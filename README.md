@@ -2,7 +2,7 @@
 
 Management of FinBIF taxon images for admins, taxon experts and crowdsourcing capabilities.
 
-## Dev enviroment
+## Dev environment
 
 TODO
 
