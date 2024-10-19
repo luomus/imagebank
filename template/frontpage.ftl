@@ -44,7 +44,7 @@
             	</#if>
             </li>
             <li>
-            	<#if user??><button id="logout">${text.logout}</button><#else><button id="login">${text.login}</button></#if>
+            	<#if user??><button id="logout">${text.logout}</button><#else><a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a></#if>
             </li>
         </ul>
     </nav>

@@ -25,7 +25,8 @@ header a {
 nav {
 	display: flex;
 	justify-content: center;
-	background-color: rgb(240,240,240);
+	border-top: 1px solid #eeefff;
+	border-bottom: 3px double #eeefff;
 }
 
 nav ul, footer ul {
@@ -38,15 +39,26 @@ nav ul li, footer ul li {
 }
 
 nav ul li a {
-	color: rgb(18, 125, 187);
 	text-decoration: none;
-	padding: 0.2em;
-	padding-top: 1em;
-	padding-bottom: 1em;
+    color: rgb(18, 125, 187);
+    font-size: 16px;
+    padding: 10px 20px;
+    display: inline-block;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s, background-color 0.3s, transform 0.3s;
 }
 
+
 nav ul li a:hover {
-	background-color: rgb(200,200,200);
+    color: #00bcd4;
+    background-color: rgba(0, 188, 212, 0.1);
+    transform: translateY(-5px);
+}
+
+nav ul li a:focus, nav ul li a:active {
+    outline: none;
 }
 
 footer ul li a {
