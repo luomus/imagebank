@@ -1,1 +1,14 @@
-title = Image Bank - Identify Finland's Species | FinBIF
+imagebank = Image Bank
+tagline = Identify Finland's Species
+finbif = FinBIF
+finbif_short = FinBIF
+
+documentation = Documentation
+support = Support and feedback
+
+login = Log In
+logout =  Logout
+
+menu_browse = Browse
+menu_curate = Curate
+menu_admin = ADMIN

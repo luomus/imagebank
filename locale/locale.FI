@@ -1,1 +1,15 @@
-title = Kuvapankki - Tunnista Suomen Lajit | Suomen Lajitietokeskus
+imagebank = Kuvapankki
+tagline = Tunnista Suomen lajit
+finbif = Suomen Lajitietokeskus
+finbif_short = LAJI.FI
+
+documentation = Ohjeet
+support = Tuki ja palaute
+
+login = Kirjaudu
+logout =  Kirjaudu ulos
+
+menu_browse = Selaa
+menu_curate = Laadunvalvonta
+menu_admin = ADMIN
+

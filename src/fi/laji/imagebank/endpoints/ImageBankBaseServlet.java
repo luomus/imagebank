@@ -8,6 +8,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import fi.laji.imagebank.dao.DataSourceDefinition;
 import fi.luomus.commons.services.BaseServlet;
 import fi.luomus.commons.services.ResponseData;
+import fi.luomus.commons.session.SessionHandler;
 
 public abstract class ImageBankBaseServlet extends BaseServlet {
 
@@ -46,8 +47,20 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 	}
 
 	protected ResponseData initResponseData(HttpServletRequest req) {
-		ResponseData responseData = new ResponseData().setDefaultLocale("en");
+		String locale = getSetLocale(req);
+		ResponseData responseData = new ResponseData().setDefaultLocale(locale);
 		return responseData;
+	}
+
+	private String getSetLocale(HttpServletRequest req) {
+		SessionHandler session = getSession(req, false);
+		if (!session.hasSession()) return getLocale(req);
+		String sessionLocale = session.get("locale");
+		if (sessionLocale == null) {
+			sessionLocale = getLocale(req);
+			session.setObject("locale", sessionLocale);
+		}
+		return sessionLocale;
 	}
 
 	@Override
