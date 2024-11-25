@@ -8,7 +8,10 @@ support = Support and feedback
 
 login = Log In
 logout =  Logout
+logged_in_as = Logged in as
 
 menu_browse = Browse
 menu_curate = Curate
 menu_admin = ADMIN
+
+error_header = Sorry! Something went wrong...

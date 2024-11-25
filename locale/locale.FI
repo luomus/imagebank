@@ -8,8 +8,10 @@ support = Tuki ja palaute
 
 login = Kirjaudu
 logout =  Kirjaudu ulos
+logged_in_as = Kirjautuneena käyttäjänä
 
 menu_browse = Selaa
 menu_curate = Laadunvalvonta
 menu_admin = ADMIN
 
+error_header = Pahoittelut! Jokin meni vikaan...

@@ -40,16 +40,23 @@
             </li>
             <li class="login-info" id="user-info">
             	<#if user??>
-            		Logged in as: <span id="username">User</span>
+            		${text.logged_in_as} <span id="username">${user.fullName?html} </span>
+            		<#if user.admin><span id="userrole" class="admin">${user.type}</span></#if>
+            		<a href="${baseURL}/logout" class="ui-button" id="logout">${text.logout}</a>
+            	<#else>
+            		<a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a>
             	</#if>
-            </li>
-            <li>
-            	<#if user??><button id="logout">${text.logout}</button><#else><a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a></#if>
             </li>
         </ul>
     </nav>
 
     <main>
+    	<#if errorMessage??>
+    		<div class="error">
+    			<h3>${text.error_header}</h3>
+    			<p>${errorMessage?html}</p>
+    		</div>
+    	</#if>
         <h2>Main Content Area</h2>
         <p>This is the main content section.</p>
     </main>

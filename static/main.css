@@ -86,6 +86,28 @@ footer {
 }
 
 .login-info {
-	color: #fff; 
-	margin-left: 5em;
+	color: rgb(50,80,125);
+	font-size: 90%;
+}
+
+#username {
+	font-weight: bold;
+}
+
+#userrole.admin {
+	color: black;
+	padding: 3px;
+	border-bottom: 1px dashed red;
+}
+
+.error {
+	border: 1px solid rgb(200,0,0);
+	background-color: rgba(255,245,245, 0.5);
+	margin: 1em;
+	padding: 1em;
+	border-radius: 5px;
+}
+
+#logout {
+	font-size: 90%;
 }
