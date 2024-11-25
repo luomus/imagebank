@@ -26,18 +26,8 @@
         <p><a href="${baseURL}">${text.tagline}</a></p>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
-            <li><a href="${baseURL}/curate">${text.menu_curate}</a></li>
-            <#if user?? && user.admin><li><a href="${baseURL}/admin">${text.menu_admin}</a></li></#if>
-            <li>🌍
-                <select id="locale-selector" onchange="changeLocale()">
-                    <option value="en" <#if locale == "en">selected="selected"</#if> >English</option>
-                    <option value="fi" <#if locale == "fi">selected="selected"</#if> >Suomi</option>
-                    <option value="sv" <#if locale == "sv">selected="selected"</#if> >Svenska</option>
-                </select>
-            </li>
+	<nav id="login-nav">
+		<ul>
             <li class="login-info" id="user-info">
             	<#if user??>
             		${text.logged_in_as} <span id="username">${user.fullName?html} </span>
@@ -46,6 +36,20 @@
             	<#else>
             		<a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a>
             	</#if>
+            </li>
+		</ul>
+	</nav>
+    <nav>
+        <ul>
+            <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
+            <li><a href="${baseURL}/curate">${text.menu_curate}</a></li>
+            <#if user?? && user.admin><li><a href="${baseURL}/admin">${text.menu_admin}</a></li></#if>
+            <li id="locale-menu-item">🌍
+                <select id="locale-selector" onchange="changeLocale()">
+                    <option value="en" <#if locale == "en">selected="selected"</#if> >English</option>
+                    <option value="fi" <#if locale == "fi">selected="selected"</#if> >Suomi</option>
+                    <option value="sv" <#if locale == "sv">selected="selected"</#if> >Svenska</option>
+                </select>
             </li>
         </ul>
     </nav>

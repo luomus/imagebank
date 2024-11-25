@@ -25,7 +25,6 @@ header a {
 nav {
 	display: flex;
 	justify-content: center;
-	border-top: 1px solid #eeefff;
 	border-bottom: 3px double #eeefff;
 }
 
@@ -50,7 +49,6 @@ nav ul li a {
     transition: color 0.3s, background-color 0.3s, transform 0.3s;
 }
 
-
 nav ul li a:hover {
     color: #00bcd4;
     background-color: rgba(0, 188, 212, 0.1);
@@ -67,6 +65,18 @@ footer ul li a {
 
 nav ul li a:hover, footer ul li a:hover {
 	text-decoration: underline;
+}
+
+#login-nav {
+	border-style: none;
+	display: block;
+	text-align: right;
+	margin-right: 5px;
+	padding: 1em;
+}
+
+#locale-menu-item {
+	white-space: nowrap;
 }
 
 main {
