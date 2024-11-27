@@ -26,19 +26,6 @@
         <p><a href="${baseURL}">${text.tagline}</a></p>
     </header>
 
-	<nav id="login-nav">
-		<ul>
-            <li class="login-info" id="user-info">
-            	<#if user??>
-            		${text.logged_in_as} <span id="username">${user.fullName?html} </span>
-            		<#if user.admin><span id="userrole" class="admin">${user.type}</span></#if>
-            		<a href="${baseURL}/logout" class="ui-button" id="logout">${text.logout}</a>
-            	<#else>
-            		<a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a>
-            	</#if>
-            </li>
-		</ul>
-	</nav>
     <nav>
         <ul>
             <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
@@ -50,6 +37,15 @@
                     <option value="fi" <#if locale == "fi">selected="selected"</#if> >Suomi</option>
                     <option value="sv" <#if locale == "sv">selected="selected"</#if> >Svenska</option>
                 </select>
+            </li>
+            <li id="login-nav">
+            	<#if user??>
+            		${text.logged_in_as} <span id="username">${user.fullName?html} </span>
+            		<#if user.admin><span id="userrole" class="admin">${user.type}</span></#if>
+            		<a href="${baseURL}/logout" class="ui-button" id="logout">${text.logout}</a>
+            	<#else>
+            		<a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a>
+            	</#if>
             </li>
         </ul>
     </nav>
