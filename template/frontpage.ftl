@@ -40,9 +40,11 @@
             </li>
             <li id="login-nav">
             	<#if user??>
-            		${text.logged_in_as} <span id="username">${user.fullName?html} </span>
-            		<#if user.admin><span id="userrole" class="admin">${user.type}</span></#if>
-            		<a href="${baseURL}/logout" class="ui-button" id="logout">${text.logout}</a>
+            		<div id="login-info">
+            			${text.logged_in_as} <span id="username">${user.fullName?html} </span>
+            			<#if user.admin><span id="userrole" class="admin">${user.type}</span></#if>
+            			<a href="${baseURL}/logout" class="ui-button" id="logout">${text.logout}</a>
+            		</div>
             	<#else>
             		<a href="${baseURL}/login" class="ui-button" id="login">${text.login}</a>
             	</#if>
