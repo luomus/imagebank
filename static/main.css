@@ -7,6 +7,7 @@
 body {
 	font-family: Arial, sans-serif;
 	line-height: 1.6;
+	font-size: 85%;
 }
 
 header {
@@ -91,7 +92,8 @@ nav ul li a:hover, footer ul li a:hover {
 }
 
 main {
-	padding: 20px;
+	padding: 30px;
+	padding-top: 5px;
 	background-color: #f4f4f4;
 	min-height: 60vh;
 }
@@ -104,6 +106,7 @@ footer {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
+	font-size: 120%;
 }
 
 #username {
@@ -126,4 +129,37 @@ footer {
 
 #logout, #login {
 	font-size: 90%;
+}
+
+h2, h3, h4, h5 {
+	color: rgb(18, 65, 107);
+	margin-top: 0.5em;
+}
+h2 {
+	margin-bottom: 1.0em;
+}
+h3, h4, h5 {
+	margin-bottom: 0.5em;
+}
+
+li {
+	list-style-type: none;
+}
+
+.speciesName {
+	font-style: italic;
+	white-space: nowrap;
+}
+
+.author {
+	display: inline-block;
+	max-width: 150px;
+	font-size: 10px;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+.taxonRank {
+	color: #515151;
+	padding-right: 5px;
 }

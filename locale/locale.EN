@@ -15,3 +15,19 @@ menu_curate = Curate
 menu_admin = ADMIN
 
 error_header = Sorry! Something went wrong...
+
+admin_main = Admin | Image Management
+admin_single_title = Edit a single image
+admin_single_body = Enter the image URL (e.g., https://image.laji.fi/MM.123/kuva.jpg) or the image identifier (e.g., MM.123 or http://tun.fi/MM.123)
+admin_taxon_title = Edit taxon images
+admin_taxon_body = Enter the taxon identifier (e.g., MX.123) or its scientific or Finnish name
+admin_select_image = Select image
+
+taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, mute swan, MX.123
+select_taxon = Select taxon
+exact_matches = Exact matches
+partial_matches = Partial matches
+likely_matches = Likely matches
+
+must_be_admin = You are not logged in or lack permissions for this section!
+unknown_taxon = Unknown taxon ID provided!

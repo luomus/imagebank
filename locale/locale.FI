@@ -15,3 +15,19 @@ menu_curate = Laadunvalvonta
 menu_admin = ADMIN
 
 error_header = Pahoittelut! Jokin meni vikaan...
+
+admin_main = Admin | Kuvien ylläpito
+admin_single_title = Muokkaa yhtä kuvaa
+admin_single_body = Kirjoita kuvan osoite (esim https://image.laji.fi/MM.123/kuva.jpg) tai kuvan tunniste (esim MM.123 tai http://tun.fi/MM.123)
+admin_taxon_title = Muokkaa taksonin kuvia
+admin_taxon_body = Kirjoita taksonin tunniste (esim MX.123) tai tieteellinen tai suomenkielinen nimi
+admin_select_image = Valitse kuva
+
+taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, ukkoetana, MX.123
+select_taxon = Valitse taksoni
+exact_matches = Täsmälliset osumat
+partial_matches = Osittaiset osumat
+likely_matches = Todennäköiset osumat
+
+must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
+unknown_taxon = Tutnematon taksonin tunniste!

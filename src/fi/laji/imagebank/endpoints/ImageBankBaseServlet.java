@@ -6,33 +6,42 @@ import javax.servlet.http.HttpServletResponse;
 import com.zaxxer.hikari.HikariDataSource;
 
 import fi.laji.imagebank.dao.DataSourceDefinition;
+import fi.laji.imagebank.dao.TaxonomyDAOImple;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
+import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.BaseServlet;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
+import fi.luomus.commons.taxonomy.TaxonomyDAO;
 
 public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	private static final long serialVersionUID = -8211770238148729310L;
+	public static final String CONFIG_FILE = "imagebank.properties";
 	private static final Object LOCK = new Object();
 
 	@Override
 	protected String configFileName() {
-		return "imagebank.properties";
+		return CONFIG_FILE;
 	}
 
 	@Override
-	protected void applicationInit() {}
+	protected void applicationInit() {
+		try {
+			getTaxonomyDAO().getTaxon(new Qname("MX.1"));
+		} catch (Exception e) {
+			getErrorReporter().report(e);
+		}
+	}
 
 	@Override
 	protected void applicationInitOnlyOnce() {}
 
 	@Override
 	protected void applicationDestroy() {
-		try {
-			if (dataSource != null) dataSource.close();
-		} catch (Exception e) {}
+		try { if (dataSource != null) dataSource.close(); } catch (Exception e) {}
+		try { if (taxonomyDAO != null) taxonomyDAO.close(); } catch (Exception e) {}
 	}
 
 	private static HikariDataSource dataSource = null;
@@ -46,6 +55,19 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			}
 		}
 		return dataSource;
+	}
+
+	private static TaxonomyDAOImple taxonomyDAO;
+
+	protected TaxonomyDAO getTaxonomyDAO() {
+		if (taxonomyDAO == null) {
+			synchronized (LOCK) {
+				if (taxonomyDAO == null) {
+					taxonomyDAO = new TaxonomyDAOImple(getConfig(), getErrorReporter());
+				}
+			}
+		}
+		return taxonomyDAO;
 	}
 
 	protected ResponseData initResponseData(HttpServletRequest req) {
@@ -62,7 +84,22 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			String flashError = session.getFlashError();
 			if (given(flashError)) responseData.setData("errorMessage", flashError);
 		}
+		responseData.setData("taxonRanks", getTaxonomyDAO().getTaxonRankLabels());
 		return responseData;
+	}
+
+	protected User getUser(HttpServletRequest req) {
+		SessionHandler session = getSession(req, false);
+		if (session.hasSession()) {
+			if (session.isAuthenticatedFor(getConfig().systemId())) {
+				return (User) session.getObject(Constant.USER);
+			}
+		}
+		return null;
+	}
+
+	protected String getText(String text, HttpServletRequest req) {
+		return getLocalizedTexts().getText(text, getSetLocale(req, getSession(req, false)));
 	}
 
 	private String getSetLocale(HttpServletRequest req, SessionHandler session) {
