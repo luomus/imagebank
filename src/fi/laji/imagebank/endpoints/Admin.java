@@ -68,6 +68,7 @@ public class Admin extends ImageBankBaseServlet {
 			return redirectTo(getConfig().baseURL()+"/admin");
 		}
 		Taxon t = getTaxonomyDAO().getTaxon(taxonId);
+		getTaxonImageDAO().reloadImages(t);
 		return data.setViewName("admin-taxon").setData("taxon", t);
 	}
 

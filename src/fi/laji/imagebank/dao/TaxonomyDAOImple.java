@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -23,6 +24,7 @@ import org.apache.http.client.methods.HttpGet;
 import com.zaxxer.hikari.HikariDataSource;
 
 import fi.luomus.commons.config.Config;
+import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.db.connectivity.SimpleTransactionConnection;
 import fi.luomus.commons.db.connectivity.TransactionConnection;
@@ -30,15 +32,17 @@ import fi.luomus.commons.http.HttpClientService;
 import fi.luomus.commons.json.JSONObject;
 import fi.luomus.commons.reporting.ErrorReporter;
 import fi.luomus.commons.taxonomy.AdministrativeStatusContainer;
+import fi.luomus.commons.taxonomy.HabitatOccurrenceCounts.HabitatOccurrenceCount;
 import fi.luomus.commons.taxonomy.InMemoryTaxonContainerImple;
 import fi.luomus.commons.taxonomy.InMemoryTaxonContainerImple.InfiniteTaxonLoopException;
 import fi.luomus.commons.taxonomy.InformalTaxonGroupContainer;
 import fi.luomus.commons.taxonomy.NoSuchTaxonException;
+import fi.luomus.commons.taxonomy.Occurrences;
+import fi.luomus.commons.taxonomy.Occurrences.Occurrence;
 import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.commons.taxonomy.TaxonContainer;
 import fi.luomus.commons.taxonomy.TaxonSearch;
 import fi.luomus.commons.taxonomy.TaxonSearchDAOSQLQueryImple;
-import fi.luomus.commons.taxonomy.TaxonSearchDataSourceDefinition;
 import fi.luomus.commons.taxonomy.TaxonSearchResponse;
 import fi.luomus.commons.taxonomy.TaxonomyDAO;
 import fi.luomus.commons.taxonomy.TaxonomyDAOBaseImple;
@@ -76,6 +80,9 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 	private static final String SEPARATOR = "\u001F";
 
+	private static final Qname NOT_EVALUATED = new Qname("MX.typeOfOccurrenceNotEvaluated");
+	private static final Qname BASED_ON_OCCURRENCES = new Qname("MX.typeOfOccurrenceOccursBasedOnOccurrences");
+
 	private final Config config;
 	private final ErrorReporter errorReporter;
 	private final Cached<TaxonSearch, TaxonSearchResponse> cachedTaxonSearches;
@@ -86,11 +93,11 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 	private static final Object LOCK = new Object();
 
-	public TaxonomyDAOImple(Config config, ErrorReporter errorReporter) {
+	public TaxonomyDAOImple(Config config, ErrorReporter errorReporter, HikariDataSource dataSource) {
 		super(config);
 		this.config = config;
 		this.errorReporter = errorReporter;
-		this.dataSource = TaxonSearchDataSourceDefinition.initDataSource(config.connectionDescription("Taxonomy"));
+		this.dataSource = dataSource;
 		this.taxonContainer = null;
 		this.cachedTaxonSearches = new Cached<>(
 				new TaxonSearchLoader(), 12, TimeUnit.HOURS, taxonSearchCacheSize());
@@ -100,7 +107,6 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 	@Override
 	public void close() {
-		if (this.dataSource != null) dataSource.close();
 		try {
 			if (scheduler != null) {
 				scheduler.shutdownNow();
@@ -480,10 +486,27 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		public TaxonContainer load() throws Exception {
 			System.out.println("Starting to create taxon container...");
 			InMemoryTaxonContainerImple taxonContainer = load(tripletFile);
-			addObservationCounts(taxonContainer);
 			addHabitats(taxonContainer, habitatFile);
+			// TODO addBiogeographicalProvinceOccurrences(taxonContainer, con, possiblyLimitedIds);
+			addObservationCounts(taxonContainer);
+			taxonContainer.generateInheritedOccurrencesAndHabitats();
+			limitHabitatCountsToTop(10, taxonContainer);
+			taxonContainer.setHasMediaFilter(Collections.emptySet());
+			List<InfiniteTaxonLoopException> ex = taxonContainer.generateTaxonomicOrders();
+			for (InfiniteTaxonLoopException e : ex) {
+				errorReporter.report(e);
+				e.printStackTrace();
+			}
 			System.out.println("Taxon container creation done");
 			return taxonContainer;
+		}
+
+		private void limitHabitatCountsToTop(int top, InMemoryTaxonContainerImple taxonContainer) {
+			for (Taxon t : taxonContainer.getAll()) {
+				if (t.hasHabitatOccurrenceCounts()) {
+					t.getHabitatOccurrenceCounts().retainTop(top);
+				}
+			}
 		}
 
 		private void addHabitats(InMemoryTaxonContainerImple taxonContainer, File habitatFile) throws NoSuchTaxonException, IOException {
@@ -544,8 +567,75 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 				Qname taxonId = Qname.fromURI(counts.getString("taxonId"));
 				if (!taxonContainer.hasTaxon(taxonId)) return;
 				Taxon taxon = taxonContainer.getTaxon(taxonId);
+				taxon.setExplicitObservationCount(counts.getInteger("count"));
 				taxon.setExplicitObservationCountFinland(counts.getInteger("countFinland"));
+				if (counts.hasKey("biogeographicalProvinceCounts")) {
+					JSONObject provinceCounts = counts.getObject("biogeographicalProvinceCounts");
+					for (String areaQname : provinceCounts.getKeys()) {
+						int count = provinceCounts.getInteger(areaQname);
+						addBiogeographicalProvinceCount(areaQname, count, taxon);
+					}
+				}
+				if (counts.hasKey("habitatOccurrenceCounts")) {
+					JSONObject habitatCounts = counts.getObject("habitatOccurrenceCounts");
+					for (String habitat : habitatCounts.getKeys()) {
+						int count = habitatCounts.getInteger(habitat);
+						addHabitatCount(habitat, count, taxon);
+					}
+				}
 			});
+		}
+
+		private void addHabitatCount(String habitat, int count, Taxon taxon) {
+			if (count < 1) return;
+			if (!validHabitat(habitat)) return;
+			taxon.getHabitatOccurrenceCounts().setCount(
+					new HabitatOccurrenceCount(habitat, localized(habitat))
+					.setOccurrenceCount(count));
+		}
+
+		private boolean validHabitat(String habitat) {
+			if (habitat == null) return false;
+			habitat = habitat.trim();
+			if (habitat.length() < 5) return false;
+			return true;
+		}
+
+		private LocalizedText localized(String habitat) {
+			if (habitat.startsWith("http://tun.fi")) {
+				return localize(Qname.fromURI(habitat));
+			}
+			return localizedAsPlain(habitat);
+		}
+
+		private LocalizedText localizedAsPlain(String habitat) {
+			return new LocalizedText().set("fi", habitat).set("en", habitat).set("sv", habitat);
+		}
+
+		private LocalizedText localize(Qname habitat) {
+			try {
+				LocalizedText localizedText = getLabels(habitat);
+				if (localizedText.isEmpty()) return localizedAsPlain(habitat.toString());
+				return localizedText;
+			} catch (Exception e) {
+				return localizedAsPlain(habitat.toString());
+			}
+		}
+
+		private void addBiogeographicalProvinceCount(String areaQname, int count, Taxon taxon) {
+			if (count < 1) return;
+			Qname areaId = new Qname(areaQname);
+			Occurrences occurrences = taxon.getOccurrences();
+			Occurrence occurrence = occurrences.getOccurrence(areaId);
+			if (occurrence == null) {
+				occurrence = new Occurrence(null, areaId, BASED_ON_OCCURRENCES);
+				occurrences.setOccurrence(occurrence);
+			} else {
+				if (occurrence.getStatus().equals(NOT_EVALUATED)) {
+					occurrence.setStatus(BASED_ON_OCCURRENCES);
+				}
+			}
+			occurrence.setOccurrenceCount(count);
 		}
 
 		private JSONObject getObservationCountData() throws Exception {

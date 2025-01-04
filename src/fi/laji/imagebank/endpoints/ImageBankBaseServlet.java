@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.zaxxer.hikari.HikariDataSource;
 
 import fi.laji.imagebank.dao.DataSourceDefinition;
+import fi.laji.imagebank.dao.TaxonImageDAO;
+import fi.laji.imagebank.dao.TaxonImageDAOImple;
 import fi.laji.imagebank.dao.TaxonomyDAOImple;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
@@ -13,6 +15,7 @@ import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.BaseServlet;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
+import fi.luomus.commons.taxonomy.TaxonSearchDataSourceDefinition;
 import fi.luomus.commons.taxonomy.TaxonomyDAO;
 
 public abstract class ImageBankBaseServlet extends BaseServlet {
@@ -42,6 +45,8 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 	protected void applicationDestroy() {
 		try { if (dataSource != null) dataSource.close(); } catch (Exception e) {}
 		try { if (taxonomyDAO != null) taxonomyDAO.close(); } catch (Exception e) {}
+		try { if (taxonImageDAO != null) taxonImageDAO.close(); } catch (Exception e) {}
+		try { if (triplestoreDataSource != null) triplestoreDataSource.close(); } catch (Exception e) {}
 	}
 
 	private static HikariDataSource dataSource = null;
@@ -57,17 +62,44 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		return dataSource;
 	}
 
+	private static HikariDataSource triplestoreDataSource = null;
+
+	protected HikariDataSource getTriplestoreDataSource() {
+		if (triplestoreDataSource == null) {
+			synchronized (LOCK) {
+				if (triplestoreDataSource == null) {
+					triplestoreDataSource = TaxonSearchDataSourceDefinition.initDataSource(getConfig().connectionDescription("Taxonomy"));
+				}
+			}
+		}
+		return triplestoreDataSource;
+	}
+
 	private static TaxonomyDAOImple taxonomyDAO;
 
 	protected TaxonomyDAO getTaxonomyDAO() {
 		if (taxonomyDAO == null) {
 			synchronized (LOCK) {
 				if (taxonomyDAO == null) {
-					taxonomyDAO = new TaxonomyDAOImple(getConfig(), getErrorReporter());
+					taxonomyDAO = new TaxonomyDAOImple(getConfig(), getErrorReporter(), getTriplestoreDataSource());
 				}
 			}
 		}
 		return taxonomyDAO;
+	}
+
+
+	private static TaxonImageDAOImple taxonImageDAO;
+
+	protected TaxonImageDAO getTaxonImageDAO() {
+		if (taxonImageDAO == null) {
+			synchronized (LOCK) {
+				if (taxonImageDAO == null) {
+					taxonImageDAO = new TaxonImageDAOImple(getTriplestoreDataSource(), getTaxonomyDAO(), getErrorReporter());
+				}
+			}
+		}
+		return taxonImageDAO;
 	}
 
 	protected ResponseData initResponseData(HttpServletRequest req) {

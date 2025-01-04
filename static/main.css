@@ -4,6 +4,12 @@
 	box-sizing: border-box;
 }
 
+html, body {
+    display: flex;
+	min-height: 100vh;
+    flex-direction: column;
+}
+
 body {
 	font-family: Arial, sans-serif;
 	line-height: 1.6;
@@ -92,20 +98,19 @@ nav ul li a:hover, footer ul li a:hover {
 }
 
 main {
+	flex: 1;
 	padding: 30px;
 	padding-top: 5px;
 	background-color: #f4f4f4;
-	min-height: 60vh;
+	padding-bottom: 5em;
 }
 
 footer {
+	width: 100%;
 	background-color: #333;
 	color: #fff;
 	text-align: center;
 	padding: 10px 0;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
 	font-size: 120%;
 }
 
@@ -162,4 +167,24 @@ li {
 .taxonRank {
 	color: #515151;
 	padding-right: 5px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+    gap: 15px; /* Space between images */
+    justify-items: center; /* Center images in their grid cells */
+}
+
+.image-grid img {
+    width: 100%;
+    max-width: 150px; /* Optional: Prevent images from becoming too large */
+    height: auto;
+    border-radius: 5px; /* Optional: Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+    transition: transform 0.2s; /* Optional: Add hover effect */
+}
+
+.image-grid img:hover {
+    transform: scale(1.05); /* Scale up slightly on hover */
 }
