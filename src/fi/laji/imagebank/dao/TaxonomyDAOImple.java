@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,6 +51,7 @@ import fi.luomus.commons.taxonomy.TaxonomyDAOBaseImple;
 import fi.luomus.commons.taxonomy.iucn.HabitatObject;
 import fi.luomus.commons.utils.Cached;
 import fi.luomus.commons.utils.DateUtils;
+import fi.luomus.commons.utils.FileUtils;
 import fi.luomus.commons.utils.Utils;
 
 public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoCloseable {
@@ -129,6 +132,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 				try {
 					reloadTriplets();
 					reloadHabitats();
+					reloadObsCounts();
 					cachedTaxonSearches.invalidateAll();
 					taxonContainer = null;
 					getTaxonContainer();
@@ -175,7 +179,8 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 					try {
 						File tripletFile = getTripletFile();
 						File habitatFile = getHabitatFile();
-						taxonContainer = new TaxonContainerLoader(config, this, errorReporter, tripletFile, habitatFile).load();
+						File obsCountFile = getObsCountFile();
+						taxonContainer = new TaxonContainerLoader(this, errorReporter, tripletFile, habitatFile, obsCountFile).load();
 					} catch (Exception e) {
 						throw new RuntimeException("Loading taxa failed", e);
 					}
@@ -206,6 +211,22 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			File finalFile = habitatFile();
 			File backupFile = new File(storageFolder(), "taxon_habitats_BACKUP.txt");
 			File tempFile = new HabitatLoader(dataSource).load();
+			if (finalFile.exists()) {
+				if (backupFile.exists()) {
+					backupFile.delete();
+				}
+				finalFile.renameTo(backupFile);
+			}
+			tempFile.renameTo(finalFile);
+			return finalFile;
+		}
+	}
+
+	public File reloadObsCounts() throws Exception {
+		synchronized (LOCK) {
+			File finalFile = obsCountFile();
+			File backupFile = new File(storageFolder(), "obs_count_BACKUP.txt");
+			File tempFile = loadObsCounts();
 			if (finalFile.exists()) {
 				if (backupFile.exists()) {
 					backupFile.delete();
@@ -262,12 +283,26 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		}
 	}
 
+	private File getObsCountFile() throws Exception {
+		File obsCountFile = obsCountFile();
+		if (obsCountFile.exists()) return obsCountFile;
+		synchronized (LOCK) {
+			if (obsCountFile.exists()) return obsCountFile;
+			obsCountFile = reloadObsCounts();
+			return obsCountFile;
+		}
+	}
+
 	private File tripletFile() {
 		return new File(storageFolder(), "taxon_triplets.txt");
 	}
 
 	private File habitatFile() {
 		return new File(storageFolder(), "taxon_habitats.txt");
+	}
+
+	private File obsCountFile() {
+		return new File(storageFolder(), "obs_counts.json");
 	}
 
 	private File storageFolder() {
@@ -468,18 +503,18 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 	private class TaxonContainerLoader {
 
-		private final Config config;
 		private final File tripletFile;
 		private final File habitatFile;
+		private final File obsCountFile;
 		private final TaxonomyDAO dao;
 		private final ErrorReporter errorReporter;
 
-		public TaxonContainerLoader(Config config, TaxonomyDAO dao, ErrorReporter errorReporter, File tripletFile, File habitatFile) {
-			this.config = config;
+		public TaxonContainerLoader(TaxonomyDAO dao, ErrorReporter errorReporter, File tripletFile, File habitatFile, File obsCountFile) {
 			this.dao = dao;
 			this.errorReporter = errorReporter;
 			this.tripletFile = tripletFile;
 			this.habitatFile = habitatFile;
+			this.obsCountFile = obsCountFile;
 			System.out.println(this.getClass().getSimpleName() + " created!");
 		}
 
@@ -488,7 +523,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			InMemoryTaxonContainerImple taxonContainer = load(tripletFile);
 			addHabitats(taxonContainer, habitatFile);
 			// TODO addBiogeographicalProvinceOccurrences(taxonContainer, con, possiblyLimitedIds);
-			addObservationCounts(taxonContainer);
+			addObservationCounts(taxonContainer, obsCountFile);
 			taxonContainer.generateInheritedOccurrencesAndHabitats();
 			limitHabitatCountsToTop(10, taxonContainer);
 			taxonContainer.setHasMediaFilter(Collections.emptySet());
@@ -500,6 +535,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			System.out.println("Taxon container creation done");
 			return taxonContainer;
 		}
+
 
 		private void limitHabitatCountsToTop(int top, InMemoryTaxonContainerImple taxonContainer) {
 			for (Taxon t : taxonContainer.getAll()) {
@@ -555,11 +591,14 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			}
 		}
 
-		private void addObservationCounts(InMemoryTaxonContainerImple taxonContainer) throws Exception {
-			System.out.println(" ... loading taxon observation counts ...");
-			JSONObject response = getObservationCountData();
-			addObservationCounts(taxonContainer, response);
-			System.out.println(" ... taxon observation counts loaded ...");
+		private void addObservationCounts(InMemoryTaxonContainerImple taxonContainer, File obsCountFile) throws FileNotFoundException, IOException {
+			System.out.println("Reading observation counts from " + obsCountFile.getAbsolutePath());
+			JSONObject data = getObservationCountData(obsCountFile);
+			addObservationCounts(taxonContainer, data);
+		}
+
+		private JSONObject getObservationCountData(File obsCountFile) throws FileNotFoundException, IOException {
+			return new JSONObject(FileUtils.readContents(obsCountFile));
 		}
 
 		private void addObservationCounts(InMemoryTaxonContainerImple taxonContainer, JSONObject response) {
@@ -638,14 +677,6 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			occurrence.setOccurrenceCount(count);
 		}
 
-		private JSONObject getObservationCountData() throws Exception {
-			try (HttpClientService client = new HttpClientService()) {
-				String url = config.get("DwURL");
-				System.out.println("Laji backend calling " + url);
-				return client.contentAsJson(new HttpGet(url));
-			}
-		}
-
 		private InMemoryTaxonContainerImple load(File tripletFile) throws Exception {
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(tripletFile), "UTF-8"), 1024*1024)) {
 				System.out.println("Reading triplets from " + tripletFile.getAbsolutePath() + " ... ");
@@ -688,6 +719,17 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 			taxonContainer.handle(taxonId, predicate, object, resourceliteral, locale, context);
 		}
+	}
+
+	private File loadObsCounts() throws Exception {
+		File tempFile = new File(storageFolder(), "obs_counts-"+DateUtils.getFilenameDatetime()+".txt");
+		tempFile.getParentFile().mkdirs();
+		String url = config.get("DwURL");
+		System.out.println("Calling " + url);
+		try (HttpClientService client = new HttpClientService(); OutputStream out = new FileOutputStream(tempFile)) {
+			client.contentToStream(new HttpGet(url), out);
+		}
+		return tempFile;
 	}
 
 }
