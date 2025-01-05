@@ -61,10 +61,12 @@ nav.main-nav ul li a {
     transition: color 0.3s, background-color 0.3s, transform 0.3s;
 }
 
+/*
 nav.main-nav ul li a:hover {
     color: #00bcd4;
     background-color: rgba(0, 188, 212, 0.1);
 }
+*/
 
 nav ul li a:focus, nav ul li a:active {
     outline: none;
@@ -77,6 +79,8 @@ footer ul li a {
 
 nav.main-nav ul li a:hover, footer ul li a:hover {
 	text-decoration: underline;
+	text-underline-offset: 8px;
+	text-decoration-thickness: 6px;
 }
 
 #login-nav {
@@ -174,15 +178,13 @@ li {
 
 .image-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+    grid-template-columns: repeat(auto-fill, 200px);
     gap: 15px; /* Space between images */
-    justify-items: center; /* Center images in their grid cells */
+    justify-items: left;
+    align-items: center; /* Align images vertically */
 }
 
 .image-grid img {
-    width: 100%;
-    max-width: 150px; /* Optional: Prevent images from becoming too large */
-    height: auto;
     border-radius: 5px; /* Optional: Rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
     transition: transform 0.2s; /* Optional: Add hover effect */
@@ -219,7 +221,7 @@ li {
 
 .breadcrumb a { 
 	text-decoration: underline;
-	text-underline-offset: 2px;
+	text-underline-offset: 8px;
 	text-decoration-thickness: 6px;
 	font-weight: bolder;
 }
