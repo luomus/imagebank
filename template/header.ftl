@@ -26,7 +26,7 @@
         <p><a href="${baseURL}">${text.tagline}</a></p>
     </header>
 
-    <nav>
+    <nav class="main-nav" role="navigation" aria-label="Main Navigation">
         <ul>
             <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
             <li><a href="${baseURL}/curate">${text.menu_curate}</a></li>

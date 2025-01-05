@@ -10,9 +10,11 @@ login = Kirjaudu
 logout =  Kirjaudu ulos
 logged_in_as = Kirjautuneena
 
+menu_home = Etusivu
 menu_browse = Selaa
 menu_curate = Laadunvalvonta
-menu_admin = ADMIN
+menu_admin = Admin
+menu_taxon_select = Taksonin valinta
 
 error_header = Pahoittelut! Jokin meni vikaan...
 
@@ -22,12 +24,14 @@ admin_single_body = Kirjoita kuvan osoite (esim https://image.laji.fi/MM.123/kuv
 admin_taxon_title = Muokkaa taksonin kuvia
 admin_taxon_body = Kirjoita taksonin tunniste (esim MX.123) tai tieteellinen tai suomenkielinen nimi
 admin_select_image = Valitse kuva
+admin_info = <p>Admin -osio on ylläpitotyökalu, jota ei ole tarkoitettu tavalliseen lajikuvien kuratointiin.</p><p>Täällä voit muokata kaikkia kuvia; myös Kotkassa lisättyjä näytekuvia ja Vihkon kautta lisättyjä havaintokuvia.</p><p>Voit muokata kuvien kaikkia tietoja, joita Kuvapankin lajikuvaosiossa ei voi muokata, esim lisenssi, kuvaajan nimi, avainsanat.</p><p>Voit myös kokonaan poistaa kuvia.</p><p>Huomaa, että ilkivaltaisissa tapauksissa on kuvan poistamisen lisäksi syytä annotoida havainto Spam-merkinnällä.</p>
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, ukkoetana, MX.123
 select_taxon = Valitse taksoni
 exact_matches = Täsmälliset osumat
 partial_matches = Osittaiset osumat
 likely_matches = Todennäköiset osumat
+no_taxon_matches = Ei osumia hakusanalla
 
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
 unknown_taxon = Tutnematon taksonin tunniste!

@@ -1,17 +1,29 @@
 <#include "header.ftl">
 
-		<h2>${text.admin_main}</h2>
+		<nav class="breadcrumb" aria-label="Breadcrumb">
+		    <ol>
+		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
+        		<li>${text.menu_admin}</li>
+    		</ol>
+		</nav>
 		
+		<h2>${text.admin_main}</h2>
+				
 		<h3>${text.admin_taxon_title}</h3>
 		<p>${text.admin_taxon_body}</p>
 		<form action="${baseURL}/admin">
-		<input name="taxon" type="text" size="50" id="taxon-autocomplete" placeholder="${text.taxon_autocomplete_placeholder}" /> <button>Valitse</button>
+			<input name="taxon" type="text" size="50" id="taxon-autocomplete" placeholder="${text.taxon_autocomplete_placeholder}" /> <button>Valitse</button>
 		</form>
 
 		<h3>${text.admin_single_title}</h3>
 		<p>${text.admin_single_body}</p>
 		<form action="${baseURL}/admin">
-		<input name="image" type="text" size="80" /> <button>Muokkaa</button>
+			<input name="image" type="text" size="80" /> <button>Muokkaa</button>
 		</form>
+		
+		<br />
+		<div class="info">
+			${text.admin_info}
+		</div>
 		
 <#include "footer.ftl">

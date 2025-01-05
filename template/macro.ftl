@@ -1,5 +1,5 @@
 <#macro printTaxon taxon>
-	<span class="scientificName <#if taxon.isCursiveName()>speciesName</#if>">${taxon.scientificName!taxon.vernacularName.forLocale("en")!taxon.qname}</span>
+	<@printScientificName taxon />
 	<#if taxon.scientificNameAuthorship?has_content>
 		<span class="author">${taxon.scientificNameAuthorship?html}</span>
 	</#if>
@@ -11,3 +11,10 @@
 	</#if>
 </#macro>
 
+<#macro printScientificName taxon>
+	<span class="scientificName <#if taxon.isCursiveName()>speciesName</#if>">${taxon.scientificName!taxon.vernacularName.forLocale("en")!taxon.qname}</span>
+</#macro>
+
+<#macro printNames taxon>
+	<@printScientificName taxon /> <#if taxon.vernacularName.forLocale(locale)?has_content> &mdash; </#if>${taxon.vernacularName.forLocale(locale)!""}
+</#macro>

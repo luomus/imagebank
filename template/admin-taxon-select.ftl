@@ -1,9 +1,21 @@
 <#include "macro.ftl">
 <#include "header.ftl">
+		
+		<nav class="breadcrumb" aria-label="Breadcrumb">
+		    <ol>
+		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
+        		<li><a href="${baseURL}/admin">${text.menu_admin}</a></li>
+        		<li>${text.menu_taxon_select}</li>
+    		</ol>
+		</nav>
 
 		<h2>${text.admin_main}</h2>
 		
-		<h3>${text.select_taxon}...</h3>
+		<#if results.hasMatches()>
+			<h3>${text.select_taxon}...</h3>
+		<#else>
+			<h3>${text.no_taxon_matches}!</h3>
+		</#if>
 		
 		<#if results.exactMatches?has_content>
 			<h4>${text.exact_matches}</h4>
