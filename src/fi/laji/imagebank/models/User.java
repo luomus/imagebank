@@ -1,10 +1,13 @@
 package fi.laji.imagebank.models;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import fi.luomus.commons.containers.rdf.Qname;
 
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 4374799732435367777L;
 
 	public static enum Type { ADMIN, CURATOR, NORMAL }
 
@@ -13,12 +16,18 @@ public class User {
 	private final String fullName;
 
 	public User(String userQname, Set<String> roles, String fullName) {
-		this.id = new Qname(userQname);
-		this.type = typeFrom(roles);
-		this.fullName = fullName;
+		this(userQname, typeFrom(roles), fullName);
 	}
 
-	private Type typeFrom(Set<String> roles) {
+	public User(String userQname, Type type, String fullName) {
+		this.id = new Qname(userQname);
+		this.type = type;
+		this.fullName = fullName;
+		if (!id.isSet()) throw new IllegalArgumentException("No user id");
+		if (fullName == null || fullName.isEmpty()) throw new IllegalArgumentException("No user fullname");
+	}
+
+	private static Type typeFrom(Set<String> roles) {
 		if (roles == null || roles.isEmpty()) return Type.NORMAL;
 		if (roles.contains("MA.admin")) return Type.ADMIN;
 		if (roles.contains("MA.taxonEditorUser")) return Type.ADMIN;

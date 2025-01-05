@@ -114,6 +114,7 @@ public class LoginUtil  {
 		session.authenticateFor(config.systemId());
 		session.setUserId(authentication.getUser().getId().toString());
 		session.setUserName(authentication.getUser().getFullName());
+		session.setUserType(authentication.getUser().getType().toString());
 		session.setObject(Constant.USER, authentication.getUser());
 		session.setTimeout(60 * 42);
 	}

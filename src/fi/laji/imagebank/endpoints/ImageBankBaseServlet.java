@@ -122,12 +122,22 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	protected User getUser(HttpServletRequest req) {
 		SessionHandler session = getSession(req, false);
-		if (session.hasSession()) {
-			if (session.isAuthenticatedFor(getConfig().systemId())) {
-				return (User) session.getObject(Constant.USER);
-			}
+		if (!session.hasSession()) return null;
+		if (!session.isAuthenticatedFor(getConfig().systemId())) return null;
+		User user = (User) session.getObject(Constant.USER);
+		if (user !=  null) return user;
+		try {
+			String id = session.userId();
+			User.Type type = User.Type.valueOf(session.userType());
+			String name = session.userName();
+			user = new User(id, type, name);
+			session.setObject(Constant.USER, user);
+			return user;
+		} catch (Exception e) {
+			// user does not validate
+			session.removeAuthentication(getConfig().systemId());
+			return null;
 		}
-		return null;
 	}
 
 	protected String getText(String text, HttpServletRequest req) {
