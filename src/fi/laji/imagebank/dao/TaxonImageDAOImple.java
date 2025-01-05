@@ -34,7 +34,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 
 	@Override
 	public void close() throws Exception {
-		// nothing for now...
+		// TODO nothing for now...  remove if not needed at all
 	}
 
 	@Override
