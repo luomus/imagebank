@@ -32,6 +32,7 @@ exact_matches = Täsmälliset osumat
 partial_matches = Osittaiset osumat
 likely_matches = Todennäköiset osumat
 no_taxon_matches = Ei osumia hakusanalla
+no_images = Ei kuvia
 
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
-unknown_taxon = Tutnematon taksonin tunniste!
+unknown_taxon = Tuntematon taksonin tunniste!

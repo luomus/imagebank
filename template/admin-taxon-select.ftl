@@ -21,7 +21,7 @@
 			<h4>${text.exact_matches}</h4>
 			<ul>
 			<#list results.exactMatches as match>
-				<li><a href="${baseURL}/admin/${match.taxon.id}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
+				<li><a href="${baseURL}/admin/${match.taxon.id}?${ref}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
 			</#list>
 			</ul>
 		</#if>
@@ -30,7 +30,7 @@
 			<h4>${text.partial_matches}</h4>
 			<ul>
 			<#list results.partialMatches as match>
-				<li><a href="${baseURL}/admin/${match.taxon.id}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
+				<li><a href="${baseURL}/admin/${match.taxon.id}?${ref}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
 			</#list>
 			</ul>
 		</#if>
@@ -39,7 +39,7 @@
 			<h4>${text.likely_matches}</h4>
 			<ul>
 			<#list results.likelyMatches as match>
-				<li><a href="${baseURL}/admin/${match.taxon.id}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
+				<li><a href="${baseURL}/admin/${match.taxon.id}?${ref}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
 			</#list>
 			</ul>
 		</#if>
