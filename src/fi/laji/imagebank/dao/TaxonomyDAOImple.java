@@ -202,6 +202,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 				finalFile.renameTo(backupFile);
 			}
 			tempFile.renameTo(finalFile);
+			System.out.println("Taxon triplets saved to " + finalFile.getAbsolutePath());
 			return finalFile;
 		}
 	}
@@ -218,6 +219,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 				finalFile.renameTo(backupFile);
 			}
 			tempFile.renameTo(finalFile);
+			System.out.println("Taxon habitats saved to " + finalFile.getAbsolutePath());
 			return finalFile;
 		}
 	}
@@ -234,6 +236,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 				finalFile.renameTo(backupFile);
 			}
 			tempFile.renameTo(finalFile);
+			System.out.println("Observation counts saved to " + finalFile.getAbsolutePath());
 			return finalFile;
 		}
 	}
