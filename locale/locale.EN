@@ -33,6 +33,7 @@ exact_matches = Exact matches
 partial_matches = Partial matches
 likely_matches = Likely matches
 no_taxon_matches = Nothing matches the search term
+taxon_search_term = Matches with search term
 no_images = No images
 
 must_be_admin = You are not logged in or lack permissions for this section!

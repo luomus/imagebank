@@ -11,7 +11,7 @@
 
 		<h2>${text.admin_main}</h2>
 		
-		<h3>Hakutulokset nimellä "${term}"</h3>
+		<h3>${text.taxon_search_term} "${taxonSearch?html}"</h3>
 		
 		<#if results.hasMatches()>
 			<h4>${text.select_taxon} ...</h4>

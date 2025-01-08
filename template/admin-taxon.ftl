@@ -5,8 +5,8 @@
 		    <ol>
 		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
         		<li><a href="${baseURL}/admin">${text.menu_admin}</a></li>
-        		<#if ref??>
-        			<li><a href="${baseURL}/admin?taxon=${ref}">${text.select_taxon}: ${ref}</a></li>
+        		<#if taxonSearch??>
+        			<li><a href="${baseURL}/admin?taxon=${taxonSearch?html}">${text.select_taxon}: ${taxonSearch?html}</a></li>
         		</#if>
         		<li><@printScientificName taxon/></li>
     		</ol>
@@ -24,7 +24,7 @@
 		
 		<div class="image-grid">
 		<#list taxon.multimedia as image>
-			<img class="admin-image" src="${image.largeURL}" <@imageData image/> />
+			<a href="${baseURL}/admin/${image.id}?<#if taxonSearch??>taxon=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL}" <@imageData image/> /></a>
 		</#list>
 		</div>
 <#else>

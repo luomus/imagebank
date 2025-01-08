@@ -62,7 +62,7 @@ public class Admin extends ImageBankBaseServlet {
 		return data.setViewName("admin-main");
 	}
 
-	private ResponseData taxonEdit(Qname taxonId, ResponseData data, String ref, HttpServletRequest req) throws Exception {
+	private ResponseData taxonEdit(Qname taxonId, ResponseData data, String taxonSearch, HttpServletRequest req) throws Exception {
 		if (!getTaxonomyDAO().getTaxonContainer().hasTaxon(taxonId)) {
 			getSession(req).setFlashError(getText("unknown_taxon", req));
 			return redirectTo(getConfig().baseURL()+"/admin");
@@ -70,7 +70,7 @@ public class Admin extends ImageBankBaseServlet {
 		Taxon t = getTaxonomyDAO().getTaxon(taxonId);
 		getTaxonImageDAO().reloadImages(t);
 		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
-		return data.setViewName("admin-taxon").setData("taxon", t).setData("ref", ref).setData("multiPrimary", multiPrimary);
+		return data.setViewName("admin-taxon").setData("taxon", t).setData("taxonSearch", taxonSearch).setData("multiPrimary", multiPrimary);
 	}
 
 	private ResponseData singleImageEdit(Qname mediaId, ResponseData data) {
@@ -80,7 +80,7 @@ public class Admin extends ImageBankBaseServlet {
 
 	private ResponseData taxonSearch(String taxonSearch, ResponseData data, HttpServletRequest req) throws Exception {
 		TaxonSearchResponse searchResults = getTaxonomyDAO().search(new TaxonSearch(taxonSearch, 10).setMatchTypes(MatchType.EXACT, MatchType.PARTIAL, MatchType.LIKELY));
-		return data.setViewName("admin-taxon-select").setData("results", searchResults).setData("ref", "taxon="+taxonSearch).setData("term", taxonSearch);
+		return data.setViewName("admin-taxon-select").setData("results", searchResults).setData("taxonSearch", taxonSearch).setData("ref", "taxon="+taxonSearch);
 	}
 
 	private ResponseData imageSearch(String imageSearch, ResponseData data) {

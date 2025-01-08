@@ -33,6 +33,7 @@ exact_matches = Täsmälliset osumat
 partial_matches = Osittaiset osumat
 likely_matches = Todennäköiset osumat
 no_taxon_matches = Ei osumia hakusanalla
+taxon_search_term = Hakutulokset nimellä
 no_images = Ei kuvia
 
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!

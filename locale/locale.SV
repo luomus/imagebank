@@ -33,6 +33,7 @@ exact_matches = Exakta träffar
 partial_matches = Partiella träffar
 likely_matches = Troliga träffar
 no_taxon_matches = Inga träffar för sökordet
+taxon_search_term = Matchar med sökterm
 no_images = Inga bilder
 
 must_be_admin = Du är inte inloggad eller saknar behörighet!
