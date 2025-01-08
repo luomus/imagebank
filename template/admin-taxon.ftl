@@ -18,11 +18,11 @@
 		
 <#if taxon.multimedia?has_content>
 
-		<h4>${text.admin_select_image}...</h4>
+		<h4>${text.admin_select_image} ...</h4>
 		
 		<div class="image-grid">
 		<#list taxon.multimedia as image>
-			<img src="${image.thumbnailURL}" />
+			<img class="admin-image" src="${image.largeURL}" <@imageData image/> />
 		</#list>
 		</div>
 <#else>

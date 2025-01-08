@@ -79,7 +79,7 @@ public class Admin extends ImageBankBaseServlet {
 
 	private ResponseData taxonSearch(String taxonSearch, ResponseData data, HttpServletRequest req) throws Exception {
 		TaxonSearchResponse searchResults = getTaxonomyDAO().search(new TaxonSearch(taxonSearch, 10).setMatchTypes(MatchType.EXACT, MatchType.PARTIAL, MatchType.LIKELY));
-		return data.setViewName("admin-taxon-select").setData("results", searchResults).setData("ref", "taxon="+taxonSearch);
+		return data.setViewName("admin-taxon-select").setData("results", searchResults).setData("ref", "taxon="+taxonSearch).setData("term", taxonSearch);
 	}
 
 	private ResponseData imageSearch(String imageSearch, ResponseData data) {

@@ -5,6 +5,7 @@ finbif_short = LAJI.FI
 
 documentation = Ohjeet
 support = Tuki ja palaute
+change_language = Change language | Vaihda kieli
 
 login = Kirjaudu
 logout =  Kirjaudu ulos
@@ -23,7 +24,7 @@ admin_single_title = Muokkaa yhtä kuvaa
 admin_single_body = Kirjoita kuvan osoite (esim https://image.laji.fi/MM.123/kuva.jpg) tai kuvan tunniste (esim MM.123 tai http://tun.fi/MM.123)
 admin_taxon_title = Muokkaa taksonin kuvia
 admin_taxon_body = Kirjoita taksonin tunniste (esim MX.123) tai tieteellinen tai suomenkielinen nimi
-admin_select_image = Valitse kuva
+admin_select_image = Valitse muokattava kuva
 admin_info = <p>Admin -osio on ylläpitotyökalu, jota ei ole tarkoitettu tavalliseen lajikuvien kuratointiin.</p><p>Täällä voit muokata kaikkia kuvia; myös Kotkassa lisättyjä näytekuvia ja Vihkon kautta lisättyjä havaintokuvia.</p><p>Voit muokata kuvien kaikkia tietoja, joita Kuvapankin lajikuvaosiossa ei voi muokata, esim lisenssi, kuvaajan nimi, avainsanat.</p><p>Voit myös kokonaan poistaa kuvia.</p><p>Huomaa, että ilkivaltaisissa tapauksissa on kuvan poistamisen lisäksi syytä annotoida havainto Spam-merkinnällä.</p>
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, ukkoetana, MX.123

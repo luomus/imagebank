@@ -11,14 +11,16 @@
 
 		<h2>${text.admin_main}</h2>
 		
+		<h3>Hakutulokset nimellä "${term}"</h3>
+		
 		<#if results.hasMatches()>
-			<h3>${text.select_taxon}...</h3>
+			<h4>${text.select_taxon} ...</h4>
 		<#else>
-			<h3>${text.no_taxon_matches}!</h3>
+			<h4>${text.no_taxon_matches}!</h4>
 		</#if>
 		
 		<#if results.exactMatches?has_content>
-			<h4>${text.exact_matches}</h4>
+			<h5>${text.exact_matches}</h5>
 			<ul>
 			<#list results.exactMatches as match>
 				<li><a href="${baseURL}/admin/${match.taxon.id}?${ref}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
@@ -27,7 +29,7 @@
 		</#if>
 		
 		<#if results.partialMatches?has_content>
-			<h4>${text.partial_matches}</h4>
+			<h5>${text.partial_matches}</h5>
 			<ul>
 			<#list results.partialMatches as match>
 				<li><a href="${baseURL}/admin/${match.taxon.id}?${ref}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>
@@ -36,7 +38,7 @@
 		</#if>
 		
 		<#if results.likelyMatches?has_content>
-			<h4>${text.likely_matches}</h4>
+			<h5>${text.likely_matches}</h5>
 			<ul>
 			<#list results.likelyMatches as match>
 				<li><a href="${baseURL}/admin/${match.taxon.id}?${ref}">${match.matchingName?html}</a> &mdash; <@printTaxon match.taxon /></li>

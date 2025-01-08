@@ -20,6 +20,12 @@ import fi.luomus.commons.taxonomy.TaxonomyDAO;
 
 public abstract class ImageBankBaseServlet extends BaseServlet {
 
+	private static final Qname MM_TYPE_ENUM = new Qname("MM.typeEnum");
+	private static final Qname MM_SIDE_ENUM = new Qname("MM.sideEnum");
+	private static final Qname MY_SEXES = new Qname("MY.sexes");
+	private static final Qname MY_PLANT_LIFE_STAGES = new Qname("MY.plantLifeStageEnum");
+	private static final Qname MY_LIFE_STAGES = new Qname("MY.lifeStages");
+	private static final Qname MZ_INTELLECTUAL_RIGHTS_ENUM = new Qname("MZ.intellectualRightsEnum");
 	private static final long serialVersionUID = -8211770238148729310L;
 	public static final String CONFIG_FILE = "imagebank.properties";
 	private static final Object LOCK = new Object();
@@ -102,7 +108,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		return taxonImageDAO;
 	}
 
-	protected ResponseData initResponseData(HttpServletRequest req) {
+	protected ResponseData initResponseData(HttpServletRequest req) throws Exception {
 		SessionHandler session = getSession(req, false);
 		String locale = getSetLocale(req, session);
 		ResponseData responseData = new ResponseData().setDefaultLocale(locale);
@@ -116,7 +122,14 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			String flashError = session.getFlashError();
 			if (given(flashError)) responseData.setData("errorMessage", flashError);
 		}
-		responseData.setData("taxonRanks", getTaxonomyDAO().getTaxonRankLabels());
+		TaxonomyDAO dao = getTaxonomyDAO();
+		responseData.setData("taxonRanks", dao.getTaxonRankLabels());
+		responseData.setData("licenses", dao.getAlt(MZ_INTELLECTUAL_RIGHTS_ENUM));
+		responseData.setData("lifeStages", dao.getAlt(MY_LIFE_STAGES));
+		responseData.setData("plantLifeStages", dao.getAlt(MY_PLANT_LIFE_STAGES));
+		responseData.setData("sexes", dao.getAlt(MY_SEXES));
+		responseData.setData("sides", dao.getAlt(MM_SIDE_ENUM));
+		responseData.setData("types", dao.getAlt(MM_TYPE_ENUM));
 		return responseData;
 	}
 

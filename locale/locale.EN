@@ -5,6 +5,7 @@ finbif_short = FinBIF
 
 documentation = Documentation
 support = Support and feedback
+change_language = Change language
 
 login = Log In
 logout =  Logout
@@ -23,7 +24,7 @@ admin_single_title = Edit a single image
 admin_single_body = Enter the image URL (e.g., https://image.laji.fi/MM.123/kuva.jpg) or the image identifier (e.g., MM.123 or http://tun.fi/MM.123)
 admin_taxon_title = Edit taxon images
 admin_taxon_body = Enter the taxon identifier (e.g., MX.123) or its scientific or Finnish name
-admin_select_image = Select image
+admin_select_image = Select an image to edit
 admin_info = <p>The Admin section is a maintenance tool, not intended for regular species image curation.</p><p>Here, you can edit all images, including specimen images added in Kotka and observation images added through Notebook.</p><p>You can edit all the image details that cannot be modified in the ImageBank species image section, such as license, photographer's name, and keywords.</p><p>You can also completely remove images.</p><p>Note that in the case of vandalism, it is good also to annotate the observation with a Spam tag.</p>
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, mute swan, MX.123

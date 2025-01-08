@@ -31,7 +31,7 @@
             <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
             <li><a href="${baseURL}/curate">${text.menu_curate}</a></li>
             <#if user?? && user.admin><li><a href="${baseURL}/admin">${text.menu_admin}</a></li></#if>
-            <li id="locale-menu-item">🌍
+            <li id="locale-menu-item"><span title="${text.change_language}">🌍</span>
                 <select id="locale-selector" onchange="changeLocale()">
                     <option value="en" <#if locale == "en">selected="selected"</#if> >English</option>
                     <option value="fi" <#if locale == "fi">selected="selected"</#if> >Suomi</option>
