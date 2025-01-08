@@ -12,11 +12,11 @@
 </#macro>
 
 <#macro printScientificName taxon>
-	<span class="scientificName <#if taxon.isCursiveName()>speciesName</#if>">${taxon.scientificName!taxon.vernacularName.forLocale("en")!taxon.qname}</span>
+	<span class="scientificName <#if taxon.isCursiveName()>speciesName</#if>">${(taxon.scientificName!taxon.vernacularName.forLocale("en")!taxon.qname)?html}</span>
 </#macro>
 
 <#macro printNames taxon>
-	<@printScientificName taxon /> <#if taxon.vernacularName.forLocale(locale)?has_content> &mdash; </#if>${taxon.vernacularName.forLocale(locale)!""}
+	<@printScientificName taxon /> <#if taxon.vernacularName.forLocale(locale)?has_content> &mdash; </#if>${(taxon.vernacularName.forLocale(locale)!"")?html}
 </#macro>
 
 <#macro imageData image>

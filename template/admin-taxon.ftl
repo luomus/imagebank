@@ -24,7 +24,7 @@
 		
 		<div class="image-grid">
 		<#list taxon.multimedia as image>
-			<a href="${baseURL}/admin/${image.id}?<#if taxonSearch??>taxon=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL}" <@imageData image/> /></a>
+			<a href="${baseURL}/admin/${image.id}?<#if taxonSearch??>taxon=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
 		</#list>
 		</div>
 <#else>
