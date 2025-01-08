@@ -15,12 +15,12 @@
 		<h2>${text.admin_main}</h2>
 		
 		<h3><@printNames taxon/> | ${taxon.id}</h3>
+
+		<#if multiPrimary><div class="info warning"><p>MULTIPLE PRIMARY IMAGES</p></div></#if>
 		
 <#if taxon.multimedia?has_content>
 
 		<h4>${text.admin_select_image} ...</h4>
-		
-		<#if multiPrimary><div class="info warning"><p>MULTIPLE PRIMARY IMAGES</p></div></#if>
 		
 		<div class="image-grid">
 		<#list taxon.multimedia as image>
