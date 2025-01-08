@@ -48,16 +48,22 @@ $(document).ready(function() {
 		image.after(tagsContainer);
 
 		const infoBox = $("<div class='image-info-box'></div>");
-		const infoHtml = ''+
-                    '<p><strong>Authors:</strong> '+image.data("authors")+'</p>'+
-                    '<p><strong>Copyright Owner:</strong> '+image.data("copyrightowner")+'</p>'+
-                    '<p><strong>License:</strong> '+image.data("licenseabbreviation")+'</p>'+
-                    '<p><strong>Caption:</strong> '+image.data("caption")+'</p>'+
-                    '<p><strong>Taxon Description:</strong> '+image.data("taxondescriptioncaption")+'</p>'+
-                    '<p><strong>Capture Date:</strong> '+image.data("capturedatetime")+'</p>'+
-                    '<p><strong>Upload Date:</strong> '+image.data("uploaddatetime")+'</p>';
+		const fields = [
+			{ key: "authors", label: "Authors" },
+    		{ key: "copyrightowner", label: "Copyright Owner" },
+    		{ key: "licenseabbreviation", label: "License" },
+			{ key: "caption", label: "Caption" },
+			{ key: "taxondescriptioncaption", label: "Taxon Description" },
+			{ key: "capturedatetime", label: "Capture Date" },
+			{ key: "uploaddatetime", label: "Upload Date" },
+			{ key: "keywords", label: "Keywords" }
+		];
+		let infoHtml = fields.map(field => {
+        	const value = image.data(field.key);
+        	return value ? '<p><strong>' + field.label + ':</strong> ' + value + '</p>' : '';
+    	})
+    	.join('');
 		infoBox.html(infoHtml);
-				
 		image.after(infoBox);
         image.hover(
 			function () { infoBox.stop(true, true).fadeIn(100); },

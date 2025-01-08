@@ -69,7 +69,8 @@ public class Admin extends ImageBankBaseServlet {
 		}
 		Taxon t = getTaxonomyDAO().getTaxon(taxonId);
 		getTaxonImageDAO().reloadImages(t);
-		return data.setViewName("admin-taxon").setData("taxon", t).setData("ref", ref);
+		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
+		return data.setViewName("admin-taxon").setData("taxon", t).setData("ref", ref).setData("multiPrimary", multiPrimary);
 	}
 
 	private ResponseData singleImageEdit(Qname mediaId, ResponseData data) {

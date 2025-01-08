@@ -20,6 +20,8 @@
 
 		<h4>${text.admin_select_image} ...</h4>
 		
+		<#if multiPrimary><div class="info warning"><p>MULTIPLE PRIMARY IMAGES</p></div></#if>
+		
 		<div class="image-grid">
 		<#list taxon.multimedia as image>
 			<img class="admin-image" src="${image.largeURL}" <@imageData image/> />
