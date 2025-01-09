@@ -16,7 +16,7 @@
 		
 		<h3><@printNames taxon/> | ${taxon.id}</h3>
 
-		<#if multiPrimary><div class="info warning"><p>MULTIPLE PRIMARY IMAGES</p></div></#if>
+		<#if multiPrimary><div class="info warning"><p>WARNING: Taxon has MULTIPLE PRIMARY images</p></div></#if>
 		
 <#if taxon.multimedia?has_content>
 
