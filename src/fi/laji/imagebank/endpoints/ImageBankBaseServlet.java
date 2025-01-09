@@ -12,11 +12,14 @@ import fi.laji.imagebank.dao.TaxonomyDAOImple;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.rdf.Qname;
+import fi.luomus.commons.db.connectivity.ConnectionDescription;
 import fi.luomus.commons.services.BaseServlet;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
 import fi.luomus.commons.taxonomy.TaxonSearchDataSourceDefinition;
 import fi.luomus.commons.taxonomy.TaxonomyDAO;
+import fi.luomus.kuvapalvelu.client.MediaApiClient;
+import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
 
 public abstract class ImageBankBaseServlet extends BaseServlet {
 
@@ -106,6 +109,24 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			}
 		}
 		return taxonImageDAO;
+	}
+
+	private static MediaApiClient mediaApiClient;
+
+	protected MediaApiClient getMediaApiClient() {
+		if (mediaApiClient == null) {
+			synchronized (LOCK) {
+				if (mediaApiClient == null) {
+					ConnectionDescription desc = getConfig().connectionDescription("MediaAPI");
+					mediaApiClient = MediaApiClientImpl.builder()
+							.uri(desc.url())
+							.username(desc.username())
+							.password(desc.password())
+							.build();
+				}
+			}
+		}
+		return mediaApiClient;
 	}
 
 	protected ResponseData initResponseData(HttpServletRequest req) throws Exception {

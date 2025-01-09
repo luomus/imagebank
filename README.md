@@ -59,13 +59,19 @@ DBpassword =
 #Taxonomy database (triplestore)
 Taxonomy_DBdriver = oracle.jdbc.OracleDriver
 Taxonomy_DBurl = jdbc:oracle:thin:@//xxx:1521/xxx
-Taxonomy_DBusername = taxon_readonly
+Taxonomy_DBusername = <taxon readonly user>
 Taxonomy_DBpassword = 
 
-#Production triplestore (for reading taxa schema related thigns)
-TriplestoreURL = 
+#Production triplestore (for reading taxa schema related things)
+TriplestoreURL = https://...
 TriplestoreUsername = 
 TriplestorePassword = 
+
+#MediaAPI HTTP Client
+MediaAPI_DBdriver = not-used
+MediaAPI_DBurl = https://...
+MediaAPI_DBusername = 
+MediaAPI_DBpassword = 
 
 DwURL = https://dw.laji.fi/taxon-obs-count
 ~~~ 

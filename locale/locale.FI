@@ -35,6 +35,8 @@ likely_matches = Todennäköiset osumat
 no_taxon_matches = Ei osumia hakusanalla
 taxon_search_term = Hakutulokset nimellä
 no_images = Ei kuvia
+edit_image = Muokkaa kuvaa
 
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
 unknown_taxon = Tuntematon taksonin tunniste!
+unknown_image = Tuntematon kuvan tunniste!

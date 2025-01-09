@@ -1,5 +1,7 @@
 package fi.laji.imagebank.endpoints;
 
+import java.util.Optional;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,8 @@ import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.commons.taxonomy.TaxonSearch;
 import fi.luomus.commons.taxonomy.TaxonSearch.MatchType;
 import fi.luomus.commons.taxonomy.TaxonSearchResponse;
+import fi.luomus.kuvapalvelu.model.Media;
+import fi.luomus.kuvapalvelu.model.MediaClass;
 
 @WebServlet(urlPatterns = {"/admin/*"})
 public class Admin extends ImageBankBaseServlet {
@@ -39,13 +43,13 @@ public class Admin extends ImageBankBaseServlet {
 	@Override
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		ResponseData data = initResponseData(req);
-		String imageSearch = req.getParameter("image");
-		String taxonSearch = req.getParameter("taxon");
+		String imageSearch = req.getParameter("imageSearch");
+		String taxonSearch = req.getParameter("taxonSearch");
 		String id = getId(req);
 
 		if (given(id)) {
 			if (id.startsWith("MM.")) {
-				return singleImageEdit(new Qname(id), data);
+				return singleImageEdit(new Qname(id), data, req);
 			}
 			if (id.startsWith("MX.")) {
 				return taxonEdit(new Qname(id), data, taxonSearch, req);
@@ -54,7 +58,7 @@ public class Admin extends ImageBankBaseServlet {
 
 		if (given(imageSearch)) {
 			if (imageSearch.startsWith("MM.")) {
-				return singleImageEdit(new Qname(id), data);
+				return singleImageEdit(new Qname(id), data, req);
 			}
 			return imageSearch(imageSearch, data);
 		}
@@ -62,7 +66,7 @@ public class Admin extends ImageBankBaseServlet {
 			if (taxonSearch.startsWith("MX.")) {
 				return taxonEdit(new Qname(taxonSearch), data, null, req);
 			}
-			return taxonSearch(taxonSearch, data, req);
+			return taxonSearch(taxonSearch, data);
 		}
 
 		return data.setViewName("admin-main");
@@ -76,17 +80,39 @@ public class Admin extends ImageBankBaseServlet {
 		Taxon t = getTaxonomyDAO().getTaxon(taxonId);
 		getTaxonImageDAO().reloadImages(t);
 		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
-		return data.setViewName("admin-taxon").setData("taxon", t).setData("taxonSearch", taxonSearch).setData("multiPrimary", multiPrimary);
+		return data.setViewName("admin-taxon")
+				.setData("taxon", t)
+				.setData("taxonSearch", taxonSearch)
+				.setData("multiPrimary", multiPrimary);
 	}
 
-	private ResponseData singleImageEdit(Qname mediaId, ResponseData data) {
-		// TODO Auto-generated method stub
-		return data.setViewName("admin-image");
+	private ResponseData singleImageEdit(Qname mediaId, ResponseData data, HttpServletRequest req) throws Exception {
+		Optional<Media> image = getMediaApiClient().get(MediaClass.IMAGE, mediaId.toString());
+		if (!image.isPresent()) {
+			getSession(req).setFlashError(getText("unknown_image", req));
+			return redirectTo(getConfig().baseURL()+"/admin");
+		}
+		//image.get().getUrls().gesq
+		data.setViewName("admin-image")
+		.setData("image", image.get())
+		.setData("taxonSearch", req.getParameter("taxonSearch"));
+
+		Qname taxonId = new Qname(req.getParameter("taxonId"));
+		if (taxonId.isSet()) {
+			if (getTaxonomyDAO().getTaxonContainer().hasTaxon(taxonId)) {
+				Taxon t = getTaxonomyDAO().getTaxon(taxonId);
+				data.setData("taxon", t);
+			}
+		}
+		return data;
 	}
 
-	private ResponseData taxonSearch(String taxonSearch, ResponseData data, HttpServletRequest req) throws Exception {
+	private ResponseData taxonSearch(String taxonSearch, ResponseData data) throws Exception {
 		TaxonSearchResponse searchResults = getTaxonomyDAO().search(new TaxonSearch(taxonSearch, 10).setMatchTypes(MatchType.EXACT, MatchType.PARTIAL, MatchType.LIKELY));
-		return data.setViewName("admin-taxon-select").setData("results", searchResults).setData("taxonSearch", taxonSearch).setData("ref", "taxon="+taxonSearch);
+		return data.setViewName("admin-taxon-select")
+				.setData("results", searchResults)
+				.setData("taxonSearch", taxonSearch)
+				.setData("ref", "taxonSearch="+taxonSearch);
 	}
 
 	private ResponseData imageSearch(String imageSearch, ResponseData data) {
