@@ -133,14 +133,6 @@ footer {
 	border-bottom: 1px dashed red;
 }
 
-.error {
-	border: 1px solid rgb(200,0,0);
-	background-color: rgba(255,245,245, 0.5);
-	margin: 1em;
-	padding: 1em;
-	border-radius: 5px;
-}
-
 #logout, #login {
 	font-size: 90%;
 }
@@ -239,7 +231,7 @@ li {
 	font-size: 150%;
 }
 
-.info {
+.info, .warning, .error {
 	background-color: #e7f3fe; 
 	border-left: 5px solid rgb(150,180,205); 
     padding: 1em 2em 1em 1em;
@@ -251,11 +243,17 @@ li {
     max-width: 60em;
 }
 
-.info p {
+.info p, .warning p, .error p {
 	margin-bottom: 0.5em;
 }
 
 .warning {
+	background-color: rgba(255, 120, 40, 0.5);
+	border-left: 5px solid rgb(150,80, 25);
+	font-weight: bold;
+}
+
+.error {
 	background-color: rgba(200,100,100, 0.5);
 	border-left: 5px solid rgb(150,80,85);
 	font-weight: bold;

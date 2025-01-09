@@ -187,4 +187,26 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		return status404(res);
 	}
 
+	protected String getNext(HttpServletRequest req) {
+		String originalURL = getURL(req);
+		return originalURL.replace("/imagebank", "").replace(getConfig().baseURL(), "");
+	}
+
+	protected static String getURL(HttpServletRequest req) {
+		String servletPath = req.getServletPath();   // /servlet/MyServlet
+		String pathInfo = req.getPathInfo();         // /a/b;c=123
+		String queryString = req.getQueryString();   // d=789
+
+		// Reconstruct original requesting URL
+		StringBuilder url = new StringBuilder();
+		url.append(servletPath);
+		if (pathInfo != null) {
+			url.append(pathInfo);
+		}
+		if (queryString != null) {
+			url.append("?").append(queryString);
+		}
+		return url.toString();
+	}
+
 }

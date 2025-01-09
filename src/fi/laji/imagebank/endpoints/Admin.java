@@ -19,6 +19,12 @@ public class Admin extends ImageBankBaseServlet {
 
 	@Override
 	protected ResponseData notAuthorizedRequest(HttpServletRequest req, HttpServletResponse res) {
+		User user = getUser(req);
+		if (user == null) {
+			// not logged in
+			return redirectTo(getConfig().baseURL()+"/login?next="+getNext(req));
+		}
+		// not admin
 		getSession(req).setFlashError(getText("must_be_admin", req));
 		return redirectTo(getConfig().baseURL());
 	}
