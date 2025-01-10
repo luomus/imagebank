@@ -178,15 +178,15 @@ li {
 .image-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 400px);
-    gap: 30px; /* Space between images */
+    gap: 30px; 
     justify-items: left;
-    align-items: center; /* Align images vertically */
+    align-items: center;
 }
 
 .image-grid img {
-    border-radius: 5px; /* Optional: Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
-    transition: transform 0.2s; /* Optional: Add hover effect */
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
     width: 400px;
     height: auto;
 }
@@ -231,7 +231,7 @@ li {
 	font-size: 150%;
 }
 
-.info, .warning, .error {
+.info, .warning, .error, .danger-zone {
 	background-color: #e7f3fe; 
 	border-left: 5px solid rgb(150,180,205); 
     padding: 1em 2em 1em 1em;
@@ -297,4 +297,79 @@ li {
     width: 100%;
     pointer-events: none;
     z-index: 999;
+}
+
+.danger-zone {
+	border: 5px dashed orange;
+	padding: 1em;
+	background-color: rgba(250,127,39, 0.4);
+	color: black;
+}
+
+.danger-zone h4 {
+	color: black;
+}
+
+.admin-image-edit {
+	display: grid;
+    grid-template-columns: repeat(auto-fill, 500px);
+    gap: 4px;	
+}
+
+.admin-image-edit > div {
+	border: 1px solid #ddd;
+    margin: 0;
+    padding: 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-image-large img {
+	width: 100%;
+	height: auto;	
+}
+
+.admin-image-all {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 150px);
+    gap: 10px;
+    justify-content: center;
+    vertical-align: top;
+}
+
+.admin-image-all div {
+	border: 1px solid #ddd;
+	padding: 5px;
+	
+}
+.admin-image-all img {
+	width: 100%;
+}
+
+.admin-image-all label {
+	display: block;
+	height: 50px;
+}
+
+#saveButton {
+    color: green; /* White text */
+    font-weight: bold; /* Emphasize the text */
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+#saveButton:hover {
+    background-color: #45a049; /* Slightly brighter green on hover */
+    border-color: #2d7033; /* Adjust border color on hover */
+}
+
+#saveButton:active {
+    background-color: #3E8E41; /* Darker green for active state */
+    border-color: #2d7033;
+}
+
+#saveButton:disabled {
+    background-color: #ccc; /* Gray background for disabled state */
+    color: #666; /* Dim text color */
+    border-color: #aaa;
+    cursor: not-allowed; /* Indicate non-clickable state */
 }

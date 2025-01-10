@@ -36,6 +36,8 @@ no_taxon_matches = Inga träffar för sökordet
 taxon_search_term = Matchar med sökterm
 no_images = Inga bilder
 edit_image = Redigera bild
+delete_image = Ta bort bild
+delete_image_note = Observera att om du tar bort en bild från Vihko eller Löydös kommer observationen att visa en "trasig bild"-platshållare. För Kotkas provbilder träder borttagningen i kraft med en fördröjning i sökresultaten.
 
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!

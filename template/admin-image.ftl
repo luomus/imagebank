@@ -17,19 +17,39 @@
 		
 		<h2>${text.admin_main}</h2>
 		
-		<h3>${text.edit_image} ${image.id}</h3>
+		<h3>${text.edit_image} ${image.id} <#if taxon??> | <@printScientificName taxon/><#elseif image.meta.documentIds?has_content> | <@list image.meta.documentIds/></#if></h3>
 		
-		<div class="admin-image-meta">Meta here</div>
-		<div class="admin-image-thumb"><img src="${image.urls.large?html}" alt=""/></div>
-		<div class="admin-image-all">
-			<label>Thumbnail</label> <img src="${image.urls.thumbnail?html}" alt=""/>
-			<label>Square thumbnail</label> <img src="${image.urls.square?html}" alt=""/>
-			<label>Large</label> <img src="${image.urls.large?html}" alt=""/>
-			<label>Full</label> <img src="${image.urls.large?html}" alt=""/>
-			<label>Original</label> <img src="${image.urls.large?html}" alt=""/>
+		<h4><a href="${image.urls.original?html}" target="_blank">${image.urls.original?html}</a></h4>
+
+		<div class="admin-image-edit">
+		
+			<div class="admin-image-meta">
+				Meta here</br>
+				Meta here</br>
+				Meta here</br>
+				Meta here</br>
+				Meta here</br>
+				Meta here</br>
+				<button id="saveButton">Save</button>
+				<button onclick="confirm('discard all changes?');"><span class="ui-icon ui-icon-cancel"></span>Cancel</button>
+			</div>
+			
+			<div class="admin-image-large"><img src="${image.urls.large?html}" alt=""/></div>
+		
+			<div class="admin-image-all">
+				<div><label>Thumbnail</label> <a href="${image.urls.thumbnail?html}" target="_blank"><img src="${image.urls.thumbnail?html}" alt="Thumbnail"/></a></div>
+				<div><label>Square thumbnail</label> <a href="${image.urls.square?html}" target="_blank"><img src="${image.urls.square?html}" alt="Square thumbnail"/></a></div>
+				<div><label>Large</label> <a href="${image.urls.large?html}" target="_blank"><img src="${image.urls.large?html}" alt="Large"/></a></div>
+				<div><label>Full</label> <a href="${image.urls.full?html}" target="_blank"><img src="${image.urls.large?html}" alt="Full"/></a></div>
+				<div><label>Original</label> <a href="${image.urls.original?html}" target="_blank"><img src="${image.urls.large?html}" alt="Original"/></a></div>
+			</div>
+
 		</div>
-		
-		
-		
+
+		<div class="danger-zone">
+			<h4>Danger Zone</h4>
+			<button class="ui-state-error"><span class="ui-icon ui-icon-trash"></span> ${text.delete_image}</button>
+			<p class="info">${text.delete_image_note}</p>
+		</div>
 		
 <#include "footer.ftl">

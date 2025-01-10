@@ -36,6 +36,9 @@ no_taxon_matches = Nothing matches the search term
 taxon_search_term = Matches with search term
 no_images = No images
 edit_image = Edit image
+delete_image = Delete image
+delete_image_note = Note that if you delete an image from Vihko or Löydös, the observation will have a "broken image" placeholder. For Kotka specimen images, the deletion will take effect in search results with a delay.
+ 
 
 must_be_admin = You are not logged in or lack permissions for this section!
 unknown_taxon = Unknown taxon ID provided!
