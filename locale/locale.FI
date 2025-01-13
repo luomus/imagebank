@@ -39,6 +39,9 @@ edit_image = Muokkaa kuvaa
 delete_image = Poista kuva
 delete_image_note = <p>Huomaa, että jos poistat näytteen/havainnon kuvan (Kotka, Vihko, Löydös), havaintoon jää "rikkinäinen kuva".</p><p>Kotkan näytekuvien osalta kuvan poistaminen tulee voimaan viivellä hakutuloksiin, jos/kun näytteet uudelleenindeksoidaan.</p><p>Kuvan poistosta ei välity tietoa Laji.fi tietovarastoon, joten siellä rikkinäinen kuva säilyy kunnes havaintoa muokataan.</p><p>Lajikuvien osalta kuva on saatettu valita Pinkkaan, ja siellä näkyy rikkinäinen kuva.</p><p>Lajikuvan poistamiseksi turvallisinta on jättää kuva poistamatta, ja poistaa siitä taksonin tunniste(et).</p> 
 cancel_confirm = Peruuta muutokset?
+save = Tallenna
+cancel = Peruuta
+save_success = Tallennettu onnistuneesti!
 
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
 unknown_taxon = Tuntematon taksonin tunniste!

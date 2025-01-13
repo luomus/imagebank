@@ -24,24 +24,27 @@
 		<div class="admin-image-edit">
 		
 			<div class="admin-image-meta">
-				Meta here</br>
-				Meta here</br>
-				Meta here</br>
-				Meta here</br>
-				Meta here</br>
-				Meta here</br>
-				<button id="saveButton">Save</button>
-				<button id="cancelButton" onclick="confirm('${text.cancel_confirm}');"><span class="ui-icon ui-icon-cancel"></span>Cancel</button>
+				<form method="POST" action="${baseURL}/admin/${image.id}?${ref}">
+					Meta here</br>
+					Meta here</br>
+					Meta here</br>
+					Meta here</br>
+					Meta here</br>
+					Meta here</br>
+					
+					<input type="submit" class="button" id="saveButton" value="${text.save}" />
+					<button id="cancelButton" onclick="confirm('${text.cancel_confirm}');"><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
+				</form>
 			</div>
 			
 			<div class="admin-image-large"><img src="${image.urls.large?html}" alt=""/></div>
 		
 			<div class="admin-image-all">
-				<div><label>Thumbnail</label> <a href="${image.urls.thumbnail?html}" target="_blank"><img src="${image.urls.thumbnail?html}" alt="Thumbnail"/></a></div>
-				<div><label>Square thumbnail</label> <a href="${image.urls.square?html}" target="_blank"><img src="${image.urls.square?html}" alt="Square thumbnail"/></a></div>
-				<div><label>Large</label> <a href="${image.urls.large?html}" target="_blank"><img src="${image.urls.large?html}" alt="Large"/></a></div>
-				<div><label>Full</label> <a href="${image.urls.full?html}" target="_blank"><img src="${image.urls.large?html}" alt="Full"/></a></div>
-				<div><label>Original</label> <a href="${image.urls.original?html}" target="_blank"><img src="${image.urls.large?html}" alt="Original"/></a></div>
+				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Thumbnail</a></label> <a href="${image.urls.thumbnail?html}" target="_blank"><img src="${image.urls.thumbnail?html}" alt="Thumbnail"/></a></div>
+				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Square thumbnail</a></label> <a href="${image.urls.square?html}" target="_blank"><img src="${image.urls.square?html}" alt="Square thumbnail"/></a></div>
+				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Large</a></label> <a href="${image.urls.large?html}" target="_blank"><img src="${image.urls.large?html}" alt="Large"/></a></div>
+				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Full</a></label> <a href="${image.urls.full?html}" target="_blank"><img src="${image.urls.large?html}" alt="Full"/></a></div>
+				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Original</a></label> <a href="${image.urls.original?html}" target="_blank"><img src="${image.urls.large?html}" alt="Original"/></a></div>
 			</div>
 
 		</div>

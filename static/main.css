@@ -232,7 +232,7 @@ li {
 	font-size: 150%;
 }
 
-.info, .warning, .error, .danger-zone {
+.info, .warning, .error, .danger-zone, .success {
 	background-color: #e7f3fe; 
 	border-left: 5px solid rgb(150,180,205); 
     padding: 1em 2em 1em 1em;
@@ -257,6 +257,12 @@ li {
 .error {
 	background-color: rgba(200,100,100, 0.5);
 	border-left: 5px solid rgb(150,80,85);
+	font-weight: bold;
+}
+
+.success {
+	background-color: rgba(100,200,100, 0.5);
+	border-left: 5px solid rgb(80,150,85);
 	font-weight: bold;
 }
 
@@ -348,7 +354,6 @@ li {
 
 .admin-image-all label {
 	display: block;
-	height: 50px;
 }
 
 #saveButton {

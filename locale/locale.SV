@@ -39,6 +39,9 @@ edit_image = Redigera bild
 delete_image = Ta bort bild
 delete_image_note = <p>Observera att om du tar bort en bild från ett prov/exemplar (Kotka, Vihko, Löydös), kommer observationen att behålla en "trasig bild".</p><p>För Kotka provbilder kommer borttagningen av bilden att fördröjas i sökresultaten tills proverna omindexeras.</p><p>Bildborttagning skickas inte till Laji.fi datalagret, så där kommer den trasiga bilden att finnas kvar tills observationen redigeras.</p><p>För artbilder kan bilden ha valts för Pinkka, och där visas den trasiga bilden.</p><p>Det säkraste sättet att ta bort en artbild är att lämna bilden intakt och ta bort taksonidentifieraren/identifierarna från den.</p>
 cancel_confirm = Ångra alla ändringar?
+save = Spara
+cancel = Avbryt
+save_success = Sparat!
 
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!

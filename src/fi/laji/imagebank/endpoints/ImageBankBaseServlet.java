@@ -142,6 +142,8 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			}
 			String flashError = session.getFlashError();
 			if (given(flashError)) responseData.setData("errorMessage", flashError);
+			String flashSuccess = session.getFlashSuccess();
+			if (given(flashSuccess)) responseData.setData("successMessage", flashSuccess);
 		}
 		TaxonomyDAO dao = getTaxonomyDAO();
 		responseData.setData("taxonRanks", dao.getTaxonRankLabels());

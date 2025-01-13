@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$("button").button();
+	$("button, .button").button();
 	
 	$("#taxon-autocomplete").autocomplete({
 		source: function (request, response) {
@@ -71,7 +71,7 @@ $(document).ready(function() {
         );
 	});
     
-    $("#cancelButton").click(function() { window.location.reload(); });
+    $("#cancelButton").click(function() { window.location.reload(); return false; });
 });
 
 function changeLocale() {

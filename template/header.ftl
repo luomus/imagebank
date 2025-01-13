@@ -62,3 +62,9 @@
     			<p>${errorMessage?html}</p>
     		</div>
     	</#if>
+    	
+    	<#if successMessage??>
+    		<div class="success">
+    			<p>${successMessage?html}</p>
+    		</div>
+    	</#if>
