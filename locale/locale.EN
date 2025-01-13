@@ -37,8 +37,8 @@ taxon_search_term = Matches with search term
 no_images = No images
 edit_image = Edit image
 delete_image = Delete image
-delete_image_note = Note that if you delete an image from Vihko or Löydös, the observation will have a "broken image" placeholder. For Kotka specimen images, the deletion will take effect in search results with a delay.
- 
+delete_image_note = <p>Note that if you delete an image from a specimen/observation (Kotka, Vihko, Löydös), the observation will retain a "broken image".</p><p>For Kotka specimen images, image removal will be delayed in search results until the specimens are re-indexed.</p><p>The deletion of the image is not communicated to the Laji.fi data repository, so the broken image will remain there until the observation is edited.</p><p>For species images, the image may have been selected for the Pinkka, and there the broken image will appear.</p><p>The safest way to remove a species image is to leave the image intact and remove the taxon identifier(s) from it.</p>
+cancel_confirm = Discard all changes? 
 
 must_be_admin = You are not logged in or lack permissions for this section!
 unknown_taxon = Unknown taxon ID provided!

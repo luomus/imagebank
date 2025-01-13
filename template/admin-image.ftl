@@ -31,7 +31,7 @@
 				Meta here</br>
 				Meta here</br>
 				<button id="saveButton">Save</button>
-				<button onclick="confirm('discard all changes?');"><span class="ui-icon ui-icon-cancel"></span>Cancel</button>
+				<button id="cancelButton" onclick="confirm('${text.cancel_confirm}');"><span class="ui-icon ui-icon-cancel"></span>Cancel</button>
 			</div>
 			
 			<div class="admin-image-large"><img src="${image.urls.large?html}" alt=""/></div>
@@ -49,7 +49,7 @@
 		<div class="danger-zone">
 			<h4>Danger Zone</h4>
 			<button class="ui-state-error"><span class="ui-icon ui-icon-trash"></span> ${text.delete_image}</button>
-			<p class="info">${text.delete_image_note}</p>
+			<div class="info">${text.delete_image_note}</div>
 		</div>
 		
 <#include "footer.ftl">
