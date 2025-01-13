@@ -41,10 +41,10 @@
 		
 			<div class="admin-image-all">
 				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Thumbnail</a></label> <a href="${image.urls.thumbnail?html}" target="_blank"><img src="${image.urls.thumbnail?html}" alt="Thumbnail"/></a></div>
-				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Square thumbnail</a></label> <a href="${image.urls.square?html}" target="_blank"><img src="${image.urls.square?html}" alt="Square thumbnail"/></a></div>
-				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Large</a></label> <a href="${image.urls.large?html}" target="_blank"><img src="${image.urls.large?html}" alt="Large"/></a></div>
-				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Full</a></label> <a href="${image.urls.full?html}" target="_blank"><img src="${image.urls.large?html}" alt="Full"/></a></div>
-				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Original</a></label> <a href="${image.urls.original?html}" target="_blank"><img src="${image.urls.large?html}" alt="Original"/></a></div>
+				<div><label><a href="${image.urls.square?html}" target="_blank">Square thumbnail</a></label> <a href="${image.urls.square?html}" target="_blank"><img src="${image.urls.square?html}" alt="Square thumbnail"/></a></div>
+				<div><label><a href="${image.urls.large?html}" target="_blank">Large</a></label> <a href="${image.urls.large?html}" target="_blank"><img src="${image.urls.large?html}" alt="Large"/></a></div>
+				<div><label><a href="${image.urls.full?html}" target="_blank">Full</a></label> <a href="${image.urls.full?html}" target="_blank"><img src="${image.urls.large?html}" alt="Full"/></a></div>
+				<div><label><a href="${image.urls.original?html}" target="_blank">Original</a></label> <a href="${image.urls.original?html}" target="_blank"><img src="${image.urls.large?html}" alt="Original"/></a></div>
 			</div>
 
 		</div>
