@@ -19,7 +19,7 @@
 		
 		<h3>${text.admin_edit_image} ${image.id} <#if taxon??> | <@printScientificName taxon/><#elseif image.meta.documentIds?has_content> | <@list image.meta.documentIds/></#if></h3>
 		
-		<h4><a href="${image.urls.original?html}" target="_blank">${image.urls.original?html}</a></h4>
+		<h4><a href="${image.urls.original?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${image.urls.original?html}</a></h4>
 
 		<div class="admin-image-edit">
 		
@@ -37,14 +37,14 @@
 				</form>
 			</div>
 			
-			<div class="admin-image-large"><img src="${image.urls.large?html}" alt=""/></div>
+			<div class="admin-image-large"><img src="${image.urls.large?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt=""/></div>
 		
 			<div class="admin-image-all">
-				<div><label><a href="${image.urls.thumbnail?html}" target="_blank">Thumbnail</a></label> <a href="${image.urls.thumbnail?html}" target="_blank"><img src="${image.urls.thumbnail?html}" alt="Thumbnail"/></a></div>
-				<div><label><a href="${image.urls.square?html}" target="_blank">Square thumbnail</a></label> <a href="${image.urls.square?html}" target="_blank"><img src="${image.urls.square?html}" alt="Square thumbnail"/></a></div>
-				<div><label><a href="${image.urls.large?html}" target="_blank">Large</a></label> <a href="${image.urls.large?html}" target="_blank"><img src="${image.urls.large?html}" alt="Large"/></a></div>
-				<div><label><a href="${image.urls.full?html}" target="_blank">Full</a></label> <a href="${image.urls.full?html}" target="_blank"><img src="${image.urls.large?html}" alt="Full"/></a></div>
-				<div><label><a href="${image.urls.original?html}" target="_blank">Original</a></label> <a href="${image.urls.original?html}" target="_blank"><img src="${image.urls.large?html}" alt="Original"/></a></div>
+				<div><@imageLink image "thumbnail" "Thumbnail"/></div>
+				<div><@imageLink image "square" "Square thumbnail"/></div>
+				<div><@imageLink image "large" "Large thumbnail"/></div>
+				<div><@imageLink image "full" "Full JPEG"/></div>
+				<div><@imageLink image "original" "Original image"/></div>
 			</div>
 
 		</div>
@@ -54,5 +54,16 @@
 			<button id="deleteButton" class="ui-state-error"><span class="ui-icon ui-icon-trash"></span> ${text.admin_delete_image}</button>
 			<div class="info">${text.admin_delete_image_note}</div>
 		</div>
-		
+
+<#macro imageLink image type label>
+	<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${label}</a></label> 
+	<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">
+		<#if type == "full" || type == "original">
+            <img src="${image.urls['large']?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+        <#else>
+            <img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+        </#if>
+	</a>
+</#macro>
+
 <#include "footer.ftl">
