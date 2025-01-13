@@ -61,13 +61,6 @@ nav.main-nav ul li a {
     transition: color 0.3s, background-color 0.3s, transform 0.3s;
 }
 
-/*
-nav.main-nav ul li a:hover {
-    color: #00bcd4;
-    background-color: rgba(0, 188, 212, 0.1);
-}
-*/
-
 nav ul li a:focus, nav ul li a:active {
     outline: none;
 }
@@ -346,14 +339,23 @@ li {
 .admin-image-all div {
 	border: 1px solid #ddd;
 	padding: 5px;
-	
 }
+
 .admin-image-all img {
 	width: 100%;
 }
 
+.admin-image-all div:hover {
+	transform: scale(1.05); /* Scale up slightly on hover */
+	transition: transform 0.2s;
+}
+
 .admin-image-all label {
 	display: block;
+	font-size: 80%;
+}
+.admin-image-all a {
+	color: #444;
 }
 
 #saveButton {
