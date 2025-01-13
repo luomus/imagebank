@@ -17,7 +17,7 @@
 		
 		<h2>${text.admin_main}</h2>
 		
-		<h3>${text.edit_image} ${image.id} <#if taxon??> | <@printScientificName taxon/><#elseif image.meta.documentIds?has_content> | <@list image.meta.documentIds/></#if></h3>
+		<h3>${text.admin_edit_image} ${image.id} <#if taxon??> | <@printScientificName taxon/><#elseif image.meta.documentIds?has_content> | <@list image.meta.documentIds/></#if></h3>
 		
 		<h4><a href="${image.urls.original?html}" target="_blank">${image.urls.original?html}</a></h4>
 
@@ -33,7 +33,7 @@
 					Meta here</br>
 					
 					<input type="submit" class="button" id="saveButton" value="${text.save}" />
-					<button id="cancelButton" onclick="confirm('${text.cancel_confirm}');"><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
+					<button id="cancelButton""><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
 				</form>
 			</div>
 			
@@ -51,8 +51,8 @@
 
 		<div class="danger-zone">
 			<h4>Danger Zone</h4>
-			<button class="ui-state-error"><span class="ui-icon ui-icon-trash"></span> ${text.delete_image}</button>
-			<div class="info">${text.delete_image_note}</div>
+			<button id="deleteButton" class="ui-state-error"><span class="ui-icon ui-icon-trash"></span> ${text.admin_delete_image}</button>
+			<div class="info">${text.admin_delete_image_note}</div>
 		</div>
 		
 <#include "footer.ftl">

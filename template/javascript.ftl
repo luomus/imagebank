@@ -71,7 +71,19 @@ $(document).ready(function() {
         );
 	});
     
-    $("#cancelButton").click(function() { window.location.reload(); return false; });
+    $("#cancelButton").click(function() {
+    	if (confirm('${text.cancel_confirm}')) {
+    		window.location.reload(); 
+    		return false;
+    	}
+    	return false; 
+    });
+    
+    $("#deleteButton").click(function() {
+    	if (confirm('${text.admin_delete_confirm}')) {
+    		alert('would delete');
+    	}
+    });
 });
 
 function changeLocale() {

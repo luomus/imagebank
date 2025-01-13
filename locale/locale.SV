@@ -26,6 +26,10 @@ admin_taxon_title = Redigera taxonbilder
 admin_taxon_body = Ange taxonens identifierare (t.ex. MX.123) eller dess vetenskapliga eller svenska namn
 admin_select_image = Välj en bild att redigera
 admin_info = <p>Admin-sektionen är ett underhållsverktyg och är inte avsett för vanlig artbildskuratering.</p><p>Här kan du redigera alla bilder, inklusive provbilder som lagts till i Kotka och observationsbilder som lagts till via Vihko.</p><p>Du kan redigera alla bildinformationer som inte kan ändras i artbildssektionen, t.ex. licens, fotografens namn och nyckelord.</p><p>Du kan även helt ta bort bilder.</p><p>I fall av avsiktlig missbruk eller skadegörelse, är det bättre att annotera observationen med en Spam-tag.</p>
+admin_edit_image = Redigera bild
+admin_delete_image = Ta bort bild
+admin_delete_image_note = <p>Observera att om du tar bort en bild från ett prov/exemplar (Kotka, Vihko, Löydös), kommer observationen att behålla en "trasig bild".</p><p>För Kotka provbilder kommer borttagningen av bilden att fördröjas i sökresultaten tills proverna omindexeras.</p><p>Bildborttagning skickas inte till Laji.fi datalagret, så där kommer den trasiga bilden att finnas kvar tills observationen redigeras.</p><p>För artbilder kan bilden ha valts för Pinkka, och där visas den trasiga bilden.</p><p>Det säkraste sättet att ta bort en artbild är att lämna bilden intakt och ta bort taksonidentifieraren/identifierarna från den.</p>
+admin_delete_confirm = Är du säker på att du vill ta bort denna bild?
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, knölsvan, MX.123
 select_taxon = Välj taxon
@@ -34,14 +38,13 @@ partial_matches = Partiella träffar
 likely_matches = Troliga träffar
 no_taxon_matches = Inga träffar för sökordet
 taxon_search_term = Matchar med sökterm
+
 no_images = Inga bilder
-edit_image = Redigera bild
-delete_image = Ta bort bild
-delete_image_note = <p>Observera att om du tar bort en bild från ett prov/exemplar (Kotka, Vihko, Löydös), kommer observationen att behålla en "trasig bild".</p><p>För Kotka provbilder kommer borttagningen av bilden att fördröjas i sökresultaten tills proverna omindexeras.</p><p>Bildborttagning skickas inte till Laji.fi datalagret, så där kommer den trasiga bilden att finnas kvar tills observationen redigeras.</p><p>För artbilder kan bilden ha valts för Pinkka, och där visas den trasiga bilden.</p><p>Det säkraste sättet att ta bort en artbild är att lämna bilden intakt och ta bort taksonidentifieraren/identifierarna från den.</p>
-cancel_confirm = Ångra alla ändringar?
+
 save = Spara
-cancel = Avbryt
 save_success = Sparat!
+cancel = Ångra
+cancel_confirm = Är du säker på att du vill ångra alla ändringar?
 
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!
