@@ -46,6 +46,47 @@ save_success = Saved!
 cancel = Cancel
 cancel_confirm = Discard all changes?
 
+yes = Yes
+no = No
+
 must_be_admin = You are not logged in or lack permissions for this section!
 unknown_taxon = Unknown taxon ID provided!
 unknown_image = Unknown image ID provided!
+
+group_authors = Authors
+label_capturers = Capturers 
+label_rightsOwner = License Owner
+label_license = License
+
+group_dates = Dates 
+label_captureDateTime = Capture Date Time
+label_uploadDateTime = Upload Date Time
+
+group_taxon_images = For Taxon images
+label_taxonIds = Taxon IDs
+label_verbatim = Verbatim
+label_primaryForTaxon = Primary For Taxon
+label_type = Type
+label_sex = Sex
+label_lifeStage = Life Stage
+label_plantLifeStage = Plant Life Stage
+label_side = Side
+
+group_captions = Captions
+label_caption = Caption
+label_taxonDescriptionCaptionFI = Taxon Description Caption - FI
+label_taxonDescriptionCaptionSV = Taxon Description Caption - SV
+label_taxonDescriptionCaptionEN = Taxon Description Caption - EN
+
+group_misc = Misc
+label_documentIds = Document IDs
+label_tags = Keywords
+label_sortOrder = Sort Order
+
+group_unmodifiable = Unmodifiable fields
+label_sourceSystem = Source system
+label_uploadedBy = Uploaded By
+label_secret = Secret
+label_originalFilename = Original Filename
+label_fullResolutionMediaAvailable = Full Resolution Media Available (via data request)
+

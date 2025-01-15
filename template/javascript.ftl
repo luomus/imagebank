@@ -84,6 +84,21 @@ $(document).ready(function() {
     		alert('would delete');
     	}
     });
+    
+    $(".multi-input-add-item").click(function() {
+    	const parent = $(this).parent(".multi-input");
+    	const firstChild = parent.children().first();
+    	let clonedChild = firstChild.clone();
+    	clonedChild.find('input').val('');
+    	parent.append(clonedChild);
+    });
+    
+    $('.admin-image-edit input[name="captureDateTime"], .admin-image-edit input[name="uploadDateTime"]')
+    .filter(function() {return $(this).val() === "";})
+    .after($("<span class='time-format-help'> YYYY-MM-DDThh:mm:ss.000+0Z:00</span>"))
+    .attr('placeholder', 'YYYY-MM-DDThh:mm:ss.000+0Z:00');
+    
+     $(".admin-image-edit select").chosen({width: "30em"}); 
 });
 
 function changeLocale() {

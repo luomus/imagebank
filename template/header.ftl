@@ -19,6 +19,9 @@
 			  integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM="
 			  crossorigin="anonymous"></script>
 
+    <script src="${staticURL}/chosen/chosen.jquery.min.js?${staticContentTimestamp}"></script>
+	<link href="${staticURL}/chosen/chosen.min.css?${staticContentTimestamp}" rel="stylesheet" />
+
     <script>
     	<#include "javascript.ftl">
     </script>

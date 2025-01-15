@@ -1,5 +1,7 @@
 package fi.laji.imagebank.endpoints;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,7 @@ import fi.laji.imagebank.dao.TaxonImageDAOImple;
 import fi.laji.imagebank.dao.TaxonomyDAOImple;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
+import fi.luomus.commons.containers.KeyValuePair;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.db.connectivity.ConnectionDescription;
 import fi.luomus.commons.services.BaseServlet;
@@ -18,6 +21,7 @@ import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
 import fi.luomus.commons.taxonomy.TaxonSearchDataSourceDefinition;
 import fi.luomus.commons.taxonomy.TaxonomyDAO;
+import fi.luomus.commons.utils.Utils;
 import fi.luomus.kuvapalvelu.client.MediaApiClient;
 import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
 
@@ -153,8 +157,17 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		responseData.setData("sexes", dao.getAlt(MY_SEXES));
 		responseData.setData("sides", dao.getAlt(MM_SIDE_ENUM));
 		responseData.setData("types", dao.getAlt(MM_TYPE_ENUM));
+		responseData.setData("sourceSystems", SOURCE_SYSTEMS);
 		return responseData;
 	}
+
+	private static final Map<String, String> SOURCE_SYSTEMS = Utils.map(
+			new KeyValuePair("KE.1181", "Kerttu"),
+			new KeyValuePair("KE.176", "Löydös"),
+			new KeyValuePair("KE.3", "Kotka"),
+			new KeyValuePair("KE.321", "Pinkka"),
+			new KeyValuePair("KE.441", "Laji.fi / Vihko"),
+			new KeyValuePair("KE.341", "Satellite Data"));
 
 	protected User getUser(HttpServletRequest req) {
 		SessionHandler session = getSession(req, false);

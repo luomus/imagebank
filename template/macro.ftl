@@ -38,13 +38,61 @@
 	data-capturedatetime="${(image.captureDateTime!"")?html}"
 </#macro>
 
-<#macro list seq><#list seq as s>${s}<#if s_has_next>, </#if></#list></#macro>
+<#macro list seq><#list seq as s>${s?html}<#if s_has_next>, </#if></#list></#macro>
 <#macro listEnum seq enum><#list seq as s>${enum[s].forLocale(locale)}<#if s_has_next>, </#if></#list></#macro>
 <#macro enumV val enum><#if val?has_content>${enum[val].forLocale(locale)}</#if></#macro>
+<#macro mapV val map><#if val?has_content>${map[val]}</#if></#macro>
+
+<#macro label name>
+	<label for="${name}">${text["label_"+name]!name}:</label>
+</#macro>
 		
-		
-		
-		
-		
-		
-		
+<#macro select name enum value="">
+	<div>
+		<@label name />	
+		<select id="${name}" name="${name}">
+        	<option value="">&nbsp;</option>
+        	<#list enum?keys as key>
+        		<option value="${key}" <#if value==key>selected="selected"</#if>>${enum[key].forLocale(locale)}</option>
+        	</#list>
+    	</select>
+    </div>
+</#macro>
+
+<#macro selectMulti name enum values>
+	<div>
+		<@label name />	
+		<select id="${name}" name="${name}" class="multi-select" multiple="multiple" data-placeholder=" ">
+        	<#list enum?keys as key>
+        		<option value="${key}" <#if values?seq_contains(key)>selected="selected"</#if>>${enum[key].forLocale(locale)}</option>
+        	</#list>
+    	</select>
+    </div>
+</#macro>
+
+<#macro input name size value="">
+	<div>
+		<@label name />
+		<input type="text" name="${name}" size="${size}" value="${value?html}" />
+	</div>
+</#macro>
+
+<#macro inputMulti name size values>
+	<div class="multi-input">
+		<#if values?has_content>
+			<#list values as v>
+				<@input name size v/>
+			</#list>
+		<#else>
+			<@input name size />
+		</#if>
+		<span class="multi-input-add-item">+</span>
+	</div><br />
+</#macro>
+
+<#macro inputNumber name value="">
+	<div>
+		<@label name />
+		<input type="number" name="${name}" size="${size}" value="${value?html}" min="0" />
+	</div>
+</#macro>

@@ -46,6 +46,46 @@ save_success = Sparat!
 cancel = Ångra
 cancel_confirm = Är du säker på att du vill ångra alla ändringar?
 
+yes = Ja
+no = Nej
+
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!
 unknown_image = Okänd media-ID!
+
+group_authors = Författare
+label_capturers = Fotograf
+label_rightsOwner = Licensägare
+label_license = Licens
+
+group_dates = Datum
+label_captureDateTime = Registreringstidpunkt
+label_uploadDateTime = Uppladdningstidpunkt
+
+group_taxon_images = Taxonbilder
+label_taxonIds = Taxon-ID
+label_verbatim = Verbatim
+label_primaryForTaxon = Primär för taxon
+label_type = Typ
+label_sex = Kön
+label_lifeStage = Livsfas
+label_plantLifeStage = Växtens livsfas
+label_side = Sida
+
+group_captions = Bildtexter
+label_caption = Bildtext
+label_taxonDescriptionCaptionFI = Taxonbeskrivningstext - FI
+label_taxonDescriptionCaptionSV = Taxonbeskrivningstext - SV
+label_taxonDescriptionCaptionEN = Taxonbeskrivningstext - EN
+
+group_misc = Övrigt
+label_documentIds = Dokument-ID
+label_tags = Nyckelord
+label_sortOrder = Sorteringsordning
+
+group_unmodifiable = Oföränderliga fält
+label_sourceSystem = Källsystem
+label_uploadedBy = Uppladdad av
+label_secret = Hemlig
+label_originalFilename = Ursprungligt filnamn
+label_fullResolutionMediaAvailable = Fullupplöst media tillgänglig (via dataförfrågan)
