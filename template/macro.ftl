@@ -93,6 +93,6 @@
 <#macro inputNumber name value="">
 	<div>
 		<@label name />
-		<input type="number" name="${name}" size="${size}" value="${value?html}" min="0" />
+		<input type="number" name="${name}" size="8" value="${value?html}" min="0" />
 	</div>
 </#macro>
