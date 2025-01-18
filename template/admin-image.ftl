@@ -5,8 +5,11 @@
 		    <ol>
 		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
         		<li><a href="${baseURL}/admin">${text.menu_admin}</a></li>
+        		<#if imageSearch??>
+        			<li><a href="${baseURL}/admin?imageSearch=${imageSearch?html}">${text.menu_image_select}: ${imageSearch?html}</a></li>
+        		</#if>
         		<#if taxonSearch??>
-        			<li><a href="${baseURL}/admin?taxonSearch=${taxonSearch?html}">${text.select_taxon}: ${taxonSearch?html}</a></li>
+        			<li><a href="${baseURL}/admin?taxonSearch=${taxonSearch?html}">${text.menu_taxon_select}: ${taxonSearch?html}</a></li>
         		</#if>
         		<#if taxon??>
         			<li><a href="${baseURL}/admin/${taxon.id?html}?<#if taxonSearch??>taxonSearch=${taxonSearch?html}"</#if>><@printScientificName taxon/></a></li>
@@ -117,8 +120,8 @@
 <#macro imageLink image type label>
 	<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${label}</a></label> 
 	<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">
-		<#if type == "full" || type == "original">
-            <img src="${image.urls['large']?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+		<#if type == "original">
+            <img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
         <#else>
             <img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
         </#if>

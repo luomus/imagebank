@@ -16,6 +16,7 @@ menu_browse = Browse
 menu_curate = Curate
 menu_admin = Admin
 menu_taxon_select = Taxon select
+menu_image_select = Image select
 
 error_header = Sorry! Something went wrong...
 

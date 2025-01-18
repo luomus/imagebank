@@ -37,6 +37,61 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 		// TODO nothing for now...  remove if not needed at all
 	}
 
+	private static final String IMAGE_SEARCH_SQL = "" +
+			" SELECT   subjectname, predicatename, objectname, resourceliteral, langcodefk " +
+			" FROM s " +
+			" WHERE subjectid IN ( " +
+			"    SELECT subjectfk " +
+			"    FROM rdf_statement " +
+			"    WHERE subjectfk in ( " +
+			"        SELECT distinct subjectid  FROM rdf_statementview WHERE resourceliteral = ? " +
+			"    )  " +
+			"    AND predicatefk = 1 " + // rdf:type
+			"    AND objectfk = 3088983 " + // MM.image
+			"    FETCH FIRST 20 ROWS ONLY " +
+			" ) " +
+			" ORDER BY subjectname, predicatename   ";
+
+	@Override
+	public List<Image> search(String searchTerm) {
+		List<Image> images = new ArrayList<>();
+		TransactionConnection con = null;
+		PreparedStatement p = null;
+		ResultSet rs = null;
+		try {
+			con = new SimpleTransactionConnection(dataSource.getConnection());
+			p = con.prepareStatement(IMAGE_SEARCH_SQL);
+			p.setString(1, searchTerm);
+			rs = p.executeQuery();
+			Qname prevImageId = new Qname("");
+			Image image = null;
+			Boolean isSecret = null;
+			while (rs.next()) {
+				Qname imageId = new Qname(rs.getString(1));
+				Qname predicate = new Qname(rs.getString(2));
+				Qname objectname = new Qname(rs.getString(3));
+				String resourceliteral = rs.getString(4);
+				String locale = rs.getString(5);
+				if (secretImage(predicate, objectname)) {
+					isSecret = true;
+				}
+				if (imageChanges(prevImageId, imageId)) {
+					add(image, images, null, isSecret);
+					prevImageId = imageId;
+					image = new Image(imageId, Content.DEFAULT_DESCRIPTION_CONTEXT);
+					isSecret = null;
+				}
+				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
+			}
+			add(image, images, null, isSecret);
+		} catch (SQLException e) {
+			throw new RuntimeException("Image search " + searchTerm, e);
+		} finally {
+			Utils.close(p, rs, con);
+		}
+		return images;
+	}
+
 	@Override
 	public Taxon reloadImages(Taxon t) {
 		try {
@@ -53,9 +108,9 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 
 	private static final String SINGLE_TAXON_SQL = "" +
 			" SELECT   subjectname, predicatename, objectname, resourceliteral, langcodefk " +
-			" FROM     rdf_statementview " +
-			" WHERE    subjectname IN ( SELECT subjectname FROM rdf_statementview WHERE predicatename = 'MM.taxonURI' AND objectname = ?) " +
-			" AND      subjectname IN ( SELECT subjectname FROM rdf_statementview WHERE predicatename = 'rdf:type'    AND objectname = 'MM.image') " +
+			" FROM     s " +
+			" WHERE    subjectname IN ( SELECT subjectname FROM s WHERE predicatename = 'MM.taxonURI' AND objectname = ?) " +
+			" AND      subjectname IN ( SELECT subjectname FROM s WHERE predicatename = 'rdf:type'    AND objectname = 'MM.image') " +
 			" ORDER BY subjectname, predicatename ";
 
 	private List<Image> images(Qname taxonId) throws SQLException {
@@ -68,27 +123,35 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 			p = con.prepareStatement(SINGLE_TAXON_SQL);
 			p.setString(1, taxonId.toString());
 			rs = p.executeQuery();
-			rs.setFetchSize(4001);
 			Qname prevImageId = new Qname("");
 			Image image = null;
+			Boolean isSecret = null;
 			while (rs.next()) {
 				Qname imageId = new Qname(rs.getString(1));
 				Qname predicate = new Qname(rs.getString(2));
 				Qname objectname = new Qname(rs.getString(3));
 				String resourceliteral = rs.getString(4);
 				String locale = rs.getString(5);
+				if (secretImage(predicate, objectname)) {
+					isSecret = true;
+				}
 				if (imageChanges(prevImageId, imageId)) {
-					add(image, images, taxonId);
+					add(image, images, taxonId, isSecret);
 					prevImageId = imageId;
 					image = new Image(imageId, Content.DEFAULT_DESCRIPTION_CONTEXT);
+					isSecret = null;
 				}
 				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
 			}
-			add(image, images, taxonId);
+			add(image, images, taxonId, isSecret);
 		} finally {
 			Utils.close(p, rs, con);
 		}
 		return images;
+	}
+
+	private boolean secretImage(Qname predicate, Qname objectname) {
+		return new Qname("MZ.publicityRestrictions").equals(predicate) && !new Qname("MZ.publicityRestrictionsPublic").equals(objectname);
 	}
 
 	private static final TripletToImageHandlers TRIPLET_TO_IMAGE_HANDLERS = new TripletToImageHandlers();
@@ -99,8 +162,9 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 		.setToImage(objectname, resourceliteral, locale, image, null);
 	}
 
-	private void add(Image image, List<Image> images, Qname taxonId) {
+	private void add(Image image, List<Image> images, Qname taxonId, Boolean isSecret) {
 		if (image == null) return;
+		if (Boolean.TRUE.equals(isSecret)) return;
 		finalize(image, taxonId);
 		images.add(image);
 	}

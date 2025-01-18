@@ -16,6 +16,7 @@ menu_browse = Bläddra
 menu_curate = Kvalitetskontroll
 menu_admin = Admin
 menu_taxon_select = Taxonval
+menu_image_select = Bildval
 
 error_header = Tyvärr! Något gick fel...
 

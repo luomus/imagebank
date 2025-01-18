@@ -5,7 +5,7 @@
 		    <ol>
 		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
         		<li><a href="${baseURL}/admin">${text.menu_admin}</a></li>
-        		<li>${text.menu_taxon_select}</li>
+        		<li>${text.menu_taxon_select}: ${taxonSearch?html}</li>
     		</ol>
 		</nav>
 
@@ -45,5 +45,10 @@
 			</#list>
 			</ul>
 		</#if>
-				
+		
+		<br />
+		<form action="${baseURL}/admin">
+			<input name="taxonSearch" type="text" size="50" id="taxon-autocomplete" placeholder="${text.taxon_autocomplete_placeholder}" /> <button>Valitse</button>
+		</form>
+			
 <#include "footer.ftl">

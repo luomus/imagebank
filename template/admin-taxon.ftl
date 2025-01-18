@@ -6,7 +6,7 @@
 		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
         		<li><a href="${baseURL}/admin">${text.menu_admin}</a></li>
         		<#if taxonSearch??>
-        			<li><a href="${baseURL}/admin?taxonSearch=${taxonSearch?html}">${text.select_taxon}: ${taxonSearch?html}</a></li>
+        			<li><a href="${baseURL}/admin?taxonSearch=${taxonSearch?html}">${text.menu_taxon_select}: ${taxonSearch?html}</a></li>
         		</#if>
         		<li><@printScientificName taxon/></li>
     		</ol>
