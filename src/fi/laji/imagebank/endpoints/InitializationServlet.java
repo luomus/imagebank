@@ -4,7 +4,7 @@ import javax.servlet.annotation.WebServlet;
 
 import fi.luomus.commons.containers.rdf.Qname;
 
-@WebServlet(name="ThreadStarterServlet", loadOnStartup=1, urlPatterns={""})
+@WebServlet(name="ThreadStarterServlet", loadOnStartup=1, urlPatterns={"/init"})
 public class InitializationServlet extends ImageBankBaseServlet {
 
 	private static final long serialVersionUID = -7554833707007928043L;
