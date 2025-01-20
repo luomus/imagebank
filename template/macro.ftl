@@ -62,10 +62,21 @@
 <#macro selectMulti name enum values>
 	<div>
 		<@label name />	
-		<select id="${name}" name="${name}" class="multi-select" multiple="multiple" data-placeholder=" ">
+		<select id="${name}" name="${name}" multiple="multiple" data-placeholder=" ">
         	<#list enum?keys as key>
         		<option value="${key}" <#if values?seq_contains(key)>selected="selected"</#if>>${enum[key].forLocale(locale)}</option>
         	</#list>
+    	</select>
+    </div>
+</#macro>
+
+<#macro selectBool name value>
+	<div>
+		<@label name />	
+		<select id="${name}" name="${name}" class="bool-select">
+        	<option value="">&nbsp;</option>
+        	<option value="true" <#if value>selected="selected"</#if>>${text.yes}</option>
+        	<option value="false" <#if !value>selected="selected"</#if>>${text.no}</option>
     	</select>
     </div>
 </#macro>

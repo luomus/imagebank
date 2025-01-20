@@ -95,10 +95,11 @@ $(document).ready(function() {
     
     $('.admin-image-edit input[name="captureDateTime"], .admin-image-edit input[name="uploadDateTime"]')
     .filter(function() {return $(this).val() === "";})
-    .after($("<span class='time-format-help'> YYYY-MM-DDThh:mm:ss.000+0Z:00</span>"))
+    .after($("<div class='time-format-help'><span class='date-part'>YYYY-MM-DD</span><b>T</b><span class='time-part'>hh:mm:ss</span>.000+0Z:00</div>"))
     .attr('placeholder', 'YYYY-MM-DDThh:mm:ss.000+0Z:00');
     
-     $(".admin-image-edit select").chosen({width: "30em"}); 
+     $(".admin-image-edit select").not(".bool-select").chosen({width: "30em"}); 
+     $(".admin-image-edit select.bool-select").chosen({width: "10em"});
 });
 
 function changeLocale() {

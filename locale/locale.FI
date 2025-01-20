@@ -53,19 +53,19 @@ no = Ei
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
 unknown_taxon = Tuntematon taksonin tunniste!
 unknown_image = Tuntematon kuvan tunniste!
+invalid_integer = Epäkelpo kokonaisluku
+invalid_datetime = Tuntematon päivämäärä/aikaformaatti
+invalid_boolean = Tuntematon arvo, pitäisi olla true/false
 
 group_authors = Tekijät
 label_capturers = Kuvaajat
 label_rightsOwner = Lisenssin omistaja
 label_license = Lisenssi
-
-group_dates = Ajankohdat
 label_captureDateTime = Kuvaushetki
-label_uploadDateTime = Latausajankohta
 
 group_taxon_images = Lajikuville
-label_taxonIds = Taksonin tunnisteet
-label_verbatim = Lajinimet
+label_taxonIds = Taksonin tunniste
+label_verbatim = Verbatim nimi
 label_primaryForTaxon = Ensisijainen kuva taksoneille
 label_type = Tyyppi
 label_sex = Sukupuoli
@@ -80,13 +80,14 @@ label_taxonDescriptionCaptionSV = Lajikuvaus - SV
 label_taxonDescriptionCaptionEN = Lajikuvaus - EN
 
 group_misc = Muut
+label_sortOrder = Järjestys
 label_documentIds = Dokumenttitunnisteet
 label_tags = Avainsanat
-label_sortOrder = Järjestys
+label_fullResolutionMediaAvailable = Täysversion pyyntölomake
 
 group_unmodifiable = Ei-muokattavat kentät
 label_sourceSystem = Lähdejärjestelmä
 label_uploadedBy = Lataaja
+label_uploadDateTime = Latausajankohta
 label_secret = Salainen
 label_originalFilename = Alkuperäinen tiedostonimi
-label_fullResolutionMediaAvailable = Täysresoluutiomedia saatavilla (pyynnöstä)

@@ -36,12 +36,7 @@
 		<@inputMulti "capturers" 80 meta.capturers />
 		<@input "rightsOwner" 80 meta.rightsOwner />
         <@select "license" licenses meta.license/>
-    </fieldset>
-
-    <fieldset>
-        <legend>${text.group_dates}</legend>
 		<@input "captureDateTime" 30 meta.captureDateTime />
-		<@input "uploadDateTime" 30 meta.uploadDateTime />
     </fieldset>
 
     <fieldset>
@@ -60,15 +55,16 @@
         <legend>${text.group_captions}</legend>
 		<@input "caption" 60 meta.caption />
 		<@input "taxonDescriptionCaptionFI" 80 meta.taxonDescriptionCaption["fi"] />
-		<@input "taxonDescriptionCaptionSV" 80 meta.taxonDescriptionCaption["SV"] />
-		<@input "taxonDescriptionCaptionEN" 80 meta.taxonDescriptionCaption["EN"] />
+		<@input "taxonDescriptionCaptionSV" 80 meta.taxonDescriptionCaption["sv"] />
+		<@input "taxonDescriptionCaptionEN" 80 meta.taxonDescriptionCaption["en"] />
 	</fieldset>
 
     <fieldset>
         <legend>${text.group_misc}</legend>
+		<@inputNumber "sortOrder" meta.sortOrder />
 		<@inputMulti "documentIds" 40 meta.documentIds />
 		<@inputMulti "tags" 40 meta.tags />
-		<@inputNumber "sortOrder" meta.sortOrder />
+		<@selectBool "fullResolutionMediaAvailable" meta.fullResolutionMediaAvailable!false />
     </fieldset>
 					
 					<input type="submit" class="button" id="saveButton" value="${text.save}" />
@@ -83,14 +79,14 @@
         <label for="uploadedBy">${text.label_uploadedBy}:</label>
         <span>${(meta.uploadedBy!"")?html}</span><br>
         
+        <label for="uploadDateTime">${text.label_uploadDateTime}:</label>
+        <span>${(meta.uploadDateTime!"")?html}</span><br>
+
         <label for="secret">${text.label_secret}:</label>
         <span>${meta.secret?string(text.yes, text.no)}</span><br>
 
         <label for="originalFilename">${text.label_originalFilename}:</label>
         <span>${meta.originalFilename?html}</span><br>
-
-        <label for="fullResolutionMediaAvailable">${text.label_fullResolutionMediaAvailable}:</label>
-        <span><#if meta.fullResolutionMediaAvailable??>${meta.fullResolutionMediaAvailable?string(text.yes, text.no)}<#else>${text.no}</#if></span><br>
     </fieldset>
 
 				</form>

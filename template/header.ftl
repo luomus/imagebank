@@ -71,3 +71,10 @@
     			<p>${successMessage?html}</p>
     		</div>
     	</#if>
+    	
+    	<#if message??>
+    		<div class="warning">
+    			<p>${message?html}</p>
+    		</div>
+    	</#if>
+    	

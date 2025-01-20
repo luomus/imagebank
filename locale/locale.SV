@@ -53,15 +53,15 @@ no = Nej
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!
 unknown_image = Okänd media-ID!
+invalid_integer = Ogiltigt heltal
+invalid_datetime = Ogiltigt datum/tidsformat
+invalid_boolean = Ogiltigt värde, ska vara true/false
 
 group_authors = Författare
 label_capturers = Fotograf
 label_rightsOwner = Licensägare
 label_license = Licens
-
-group_dates = Datum
 label_captureDateTime = Registreringstidpunkt
-label_uploadDateTime = Uppladdningstidpunkt
 
 group_taxon_images = Taxonbilder
 label_taxonIds = Taxon-ID
@@ -80,13 +80,14 @@ label_taxonDescriptionCaptionSV = Taxonbeskrivningstext - SV
 label_taxonDescriptionCaptionEN = Taxonbeskrivningstext - EN
 
 group_misc = Övrigt
+label_sortOrder = Sorteringsordning
 label_documentIds = Dokument-ID
 label_tags = Nyckelord
-label_sortOrder = Sorteringsordning
+label_fullResolutionMediaAvailable = Formulär för begäran om fullversion
 
 group_unmodifiable = Oföränderliga fält
 label_sourceSystem = Källsystem
 label_uploadedBy = Uppladdad av
+label_uploadDateTime = Uppladdningstidpunkt
 label_secret = Hemlig
 label_originalFilename = Ursprungligt filnamn
-label_fullResolutionMediaAvailable = Fullupplöst media tillgänglig (via dataförfrågan)

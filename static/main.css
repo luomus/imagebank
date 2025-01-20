@@ -467,6 +467,7 @@ fieldset#unmodifieable-meta-fields {
 	bottom: 3px;
 }
 
-.time-format-help { color: grey; }
-
+.time-format-help { color: #777; display: inline-block; margin-left: 1em; }
+.time-format-help .date-part { color: rgb(100,100,255); }
+.time-format-help .time-part { color: rgb(200,100,100); }
 

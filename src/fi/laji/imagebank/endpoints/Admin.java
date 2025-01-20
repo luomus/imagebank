@@ -1,6 +1,7 @@
 package fi.laji.imagebank.endpoints;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -10,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.joda.time.DateTime;
 
 import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.Image;
@@ -23,6 +26,8 @@ import fi.luomus.commons.utils.URIBuilder;
 import fi.luomus.kuvapalvelu.model.Media;
 import fi.luomus.kuvapalvelu.model.MediaClass;
 import fi.luomus.kuvapalvelu.model.Meta;
+import fi.luomus.utils.exceptions.ApiException;
+import fi.luomus.utils.exceptions.NotFoundException;
 
 @WebServlet(urlPatterns = {"/admin/*"})
 public class Admin extends ImageBankBaseServlet {
@@ -134,36 +139,6 @@ public class Admin extends ImageBankBaseServlet {
 				data.setData("taxon", taxon);
 			}
 		}
-		Meta meta = image.get().getMeta();
-
-		meta.getSourceSystem();
-		meta.getSecret();
-		meta.getOriginalFilename();
-		meta.getFullResolutionMediaAvailable();
-
-		meta.getCapturers();
-		meta.getRightsOwner();
-		meta.getLicense();
-
-		meta.getCaptureDateTime();
-		meta.getUploadedBy();
-		meta.getUploadDateTime();
-
-		meta.getIdentifications().getTaxonIds();
-		meta.getIdentifications().getVerbatim();
-		meta.getPrimaryForTaxon();
-		meta.getType();
-		meta.getSex();
-		meta.getLifeStage();
-		meta.getPlantLifeStage();
-		meta.getSide();
-
-		meta.getCaption();
-		meta.getTaxonDescriptionCaption();
-
-		meta.getDocumentIds();
-		meta.getTags();
-		meta.getSortOrder();
 
 		data.setViewName("admin-image")
 		.setData("image", image.get())
@@ -204,12 +179,142 @@ public class Admin extends ImageBankBaseServlet {
 		String taxonSearch = req.getParameter(TAXON_SEARCH);
 		String taxonId = req.getParameter(TAXON_ID);
 		String id = getId(req);
+
+		if (!given(id)) {
+			getSession(req).setFlashError(getText("unknown_image", req));
+			return redirectTo(getConfig().baseURL()+"/admin");
+		}
+
+		Meta meta = null;
+		try {
+			meta = parseMeta(req);
+			validate(id, meta, req);
+		} catch (IllegalArgumentException e) {
+			getSession(req).setFlash(e.getMessage());
+			return redirectTo(getConfig().baseURL()+"/admin/"+id);
+		} catch (NotFoundException e) {
+			getSession(req).setFlashError(getText("unknown_image", req));
+			return redirectTo(getConfig().baseURL()+"/admin");
+		}
+
+		saveMeta(id, meta);
+
 		getSession(req).setFlashSuccess(getText("save_success", req));
 		URIBuilder redirectURI = new URIBuilder(getConfig().baseURL()+"/admin/"+id);
 		if (given(taxonSearch)) redirectURI.addParameter(TAXON_SEARCH, taxonSearch);
 		if (given(taxonId)) redirectURI.addParameter(TAXON_ID, taxonId);
 		if (given(imageSearch)) redirectURI.addParameter(IMAGE_SEARCH, imageSearch);
 		return new ResponseData().setRedirectLocation(redirectURI.toString());
+	}
+
+	private void validate(String id, Meta meta, HttpServletRequest req) throws ApiException, NotFoundException, Exception {
+		Optional<Media> existing = getMediaApiClient().get(MediaClass.IMAGE, id);
+		if (!existing.isPresent()) throw new NotFoundException();
+		Meta existingMeta = existing.get().getMeta();
+
+		if (existingMeta.isSecret()) {
+			if (!meta.getIdentifications().getTaxonIds().isEmpty()) throw validationFailure("taxonIds", "Secret media must not be made a taxon image", req);
+		}
+		for (String taxonId : meta.getIdentifications().getTaxonIds()) {
+			if (!getTaxonomyDAO().getTaxonContainer().hasTaxon(new Qname(taxonId))) throw validationFailure("taxonIds", "unknown_taxon", req);
+		}
+		for (String primaryFoTaxon : meta.getPrimaryForTaxon()) {
+			if (!meta.getIdentifications().getTaxonIds().contains(primaryFoTaxon)) throw validationFailure("primaryForTaxon", "Primary taxon id not found in taxon ids", req);
+		}
+	}
+
+	private void saveMeta(String id, Meta meta) throws ApiException, NotFoundException {
+		getMediaApiClient().update(MediaClass.IMAGE, id, meta);
+	}
+
+	private Meta parseMeta(HttpServletRequest req) {
+		Meta meta = new Meta();
+		meta.getCapturers().addAll(params(req, "capturers"));
+		meta.setRightsOwner(param(req, "rightsOwner"));
+		meta.setLicense(param(req, "license"));
+		meta.setCaptureDateTime(date(req, "captureDateTime"));
+		meta.setUploadedBy(param(req, "uploadedBy"));
+		meta.setUploadDateTime(date(req, "uploadDateTime"));
+		params(req, "taxonIds").forEach(meta.getIdentifications()::addTaxonId);
+		params(req, "verbatim").forEach(meta.getIdentifications()::addVerbatim);
+		params(req, "primaryForTaxon").forEach(meta::addPrimaryForTaxon);
+		meta.setType(param(req, "type"));
+		params(req, "sex").forEach(meta::addSex);
+		params(req, "lifeStage").forEach(meta::addLifeStage);
+		params(req, "plantLifeStage").forEach(meta::addPlantLifeStage);
+		meta.setSide(param(req, "side"));
+		meta.setCaption(param(req, "caption"));
+		params(req, "documentIds").forEach(meta::addDocumentId);
+		params(req, "tags").forEach(meta::addTag);
+		meta.setSortOrder(intV(req, "sortOrder"));
+		meta.setFullResolutionMediaAvailable(boolV(req, "fullResolutionMediaAvailable"));
+
+		String fi = param(req, "taxonDescriptionCaptionFI");
+		String sv = param(req, "taxonDescriptionCaptionSV");
+		String en = param(req, "taxonDescriptionCaptionEN");
+		if (given(fi)) meta.getTaxonDescriptionCaption().put("fi", fi);
+		if (given(sv)) meta.getTaxonDescriptionCaption().put("sv", sv);
+		if (given(en)) meta.getTaxonDescriptionCaption().put("en", en);
+		return meta;
+	}
+
+	private Boolean boolV(HttpServletRequest req, String param) {
+		String s = param(req, param);
+		if (!given(s)) return null;
+		try {
+			return Boolean.valueOf(s);
+		} catch (Exception e) {
+			throw validationFailure(param, "invalid_boolean", req);
+		}
+	}
+
+	private Integer intV(HttpServletRequest req, String param) {
+		String s = param(req, param);
+		if (!given(s)) return null;
+		try {
+			Integer i = Integer.valueOf(s);
+			if (i < 0) throw new IllegalArgumentException();
+			return i;
+		} catch (Exception e) {
+			throw validationFailure(param, "invalid_integer", req);
+		}
+	}
+
+	private DateTime date(HttpServletRequest req, String param) {
+		String s = param(req, param);
+		if (!given(s)) return null;
+		try {
+			return DateTime.parse(s);
+		} catch (Exception e) {
+			throw validationFailure(param, "invalid_datetime", req);
+		}
+	}
+
+	private String param(HttpServletRequest req, String param) {
+		String val = req.getParameter(param);
+		if (val == null) return null;
+		val = val.trim();
+		if (!given(val)) return null;
+		return val;
+	}
+
+	private List<String> params(HttpServletRequest req, String param) {
+		String[] rawValues = req.getParameterValues(param);
+		if (rawValues == null) return Collections.emptyList();
+		List<String> values = new ArrayList<>();
+		for (String v : rawValues) {
+			if (v == null) continue;
+			v = v.trim();
+			if (!given(v)) continue;
+			values.add(v);
+		}
+		return values;
+	}
+
+	private IllegalArgumentException validationFailure(String param, String error, HttpServletRequest req) {
+		String label = getText("label_"+param, req);
+		String errorText = getLocalizedTexts().hasText(error) ? getText(error, req) : error;
+		return new IllegalArgumentException(label + ": " + errorText);
 	}
 
 }
