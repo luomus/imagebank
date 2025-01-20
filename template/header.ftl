@@ -30,6 +30,7 @@
     <header>
         <h1><a href="${baseURL}">${text.finbif_short} ${text.imagebank}</a></h1>
         <p><a href="${baseURL}">${text.tagline}</a></p>
+        <a id="main-logo" href="https://laji.fi/<#if locale?? && locale != "fi">${locale}</#if>">LAJI.FI</a>
     </header>
 
     <nav class="main-nav" role="navigation" aria-label="Main Navigation">
@@ -77,4 +78,3 @@
     			<p>${message?html}</p>
     		</div>
     	</#if>
-    	

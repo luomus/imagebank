@@ -26,7 +26,17 @@ $(document).ready(function() {
 			return false; // Prevent default autocomplete behavior
 		}
 	});
+    
+    <#if page?starts_with("admin-")>
         
+    $("#cancelButton").click(function() {
+    	if (confirm('${text.cancel_confirm}')) {
+    		window.location.reload(); 
+    		return false;
+    	}
+    	return false; 
+    });
+    
 	$(".admin-image").each(function () {
 		const image = $(this);
 		const wrapper = $("<div class='admin-image-wrapper'></div>");
@@ -71,20 +81,12 @@ $(document).ready(function() {
         );
 	});
     
-    $("#cancelButton").click(function() {
-    	if (confirm('${text.cancel_confirm}')) {
-    		window.location.reload(); 
-    		return false;
-    	}
-    	return false; 
-    });
-    
     <#if image??>
 	$("#deleteButton").click(function(event) {
     	event.preventDefault(); // Prevent default button behavior
 	    if (confirm('${text.admin_delete_confirm}')) {
         	$.ajax({
-            	url: '${baseURL}/admin/${image.id?html}', // Use the current URL
+            	url: '${baseURL}/admin/${image.id?html}',
             	type: 'DELETE',
             	success: function() {
                 	window.location.href = '${baseURL}/admin?taxonSearch=${(taxonSearch!"")?html}&taxonId=${(taxonId!"")?html}&imageSearch=${(imageSearch!"")?html}';
@@ -107,12 +109,15 @@ $(document).ready(function() {
     });
     
     $('.admin-image-edit input[name="captureDateTime"], .admin-image-edit input[name="uploadDateTime"]')
-    .filter(function() {return $(this).val() === "";})
-    .after($("<div class='time-format-help'><span class='date-part'>YYYY-MM-DD</span><b>T</b><span class='time-part'>hh:mm:ss</span>.000+0Z:00</div>"))
-    .attr('placeholder', 'YYYY-MM-DDThh:mm:ss.000+0Z:00');
+    	.filter(function() {return $(this).val() === "";})
+    	.after($("<div class='time-format-help'><span class='date-part'>YYYY-MM-DD</span><b>T</b><span class='time-part'>hh:mm:ss</span>.000+0Z:00</div>"))
+    	.attr('placeholder', 'YYYY-MM-DDThh:mm:ss.000+0Z:00');
     
      $(".admin-image-edit select").not(".bool-select").chosen({width: "30em"}); 
      $(".admin-image-edit select.bool-select").chosen({width: "10em"});
+     
+    </#if>
+    
 });
 
 function changeLocale() {

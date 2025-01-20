@@ -21,7 +21,7 @@ header {
 	color: black;
 	padding: 10px 0;
 	text-align: center;
-	border-top: 2.5em solid rgb(38, 145, 217);
+	border-top: 2.5em solid hsl(204,70%,40%);
 }
 
 a {
@@ -32,6 +32,18 @@ a {
 header a {
 	text-decoration: none;
 	color: black;
+}
+
+#main-logo {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	color: #e7f5fe;
+  	font-weight: 700;
+  	letter-spacing: 2px;
+	font-family: Roboto,Helvetica Neue,Helvetica,Arial,sans-serif;
+	font-size: 18px;
+  	line-height: 20px;
 }
 
 nav.main-nav {
