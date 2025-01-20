@@ -79,11 +79,24 @@ $(document).ready(function() {
     	return false; 
     });
     
-    $("#deleteButton").click(function() {
-    	if (confirm('${text.admin_delete_confirm}')) {
-    		alert('would delete');
+    <#if image??>
+	$("#deleteButton").click(function(event) {
+    	event.preventDefault(); // Prevent default button behavior
+	    if (confirm('${text.admin_delete_confirm}')) {
+        	$.ajax({
+            	url: '${baseURL}/admin/${image.id?html}', // Use the current URL
+            	type: 'DELETE',
+            	success: function() {
+                	window.location.href = '${baseURL}/admin?taxonSearch=${(taxonSearch!"")?html}&taxonId=${(taxonId!"")?html}&imageSearch=${(imageSearch!"")?html}';
+            	},
+            	error: function() {
+                	// Refresh the page to display the failure reason via flash message
+                	location.reload();
+            	}
+        	});
     	}
-    });
+	});
+    </#if>
     
     $(".multi-input-add-item").click(function() {
     	const parent = $(this).parent(".multi-input");

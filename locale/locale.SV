@@ -31,6 +31,7 @@ admin_edit_image = Redigera bild
 admin_delete_image = Ta bort bild
 admin_delete_image_note = <p>Observera att om du tar bort en bild från ett prov/exemplar (Kotka, Vihko, Löydös), kommer observationen att behålla en "trasig bild".</p><p>För Kotka provbilder kommer borttagningen av bilden att fördröjas i sökresultaten tills proverna omindexeras.</p><p>Bildborttagning skickas inte till Laji.fi datalagret, så där kommer den trasiga bilden att finnas kvar tills observationen redigeras.</p><p>För artbilder kan bilden ha valts för Pinkka, och där visas den trasiga bilden.</p><p>Det säkraste sättet att ta bort en artbild är att lämna bilden intakt och ta bort taksonidentifieraren/identifierarna från den.</p><p>I fall av avsiktlig missbruk eller skadegörelse, är det bättre att annotera observationen med en Spam-tag.</p>
 admin_delete_confirm = Är du säker på att du vill ta bort denna bild?
+admin_delete_success = Borttagen!
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, knölsvan, MX.123
 select_taxon = Välj taxon

@@ -317,4 +317,27 @@ public class Admin extends ImageBankBaseServlet {
 		return new IllegalArgumentException(label + ": " + errorText);
 	}
 
+	@Override
+	protected ResponseData processDelete(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		String id = getId(req);
+
+		if (!given(id)) {
+			getSession(req).setFlashError(getText("unknown_image", req));
+			return status(400, res);
+		}
+
+		try {
+			getMediaApiClient().delete(MediaClass.IMAGE, id);
+		} catch (NotFoundException e) {
+			getSession(req).setFlashError(getText("unknown_image", req));
+			return status(400, res);
+		} catch (Exception e) {
+			getSession(req).setFlashError(e.getMessage());
+			return status(400, res);
+		}
+
+		getSession(req).setFlashSuccess(getText("admin_delete_success", req));
+		return new ResponseData("ok", "text-plain");
+	}
+
 }
