@@ -12,7 +12,7 @@
         			<li><a href="${baseURL}/admin?taxonSearch=${taxonSearch?html}">${text.menu_taxon_select}: ${taxonSearch?html}</a></li>
         		</#if>
         		<#if taxon??>
-        			<li><a href="${baseURL}/admin/${taxon.id?html}?<#if taxonSearch??>taxonSearch=${taxonSearch?html}"</#if>><@printScientificName taxon/></a></li>
+        			<li><a href="${baseURL}/admin/${taxon.id?html}?<#if taxonSearch??>taxonSearch=${taxonSearch?html}</#if>"><@printScientificName taxon/></a></li>
         		</#if>
         		<li>${image.id}</li>
     		</ol>
