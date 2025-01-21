@@ -337,7 +337,7 @@ public class Admin extends ImageBankBaseServlet {
 		}
 
 		getSession(req).setFlashSuccess(getText("admin_delete_success", req));
-		return new ResponseData("ok", "text-plain");
+		return new ResponseData("ok", "text/plain");
 	}
 
 }
