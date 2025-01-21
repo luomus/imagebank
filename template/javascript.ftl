@@ -102,7 +102,7 @@ $(document).ready(function() {
     
     $(".multi-input-add-item").click(function() {
     	const parent = $(this).parent(".multi-input");
-    	const firstChild = parent.children().first();
+    	const firstChild = parent.find("div").first();
     	let clonedChild = firstChild.clone();
     	clonedChild.find('input').val('');
     	parent.append(clonedChild);
@@ -115,6 +115,16 @@ $(document).ready(function() {
     
      $(".admin-image-edit select").not(".bool-select").chosen({width: "30em"}); 
      $(".admin-image-edit select.bool-select").chosen({width: "10em"});
+     
+     <#if taxon??>
+     	const makePrimaryButton = $('<button id="makePrimary" type="button">${text.admin_make_primary}</button>').button();
+     	$("input[name='primaryForTaxon']").first().parent().before(makePrimaryButton);
+     	
+     	makePrimaryButton.click(function() {
+     		$(this).parent().find(".multi-input-add-item").first().click();
+     		$("input[name='primaryForTaxon']").filter(function() {return $(this).val() === "";}).first().val('${taxon.id}');
+     	});
+     </#if>
      
     </#if>
     

@@ -483,3 +483,10 @@ fieldset#unmodifieable-meta-fields {
 .time-format-help .date-part { color: rgb(100,100,255); }
 .time-format-help .time-part { color: rgb(200,100,100); }
 
+#makePrimary {
+	font-size: 90%;
+	position: absolute;
+	right: -250px;
+	top: -25px;
+	z-index: 10;
+}
