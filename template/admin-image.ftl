@@ -65,10 +65,11 @@
 		<@inputMulti "documentIds" 40 meta.documentIds />
 		<@inputMulti "tags" 40 meta.tags />
 		<@selectBool "fullResolutionMediaAvailable" meta.fullResolutionMediaAvailable!false />
+		<@selectBool "secret" meta.secret />
     </fieldset>
 					
-					<input type="submit" class="button" id="saveButton" value="${text.save}" />
-					<button id="cancelButton" type="button"><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
+	<input type="submit" class="button" id="saveButton" value="${text.save}" />
+	<button id="cancelButton" type="button"><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
 			
 	 <fieldset id="unmodifieable-meta-fields" class="long-labels">
         <legend>${text.group_unmodifiable}</legend>
@@ -81,9 +82,6 @@
         
         <label for="uploadDateTime">${text.label_uploadDateTime}:</label>
         <span>${(meta.uploadDateTime!"")?html}</span><br>
-
-        <label for="secret">${text.label_secret}:</label>
-        <span>${meta.secret?string(text.yes, text.no)}</span><br>
 
         <label for="originalFilename">${text.label_originalFilename}:</label>
         <span>${meta.originalFilename?html}</span><br>

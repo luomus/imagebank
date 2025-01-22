@@ -27,7 +27,7 @@ $(document).ready(function() {
 		}
 	});
     
-    <#if page?starts_with("admin-")>
+<#if page?starts_with("admin-")>
         
     $("#cancelButton").click(function() {
     	if (confirm('${text.cancel_confirm}')) {
@@ -113,10 +113,69 @@ $(document).ready(function() {
     	.after($("<div class='time-format-help'><span class='date-part'>YYYY-MM-DD</span><b>T</b><span class='time-part'>hh:mm:ss</span>.000+0Z:00</div>"))
     	.attr('placeholder', 'YYYY-MM-DDThh:mm:ss.000+0Z:00');
     
-     $(".admin-image-edit select").not(".bool-select").chosen({width: "30em"}); 
-     $(".admin-image-edit select.bool-select").chosen({width: "10em"});
+	$(".admin-image-edit select").not(".bool-select").chosen({width: "30em"}); 
+	$(".admin-image-edit select.bool-select").chosen({width: "10em"});
      
-     <#if taxon??>
+	$(".mass-tag-select-header").click(function() {
+		$(".mass-tag-select-body").toggle();
+	});
+     
+	const activeTags = {};
+     
+	$(".mass-tag-select select").change(function() {
+     	const name = $(this).attr("name");
+    	const value = $(this).val(); // The select's value
+    	const label = $(this).find("option:selected").text(); // The human-readable label
+   		let has = false;
+		if (value) {
+			activeTags[name] = { value, label };
+			has = true;
+    	} else {
+			delete activeTags[name];
+    	}
+   		$(".tag-hover").remove();
+    	if (has) {
+    		let hoverElement = $('<div class="tag-hover">${text.admin_click_to_add_tags}: </div>');
+    		hoverElement.html(hoverElement.html() + Object.values(activeTags).map(tag => tag.label).join(", "));
+    		$("body").append(hoverElement);
+    	}
+	});
+	
+    $(document).on("mousemove", function (event) {
+    	$(".tag-hover").css({
+        	top: event.clientY + 10 + "px", // 10px below the cursor
+        	left: event.clientX + 10 + "px" // 10px to the right of the cursor
+    	});
+	});
+
+	$(".taxon-image").click(function() {
+    	if (Object.keys(activeTags).length === 0) return true;
+		const image = $(this);
+	    const imageId = image.find('img').first().data("id");
+	    $.ajax({
+        	url: "${baseURL}/admin/tag/"+imageId,
+        	method: "POST",
+        	contentType: "application/json",
+        	data: JSON.stringify(activeTags),
+        	success: function(response) {
+            	image.addClass('tagged-saved');
+            	$("#mass-tag-done-button").show('fast');
+        	},
+        	error: function(xhr, status, error) {
+            	// Refresh the page to display the failure reason via flash message
+                location.reload();
+        	}
+    	});
+    	return false;
+	});
+    
+    $("#mass-tag-clear-button").click(function() {
+    	 $(".mass-tag-select select").val('').change();
+    });
+    	
+	$("#mass-tag-done-button").click(function() { location.reload(); });
+    
+	<#if taxon??>
      	const makePrimaryButton = $('<button id="makePrimary" type="button">${text.admin_make_primary}</button>').button();
      	$("input[name='primaryForTaxon']").first().parent().before(makePrimaryButton);
      	
@@ -124,10 +183,9 @@ $(document).ready(function() {
      		$(this).parent().find(".multi-input-add-item").first().click();
      		$("input[name='primaryForTaxon']").filter(function() {return $(this).val() === "";}).first().val('${taxon.id}');
      	});
-     </#if>
+	</#if>
      
-    </#if>
-    
+</#if>
 });
 
 function changeLocale() {

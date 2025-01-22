@@ -29,10 +29,13 @@ admin_select_image = Select an image to edit
 admin_info = <p>The Admin section is a maintenance tool, not intended for regular species image curation.</p><p>Here, you can edit all images, including specimen images added in Kotka and observation images added through Notebook.</p><p>You can edit all the image details that cannot be modified in the ImageBank species image section, such as license, photographer's name, and keywords.</p><p>You can also completely remove images.</p>
 admin_edit_image = Edit image
 admin_delete_image = Delete image
-admin_delete_image_note = <p>Note that if you delete an image from a specimen/observation (Kotka, Vihko, Löydös), the observation will retain a "broken image".</p><p>For Kotka specimen images, image removal will be delayed in search results until the specimens are re-indexed.</p><p>The deletion of the image is not communicated to the Laji.fi data repository, so the broken image will remain there until the observation is edited.</p><p>For species images, the image may have been selected for the Pinkka, and there the broken image will appear.</p><p>The safest way to remove a species image is to leave the image intact and remove the taxon identifier(s) from it.</p><p>Note that in the case of vandalism, it is good also to annotate the observation with a Spam tag.</p>
+admin_delete_image_note = <p>Note that if you delete an image from a specimen/observation (Kotka, Vihko, Löydös), the observation will retain a "broken image".</p><p>For Kotka specimen images, image removal will be delayed in search results until the specimens are re-indexed.</p><p>The deletion of the image is not communicated to the Laji.fi Data Warehouse, so the broken image will remain there until the observation is edited.</p><p>For species images, the image may have been selected for the Pinkka, and there the broken image will appear.</p><p>The safest way to remove a species image is to leave the image intact and remove the taxon identifier(s) from it.</p><p>Note that in the case of vandalism, it is good also to annotate the observation with a Spam tag.</p>
 admin_delete_confirm = Are you sure you want to delete this image?
 admin_delete_success = Deleted!
 admin_make_primary = Make primary for this taxon
+admin_tag_images = Tag images
+admin_tag_done = Done/Refresh
+admin_click_to_add_tags = Click image to add tags
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, mute swan, MX.123
 select_taxon = Select taxon
@@ -48,6 +51,7 @@ save = Save
 save_success = Saved!
 cancel = Cancel
 cancel_confirm = Discard all changes?
+clear_all = Clear all
 
 yes = Yes
 no = No

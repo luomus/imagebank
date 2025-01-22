@@ -33,6 +33,9 @@ admin_delete_image_note = <p>Observera att om du tar bort en bild från ett prov
 admin_delete_confirm = Är du säker på att du vill ta bort denna bild?
 admin_delete_success = Borttagen!
 admin_make_primary = Gör till primär för denna taxon
+admin_tag_images = Tagga bilder
+admin_tag_done = Klar/Uppdatera
+admin_click_to_add_tags = Klicka på bilden för att lägga till taggar
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, knölsvan, MX.123
 select_taxon = Välj taxon
@@ -48,6 +51,7 @@ save = Spara
 save_success = Sparat!
 cancel = Ångra
 cancel_confirm = Är du säker på att du vill ångra alla ändringar?
+clear_all = Rensa alla
 
 yes = Ja
 no = Nej

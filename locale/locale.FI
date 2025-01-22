@@ -33,6 +33,9 @@ admin_delete_image_note = <p>Huomaa, että jos poistat näytteen/havainnon kuvan
 admin_delete_confirm = Haluatko varmasti poistaa tämän kuvan?
 admin_delete_success = Poistettu onnistuneesti!
 admin_make_primary = Aseta pääkuvaksi tälle taksonille
+admin_tag_images = Merkitse kuvia
+admin_tag_done = Valmis/Päivitä sivu
+admin_click_to_add_tags = Klikkaa kuvaa lisätäksesi merkintöjä
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, ukkoetana, MX.123
 select_taxon = Valitse taksoni
@@ -48,6 +51,7 @@ save = Tallenna
 save_success = Tallennettu onnistuneesti!
 cancel = Peruuta
 cancel_confirm = Peruuta muutokset?
+clear_all = Tyhjennä kaikki
 
 yes = Kyllä
 no = Ei
