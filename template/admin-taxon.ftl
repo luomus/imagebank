@@ -35,13 +35,16 @@
 		
 <#if taxon.multimedia?has_content>
 		<h4>${text.admin_select_image} ...</h4>
+		
+		<p>multi:${taxon.multimedia?size}</p>
+		<p>ordered:${taxon.orderedMultimedia?size}</p>
 <#else>
 		<h4>${text.no_images}!</h4>
 </#if>
 
 
 		<div class="image-grid">
-		<#list taxon.multimedia as image>
+		<#list taxon.orderedMultimedia as image>
 			<a class="taxon-image" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
 		</#list>
 			<form class="image-upload-form" id="imageUploadForm" action="/admin/add" method="POST" enctype="multipart/form-data">

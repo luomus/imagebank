@@ -76,14 +76,14 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 					isSecret = true;
 				}
 				if (imageChanges(prevImageId, imageId)) {
-					add(image, images, null, isSecret);
+					add(image, images, isSecret);
 					prevImageId = imageId;
 					image = new Image(imageId, Content.DEFAULT_DESCRIPTION_CONTEXT);
 					isSecret = null;
 				}
 				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
 			}
-			add(image, images, null, isSecret);
+			add(image, images, isSecret);
 		} catch (SQLException e) {
 			throw new RuntimeException("Image search " + searchTerm, e);
 		} finally {
@@ -136,14 +136,14 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 					isSecret = true;
 				}
 				if (imageChanges(prevImageId, imageId)) {
-					add(image, images, taxonId, isSecret);
+					add(image, images, isSecret);
 					prevImageId = imageId;
 					image = new Image(imageId, Content.DEFAULT_DESCRIPTION_CONTEXT);
 					isSecret = null;
 				}
 				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
 			}
-			add(image, images, taxonId, isSecret);
+			add(image, images, isSecret);
 		} finally {
 			Utils.close(p, rs, con);
 		}
@@ -162,18 +162,15 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 		.setToImage(objectname, resourceliteral, locale, image, null);
 	}
 
-	private void add(Image image, List<Image> images, Qname taxonId, Boolean isSecret) {
+	private void add(Image image, List<Image> images, Boolean isSecret) {
 		if (image == null) return;
 		if (Boolean.TRUE.equals(isSecret)) return;
-		finalize(image, taxonId);
+		finalize(image);
 		images.add(image);
 	}
 
-	private void finalize(Image image, Qname taxonId) {
+	private void finalize(Image image) {
 		addLicenseName(image);
-		if (image.getKeywords().contains("primary")) {
-			image.addPrimaryForTaxon(taxonId);
-		}
 		image.doLegacyConversions();
 	}
 
