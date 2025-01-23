@@ -35,9 +35,6 @@
 		
 <#if taxon.multimedia?has_content>
 		<h4>${text.admin_select_image} ...</h4>
-		
-		<p>multi:${taxon.multimedia?size}</p>
-		<p>ordered:${taxon.orderedMultimedia?size}</p>
 <#else>
 		<h4>${text.no_images}!</h4>
 </#if>
