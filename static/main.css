@@ -237,7 +237,7 @@ li {
 	font-size: 150%;
 }
 
-.info, .warning, .error, .danger-zone, .success {
+.info, .warning, .error, .danger-zone, .success, .custom-tooltip-class {
 	background-color: #e7f3fe; 
 	border-left: 5px solid rgb(150,180,205); 
     padding: 1em 2em 1em 1em;
@@ -249,6 +249,12 @@ li {
     max-width: 60em;
 }
 
+.ui-tooltip {
+    border: 1px solid red;
+    background: #111;
+    color: white;
+}
+  
 .info p, .warning p, .error p {
 	margin-bottom: 0.5em;
 }
@@ -524,9 +530,9 @@ fieldset#unmodifieable-meta-fields {
 	width: 10em;
 }
 
-.image-upload-form form {
-  max-width: 600px;
-  margin: auto;
+.image-upload-form {
+  max-width: 25em;
+  display: inline-block;
 }
 
 .image-upload-form #dropArea {
@@ -538,7 +544,7 @@ fieldset#unmodifieable-meta-fields {
   margin: 10px;
 }
 
-.image-upload-form #dropArea.dragover {
+.image-upload-form #dropArea.hover {
   background-color: #e9f7ff;
 }
 
@@ -553,17 +559,10 @@ fieldset#unmodifieable-meta-fields {
   color: #555;
 }
 
-.image-upload-form #hiddenImageOption {
+.image-upload-form #secretImageOption {
   margin-top: 20px;
   font-size: 14px;
   float: right;
-}
-
-.info-icon {
-  font-size: 12px;
-  color: #555;
-  cursor: help;
-  margin-left: 5px;
 }
 
 .tag-hover {
@@ -601,3 +600,8 @@ fieldset#unmodifieable-meta-fields {
     border-color: #2d7033;
 }
 
+.custom-tooltip-class {
+	border-radius: 0;
+	font-weight: normal !important;
+	font-size: 80% !important;
+}

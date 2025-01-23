@@ -171,7 +171,8 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			new KeyValuePair("KE.3", "Kotka"),
 			new KeyValuePair("KE.321", "Pinkka"),
 			new KeyValuePair("KE.441", "Laji.fi / Vihko"),
-			new KeyValuePair("KE.341", "Satellite Data"));
+			new KeyValuePair("KE.341", "Satellite Data"),
+			new KeyValuePair("KE.1841", "Image Bank"));
 
 	protected User getUser(HttpServletRequest req) {
 		SessionHandler session = getSession(req, false);

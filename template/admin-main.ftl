@@ -1,4 +1,5 @@
 <#include "header.ftl">
+<#include "macro.ftl">
 
 		<nav class="breadcrumb" aria-label="Breadcrumb">
 		    <ol>
@@ -20,6 +21,9 @@
 		<form action="${baseURL}/admin">
 			<input name="imageSearch" type="text" size="80" /> <button>Muokkaa</button>
 		</form>
+		
+		<h3>${text.admin_add_image_title}</h3>
+		<@adminImageUpload/>
 		
 		<br />
 		<div class="info">

@@ -41,7 +41,7 @@
 <#macro list seq><#list seq as s>${s?html}<#if s_has_next>, </#if></#list></#macro>
 <#macro listEnum seq enum><#list seq as s>${enum[s].forLocale(locale)}<#if s_has_next>, </#if></#list></#macro>
 <#macro enumV val enum><#if val?has_content>${enum[val].forLocale(locale)}</#if></#macro>
-<#macro mapV val map><#if val?has_content>${map[val]}</#if></#macro>
+<#macro mapV val map><#if val?has_content>${map[val]!val}</#if></#macro>
 
 <#macro label name>
 	<label for="${name}">${text["label_"+name]!name}:</label>
@@ -106,4 +106,27 @@
 		<@label name />
 		<input type="number" name="${name}" size="8" value="${value?html}" min="0" />
 	</div>
+</#macro>
+
+<#macro adminImageUpload>
+	<form class="image-upload-form" id="imageUploadForm" action="${baseURL}/admin/add<#if taxon??>?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if></#if>" method="POST" enctype="multipart/form-data">
+		<fieldset>
+			<legend>Upload Image</legend>
+			    <div id="dropArea">
+      				<input type="file" id="fileInput" name="image" accept="image/*" hidden />
+      				<div id="dropText">
+        				<i class="fa fa-camera" aria-hidden="true"></i>
+        				<p>${text.drop_image}</p>
+      				</div>
+    			</div>
+    			<#if !taxon??>
+			    	<div id="secretImageOption">
+      					<label for="secretCheckbox">${text.label_secret}</label>
+        				<span class="ui-icon ui-icon-info" title="${text.admin_secret_image_help}">?</span>
+        				<input type="checkbox" id="secretCheckbox" name="secret">
+        			</div>
+        		</#if>
+			<button type="submit" id="saveButton">${text.save}</button>
+		</fieldset>
+	</form>
 </#macro>

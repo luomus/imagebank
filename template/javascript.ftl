@@ -2,6 +2,12 @@ $(document).ready(function() {
 
 	$("button, .button").button();
 	
+	$(".ui-icon-info").tooltip({
+    	classes: {
+        	"ui-tooltip": "custom-tooltip-class"
+    	}	
+	});
+	
 	$("#taxon-autocomplete").autocomplete({
 		source: function (request, response) {
 			$.ajax({
@@ -186,7 +192,54 @@ $(document).ready(function() {
      		$("input[name='primaryForTaxon']").filter(function() {return $(this).val() === "";}).first().val('${taxon.id}');
      	});
 	</#if>
-     
+    
+    $("#dropArea").on("dragover", function(event) {
+        event.preventDefault();
+        $(this).addClass("hover");
+    }).on("dragleave", function() {
+        $(this).removeClass("hover");
+    }).on("drop", function(event) {
+        event.preventDefault();
+        $(this).removeClass("hover");
+        var files = event.originalEvent.dataTransfer.files;
+        $("#fileInput")[0].files = files;
+        $("#fileInput").trigger("change");
+    }).on("click", function() {
+    	 $("#fileInput").click();
+    });
+    
+    $("#fileInput").on("click", function(event) {
+    	event.stopPropagation();
+    });
+    
+    $("#fileInput").on("change", function() {
+        if (this.files.length > 0) {
+            $("#dropText p").text(this.files[0].name);
+        }
+    });
+
+    $("#imageUploadForm").submit(function(event) {
+        event.preventDefault(); 
+        if ($("#fileInput").prop('files').length < 1) return false;
+        var formData = new FormData(this);
+        console.log(formData);
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+            	let id = response;
+                window.location.href = '${baseURL}/admin/'+id+'?taxonSearch=${(taxonSearch!"")?html}&taxonId=<#if taxon??>${taxon.id}</#if>';
+            },
+            error: function(xhr, status, error) {
+            	window.scrollTo(0, 0);
+                window.location.reload();
+            }
+        });
+    });
+    
 </#if>
 });
 

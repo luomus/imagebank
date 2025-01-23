@@ -25,6 +25,7 @@ admin_single_title = Redigera en bild
 admin_single_body = Ange bildens adress (t.ex. https://image.laji.fi/MM.123/kuva.jpg) eller bildens identifierare (t.ex. MM.123 eller http://tun.fi/MM.123)
 admin_taxon_title = Redigera taxonbilder
 admin_taxon_body = Ange taxonens identifierare (t.ex. MX.123) eller dess vetenskapliga eller svenska namn
+admin_add_image_title = Ladda upp bild
 admin_select_image = Välj en bild att redigera
 admin_info = <p>Admin-sektionen är ett underhållsverktyg och är inte avsett för vanlig artbildskuratering.</p><p>Här kan du redigera alla bilder, inklusive provbilder som lagts till i Kotka och observationsbilder som lagts till via Vihko.</p><p>Du kan redigera alla bildinformationer som inte kan ändras i artbildssektionen, t.ex. licens, fotografens namn och nyckelord.</p><p>Du kan även helt ta bort bilder.</p>
 admin_edit_image = Redigera bild
@@ -36,6 +37,8 @@ admin_make_primary = Gör till primär för denna taxon
 admin_tag_images = Tagga bilder
 admin_tag_done = Klar/Uppdatera
 admin_click_to_add_tags = Klicka på bilden för att lägga till taggar
+admin_secret_image_help = En hemlig bild är inte offentligt tillgänglig. För att visa den krävs en speciell hemlig nyckel. Markera inte detta om du inte vet exakt varför.
+admin_image_add_success = Uppladdad! Vänligen fyll i metadata såsom fotografens namn och licens.
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, knölsvan, MX.123
 select_taxon = Välj taxon
@@ -47,6 +50,7 @@ taxon_search_term = Matchar med sökterm
 
 no_images = Inga bilder
 no_image = Ingen bild
+drop_image = Dra och släpp en bild här, eller klicka för att välja en.
 
 save = Spara
 save_success = Sparat!
@@ -63,6 +67,8 @@ unknown_image = Okänd media-ID!
 invalid_integer = Ogiltigt heltal
 invalid_datetime = Ogiltigt datum/tidsformat
 invalid_boolean = Ogiltigt värde, ska vara true/false
+file_missing = Fil saknas!
+file_too_large = Filen är för stor. Den maximala storleken är 50 MB.
 
 group_authors = Författare
 label_capturers = Fotograf

@@ -25,6 +25,7 @@ admin_single_title = Muokkaa yhtä kuvaa
 admin_single_body = Kirjoita kuvan osoite (esim https://image.laji.fi/MM.123/kuva.jpg) tai kuvan tunniste (esim MM.123 tai http://tun.fi/MM.123) tai jokin muu kuvassa esiintyvä teksti
 admin_taxon_title = Muokkaa taksonin kuvia
 admin_taxon_body = Kirjoita taksonin tunniste (esim MX.123) tai tieteellinen tai suomenkielinen nimi
+admin_add_image_title = Lataa kuva
 admin_select_image = Valitse muokattava kuva
 admin_info = <p>Admin -osio on ylläpitotyökalu, jota ei ole tarkoitettu tavalliseen lajikuvien kuratointiin.</p><p>Täällä voit muokata kaikkia kuvia; myös Kotkassa lisättyjä näytekuvia ja Vihkon kautta lisättyjä havaintokuvia.</p><p>Voit muokata kuvien kaikkia tietoja, joita Kuvapankin lajikuvaosiossa ei voi muokata, esim lisenssi, kuvaajan nimi, avainsanat.</p><p>Voit myös kokonaan poistaa kuvia.</p>
 admin_edit_image = Muokkaa kuvaa
@@ -36,6 +37,8 @@ admin_make_primary = Aseta pääkuvaksi tälle taksonille
 admin_tag_images = Merkitse kuvia
 admin_tag_done = Valmis/Päivitä sivu
 admin_click_to_add_tags = Klikkaa kuvaa lisätäksesi merkintöjä
+admin_secret_image_help = Salattu kuva ei ole avoimesti nähtävillä. Sen katsomiseen tarvitaan erityinen salainen avain. Älä laita tähän ruksia, jos et tiedä tarkalleen syytä.
+admin_image_add_success = Ladattu onnistuneesti! Ole hyvä ja täytä metatiedot, kuten kuvaajan nimi ja lisenssi.
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, ukkoetana, MX.123
 select_taxon = Valitse taksoni
@@ -47,6 +50,7 @@ taxon_search_term = Hakutulokset nimellä
 
 no_images = Ei kuvia
 no_image = Ei kuvaa
+drop_image = Pudota kuvatiedosto tähän tai klikkaa valitaksesi kuva koneeltasi.
 
 save = Tallenna
 save_success = Tallennettu onnistuneesti!
@@ -63,6 +67,8 @@ unknown_image = Tuntematon kuvan tunniste!
 invalid_integer = Epäkelpo kokonaisluku
 invalid_datetime = Tuntematon päivämäärä/aikaformaatti
 invalid_boolean = Tuntematon arvo, pitäisi olla true/false
+file_missing = Tiedosto puuttuu!
+file_too_large = Tiedosto on liian suuri. Maksimikoko on 50MB.
 
 group_authors = Tekijät
 label_capturers = Kuvaajat

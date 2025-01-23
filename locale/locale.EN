@@ -25,6 +25,7 @@ admin_single_title = Edit a single image
 admin_single_body = Enter the image URL (e.g., https://image.laji.fi/MM.123/kuva.jpg) or the image identifier (e.g., MM.123 or http://tun.fi/MM.123)
 admin_taxon_title = Edit taxon images
 admin_taxon_body = Enter the taxon identifier (e.g., MX.123) or its scientific or Finnish name
+admin_add_image_title = Upload image
 admin_select_image = Select an image to edit
 admin_info = <p>The Admin section is a maintenance tool, not intended for regular species image curation.</p><p>Here, you can edit all images, including specimen images added in Kotka and observation images added through Notebook.</p><p>You can edit all the image details that cannot be modified in the ImageBank species image section, such as license, photographer's name, and keywords.</p><p>You can also completely remove images.</p>
 admin_edit_image = Edit image
@@ -36,6 +37,8 @@ admin_make_primary = Make primary for this taxon
 admin_tag_images = Tag images
 admin_tag_done = Done/Refresh
 admin_click_to_add_tags = Click image to add tags
+admin_secret_image_help = A secret image is not publicly visible. Viewing it requires a special secret key. Do not check this if you do not know exactly why.
+admin_image_add_success = Uploaded! Please fill in the metadata, such as author name and license.
 
 taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, mute swan, MX.123
 select_taxon = Select taxon
@@ -47,6 +50,7 @@ taxon_search_term = Matches with search term
 
 no_images = No images
 no_image = No image
+drop_image = Drag & drop an image here, or click to select one
 
 save = Save
 save_success = Saved!
@@ -63,6 +67,8 @@ unknown_image = Unknown image ID provided!
 invalid_integer = Invalid integer
 invalid_datetime = Invalid date/time format
 invalid_boolean = Invalid value, should be true/false
+file_missing = Please, provide a file!
+file_too_large = The file is too large. The maximum size is 50MB.
 
 group_authors = Authors
 label_capturers = Capturers 

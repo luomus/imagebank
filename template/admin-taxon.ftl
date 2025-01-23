@@ -5,7 +5,7 @@
 		    <ol>
 		    	<li><a href="${baseURL}" aria-label="Home" title="${text.menu_home}" class="home">⌂</a></li>
         		<li><a href="${baseURL}/admin">${text.menu_admin}</a></li>
-        		<#if taxonSearch??>
+        		<#if taxonSearch?has_content>
         			<li><a href="${baseURL}/admin?taxonSearch=${taxonSearch?html}">${text.menu_taxon_select}: ${taxonSearch?html}</a></li>
         		</#if>
         		<li><@printScientificName taxon/></li>
@@ -39,30 +39,11 @@
 		<h4>${text.no_images}!</h4>
 </#if>
 
-
 		<div class="image-grid">
-		<#list taxon.orderedMultimedia as image>
-			<a class="taxon-image" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
-		</#list>
-			<form class="image-upload-form" id="imageUploadForm" action="/admin/add" method="POST" enctype="multipart/form-data">
-  				<fieldset>
-    				<legend>Upload Image</legend>
-					    <div id="dropArea">
-      						<input type="file" id="fileInput" name="image" accept="image/*" hidden>
-      						<div id="dropText">
-        						<i class="fa fa-camera" aria-hidden="true"></i>
-        						<p>Drag & drop an image here, or click to select one</p>
-      						</div>
-    					</div>
-					    <div id="hiddenImageOption">
-      						<label for="hiddenCheckbox">Hidden image</label>
-        					<span class="info-icon" title="A hidden image is only visible to administrators and will not appear publicly.">?</span>
-        					<input type="checkbox" id="hiddenCheckbox" name="hidden">
-        				</div>
-					    <button type="submit" class="ui-priority-primary">Submit</button>
-  				</fieldset>
-			</form>
-			
+			<#list taxon.orderedMultimedia as image>
+				<a class="taxon-image" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
+			</#list>
+			<@adminImageUpload/>			
 		</div>
 
 <#include "footer.ftl">
