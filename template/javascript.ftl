@@ -86,14 +86,15 @@ $(document).ready(function() {
     	event.preventDefault(); // Prevent default button behavior
 	    if (confirm('${text.admin_delete_confirm}')) {
         	$.ajax({
-            	url: '${baseURL}/admin/${image.id?html}',
+            	url: '${baseURL}/admin/delete/${image.id?html}',
             	type: 'DELETE',
             	success: function() {
                 	window.location.href = '${baseURL}/admin?taxonSearch=${(taxonSearch!"")?html}&taxonId=${(taxonId!"")?html}&imageSearch=${(imageSearch!"")?html}';
             	},
             	error: function() {
                 	// Refresh the page to display the failure reason via flash message
-                	location.reload();
+					window.scrollTo(0, 0);
+        			window.location.reload();
             	}
         	});
     	}
@@ -163,7 +164,8 @@ $(document).ready(function() {
         	},
         	error: function(xhr, status, error) {
             	// Refresh the page to display the failure reason via flash message
-                location.reload();
+				window.scrollTo(0, 0);
+        		window.location.reload();
         	}
     	});
     	return false;
@@ -173,7 +175,7 @@ $(document).ready(function() {
     	 $(".mass-tag-select select").val('').change();
     });
     	
-	$("#mass-tag-done-button").click(function() { location.reload(); });
+	$("#mass-tag-done-button").click(function() { window.location.reload(); });
     
 	<#if taxon??>
      	const makePrimaryButton = $('<button id="makePrimary" type="button">${text.admin_make_primary}</button>').button();
@@ -193,5 +195,10 @@ function changeLocale() {
 	$.post('${baseURL}/api/set-locale?locale='+selectedLocale)
 	.done(function() {
     	 window.location.reload();
+	})
+	.fail(function() {
+		// Refresh the page to display the failure reason via flash message
+		window.scrollTo(0, 0);
+        window.location.reload();
 	});
 }

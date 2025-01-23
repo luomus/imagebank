@@ -2,6 +2,7 @@ package fi.laji.imagebank.endpoints;
 
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +17,7 @@ import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.KeyValuePair;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.db.connectivity.ConnectionDescription;
+import fi.luomus.commons.reporting.FunnyOwlExceptionViewer;
 import fi.luomus.commons.services.BaseServlet;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
@@ -245,6 +247,16 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			url.append("?").append(queryString);
 		}
 		return url.toString();
+	}
+
+	@Override
+	protected void handleException(Exception e, HttpServletRequest req, HttpServletResponse res) throws ServletException {
+		try {
+			status500(res);
+			new FunnyOwlExceptionViewer(getConfig().staticURL(), res.getWriter(), res).view(e);
+		} catch (Exception e1) {
+			throw new ServletException(e);
+		}
 	}
 
 }

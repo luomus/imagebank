@@ -46,6 +46,7 @@ no_taxon_matches = Nothing matches the search term
 taxon_search_term = Matches with search term
 
 no_images = No images
+no_image = No image
 
 save = Save
 save_success = Saved!

@@ -22,7 +22,7 @@
 		
 		<h3>${text.admin_edit_image} ${image.id} <#if taxon??> | <@printScientificName taxon/><#elseif image.meta.documentIds?has_content> | <@list image.meta.documentIds/></#if></h3>
 		
-		<h4><a href="${image.urls.original?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${image.urls.original?html}</a></h4>
+		<h4><a href="${(image.urls.original!image.urls.full)?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${(image.urls.original!image.urls.full)?html}</a></h4>
 
 		<div class="admin-image-edit">
 		
@@ -84,7 +84,7 @@
         <span>${(meta.uploadDateTime!"")?html}</span><br>
 
         <label for="originalFilename">${text.label_originalFilename}:</label>
-        <span>${meta.originalFilename?html}</span><br>
+        <span>${(meta.originalFilename!"")?html}</span><br>
     </fieldset>
 
 				</form>
@@ -92,7 +92,11 @@
 			</div>
 			
 			<div class="admin-image-large">
-				<@imageLink image "original" ""/>
+				<#if image.urls.original??>
+					<@imageLink image "original" ""/>
+				<#else>
+					<@imageLink image "full" ""/>
+				</#if>
 			</div>
 		
 			<div class="admin-image-all">
@@ -112,14 +116,19 @@
 		</div>
 
 <#macro imageLink image type label>
-	<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${label}</a></label> 
-	<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">
-		<#if type == "original">
-            <img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
-        <#else>
-            <img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
-        </#if>
-	</a>
+	<#if image.urls[type]??>
+		<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${label}</a></label> 
+		<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">
+			<#if type == "original">
+            	<img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+        	<#else>
+            	<img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+        	</#if>
+		</a>
+	<#else>
+		<label>${label}</label>
+		<p>${text.no_image}</p>
+	</#if>
 </#macro>
 
 <#include "footer.ftl">

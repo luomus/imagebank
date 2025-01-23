@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import fi.luomus.commons.services.ResponseData;
 
 @WebServlet(urlPatterns = {"/api/set-locale/*"})
-public class APISetLocale extends ImageBankBaseServlet {
+public class APISetLocale extends APIBaseServlet {
 
 	private static final long serialVersionUID = 5707703585398451057L;
 
@@ -15,7 +15,7 @@ public class APISetLocale extends ImageBankBaseServlet {
 	protected ResponseData processPost(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String locale = getLocale(req);
 		getSession(req).setObject("locale", locale);
-		return status(200, res);
+		return new ResponseData("ok", "text/plain");
 	}
 
 }

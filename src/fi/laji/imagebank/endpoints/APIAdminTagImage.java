@@ -13,14 +13,9 @@ import fi.luomus.kuvapalvelu.model.MediaClass;
 import fi.luomus.kuvapalvelu.model.Meta;
 
 @WebServlet(urlPatterns = {"/admin/tag/*"})
-public class APIAdminTagImage extends Admin {
+public class APIAdminTagImage extends APIAdminBaseServlet {
 
 	private static final long serialVersionUID = -7542620621210286239L;
-
-	@Override
-	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	protected ResponseData processPost(HttpServletRequest req, HttpServletResponse res) throws Exception {
@@ -31,18 +26,12 @@ public class APIAdminTagImage extends Admin {
 			return status(400, res);
 		}
 
-		Meta existingMeta = null;
-		try {
-			Optional<Media> media = getMediaApiClient().get(MediaClass.IMAGE, id);
-			if (!media.isPresent()) {
-				getSession(req).setFlashError(getText("unknown_image", req));
-				return status(400, res);
-			}
-			existingMeta = media.get().getMeta();
-		} catch (Exception e) {
-			getSession(req).setFlashError(e.getMessage());
+		Optional<Media> media = getMediaApiClient().get(MediaClass.IMAGE, id);
+		if (!media.isPresent()) {
+			getSession(req).setFlashError(getText("unknown_image", req));
 			return status(400, res);
 		}
+		Meta existingMeta = media.get().getMeta();
 
 		// {"type":{"value":"MM.typeEnumLive","label":"Luonnossa otettu"},"sex":{"value":"MY.sexM","label":"koiras"}}
 		JSONObject json = new JSONObject(readBody(req));
@@ -56,11 +45,6 @@ public class APIAdminTagImage extends Admin {
 		getMediaApiClient().update(MediaClass.IMAGE,id, existingMeta);
 
 		return new ResponseData("ok", "text/plain");
-	}
-
-	@Override
-	protected ResponseData processDelete(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		throw new UnsupportedOperationException();
 	}
 
 }

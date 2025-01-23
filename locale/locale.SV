@@ -46,6 +46,7 @@ no_taxon_matches = Inga träffar för sökordet
 taxon_search_term = Matchar med sökterm
 
 no_images = Inga bilder
+no_image = Ingen bild
 
 save = Spara
 save_success = Sparat!
