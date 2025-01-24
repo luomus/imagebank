@@ -21,6 +21,7 @@ menu_image_select = Bildval
 error_header = Tyvärr! Något gick fel...
 
 browse_title = Bläddra | Bläddring och innehållsskapande
+curate_title = Kvalitetskontroll | Bildkuratering
 
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild

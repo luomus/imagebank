@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${text.imagebank} - ${text.tagline} | ${text.finbif}</title>
-    <link rel="stylesheet" href="${staticURL}/main.css?${staticContentTimestamp}">
+    <link rel="stylesheet" href="${staticURL}/style_main.css?${staticContentTimestamp}">
+    <#if page?starts_with("admin-")>
+    	<link rel="stylesheet" href="${staticURL}/style_admin.css?${staticContentTimestamp}">
+    </#if>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/ui-lightness/jquery-ui.css">
     <link rel="icon" href="${staticURL}/laji.ico?${staticContentTimestamp}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

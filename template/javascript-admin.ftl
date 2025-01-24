@@ -10,10 +10,10 @@ $(document).ready(function() {
     
 	$(".admin-image").each(function () {
 		const image = $(this);
-		const wrapper = $("<div class='admin-image-wrapper'></div>");
+		const wrapper = $("<div class='image-wrapper'></div>");
 		image.wrap(wrapper);
 		
-        const tagsContainer = $("<div class='admin-image-tags'></div>");
+        const tagsContainer = $("<div class='image-tags'></div>");
         const tagData = {
 			primary: image.data("primary") ? "primary" : null,
 			type: image.data("type"),

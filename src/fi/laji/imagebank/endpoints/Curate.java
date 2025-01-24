@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import fi.luomus.commons.services.ResponseData;
 
-@WebServlet(urlPatterns = {"/browse/*"})
-public class Browse extends ImageBankBaseServlet {
+@WebServlet(urlPatterns = {"/curate/*"})
+public class Curate extends ImageBankBaseServlet {
 
-	private static final long serialVersionUID = 8621449842296848597L;
+	private static final long serialVersionUID = -2197845774318203755L;
 
 	@Override
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		return initResponseData(req).setViewName("browse");
+		return initResponseData(req).setViewName("curate");
 	}
 
 }

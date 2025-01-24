@@ -1,6 +1,6 @@
 <#include "header.ftl">
 
-		<h2>Etusivu / Frontpage</h2>
+		<h2>${text.menu_home}</h2>
 		<p>Rakenteilla. This section is under construction.</p>
 		
 <#include "footer.ftl">

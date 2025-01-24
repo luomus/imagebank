@@ -20,7 +20,8 @@ menu_image_select = Kuvan valinta
 
 error_header = Pahoittelut! Jokin meni vikaan...
 
-browse_title = Selaa | Lajikuvien selaus ja sisällön tuottaminen
+browse_title = Selaa | Lajikuvat ja sisällöntuotanto
+curate_title = Laadunvalvonta | Kuvien kuratointi
 
 admin_main = Admin | Kuvien ylläpito
 admin_single_title = Muokkaa yhtä kuvaa
