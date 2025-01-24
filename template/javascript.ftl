@@ -8,6 +8,15 @@ $(document).ready(function() {
     	}	
 	});
 	
+	$("#preferences select").chosen({width: "8em"});
+	
+	$("#preferences input[type='checkbox']").checkboxradio();
+	$("#preferences input[type='radio']").checkboxradio();
+	
+	$("#preferencesHeader").click(function() {
+		$("#preferencesBody").toggle();
+	});
+	
 	$("#taxon-autocomplete").autocomplete({
 		source: function (request, response) {
 			$.ajax({

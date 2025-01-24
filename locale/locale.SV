@@ -23,6 +23,24 @@ error_header = Tyvärr! Något gick fel...
 browse_title = Bläddra | Bläddring och innehållsskapande
 curate_title = Kvalitetskontroll | Bildkuratering
 
+preferences = Inställningar
+group_select = Artgrupp
+order = Ordning
+taxonomic = Taxonomisk
+alphabetic = Alfabetisk
+taxa_preference = Finska arter 
+taxa_finnish = Endast finska
+taxa_all = Alla
+taxon_ranks_preference = Taxonomiska nivåer
+category_filter = Kategorier
+page_size = Sidstorlek
+image_size = Bildstorlek
+image_size_small = Liten
+image_size_large = Stor
+content_creation_preference = Innehållsskapande
+on = På
+off = Av
+
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild
 admin_single_body = Ange bildens adress (t.ex. https://image.laji.fi/MM.123/kuva.jpg) eller bildens identifierare (t.ex. MM.123 eller http://tun.fi/MM.123)

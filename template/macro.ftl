@@ -126,7 +126,7 @@
         				<input type="checkbox" id="secretCheckbox" name="secret">
         			</div>
         		</#if>
-			<button type="submit" id="saveButton">${text.save}</button>
+			<button type="submit" id="saveButton" disabled>${text.save}</button>
 		</fieldset>
 	</form>
 </#macro>

@@ -23,6 +23,24 @@ error_header = Sorry! Something went wrong...
 browse_title = Browse | Browsing and content creation
 curate_title = Quality Control | Image Curation
 
+preferences = Preferences
+group_select = Species group
+order = Order
+taxonomic = Taxonomic
+alphabetic = Alphabetical
+taxa_preference = Finnish 
+taxa_finnish = Only Finnish
+taxa_all = All
+taxon_ranks_preference = Taxonomic ranks
+category_filter = Categories
+page_size = Page size
+image_size = Image size
+image_size_small = Small
+image_size_large = Large
+content_creation_preference = Content creation
+on = On
+off = Off
+
 admin_main = Admin | Image Management
 admin_single_title = Edit a single image
 admin_single_body = Enter the image URL (e.g., https://image.laji.fi/MM.123/kuva.jpg) or the image identifier (e.g., MM.123 or http://tun.fi/MM.123)

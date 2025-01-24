@@ -13,7 +13,7 @@ html, body {
 body {
 	font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
 	line-height: 1.6;
-	font-size: 100%;
+	font-size: 90%;
 }
 
 header {
@@ -144,19 +144,17 @@ footer {
 
 h2, h3, h4, h5 {
 	color: rgb(18, 65, 107);
-	margin-top: 0.5em;
+	margin: 0;
 }
 h2 {
-	margin-bottom: 1.0em;
+	margin-bottom: 0.2em;
 }
-h3, h4, h5 {
-	margin-bottom: 0.5em;
-}
+
 h3 {
 	text-decoration: underline;
 	text-underline-offset: 8px;
 	text-decoration-thickness: 3px;
-	margin-bottom: 1em;
+	margin-bottom: 0.3em;
 	font-size: 120%;
 }
 
@@ -335,27 +333,29 @@ li {
 }
 
 #saveButton {
-    color: green; /* White text */
-    font-weight: bold; /* Emphasize the text */
+    color: black; 
+    font-weight: bold;
     padding-left: 100px;
     padding-right: 100px;
+    background-color: rgba(107,189,87);
+    border: 1px solid green;
 }
 
 #saveButton:hover {
-    background-color: #45a049; /* Slightly brighter green on hover */
-    border-color: #2d7033; /* Adjust border color on hover */
+    background-color: #45a049;
+    border-color: #2d7033;
 }
 
 #saveButton:active {
-    background-color: #3E8E41; /* Darker green for active state */
+    background-color: #3E8E41;
     border-color: #2d7033;
 }
 
 #saveButton:disabled {
-    background-color: #ccc; /* Gray background for disabled state */
-    color: #666; /* Dim text color */
+    background-color: #ccc;
+    color: #666; 
     border-color: #aaa;
-    cursor: not-allowed; /* Indicate non-clickable state */
+    cursor: not-allowed;
 }
 
 .multi-input {
@@ -387,7 +387,10 @@ li {
   max-width: 25em;
   display: inline-block;
 }
-
+.image-upload-form fieldset {
+	padding: 10px;
+	text-align: center;
+}
 .image-upload-form #dropArea {
   padding: 20px;
   text-align: center;
@@ -416,4 +419,60 @@ li {
   margin-top: 20px;
   font-size: 14px;
   float: right;
+}
+.image-upload-form #saveButton {
+	font-size: 0.8em;
+}
+.preferences {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: inline-block;
+}
+.preferences .ui-icon {
+
+}
+.preferences #preferencesHeader {
+    font-size: 1em;
+    margin-bottom: 0.2em;
+    cursor: pointer;
+    border-radius: 5px 5px 0px 0px;
+    user-select: none;
+    line-height: 2em;
+    min-width: 30em;
+}
+
+.preferences #preferencesBody {
+    border-top: 1px solid #ccc;
+}
+
+.preferences-group {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.preferences .ui-checkboxradio-label {
+   display: block;
+   text-align: left;
+}
+
+.preferences fieldset {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.preferences fieldset legend {
+    font-weight: bold;
+    padding: 0 8px;
+    color: #555;
+}
+
+.preferences .fa-image-smallImage {
+	font-size: 70%;
+}
+.preferences .fa-image-largeImage {
+	font-size: 110%;
 }

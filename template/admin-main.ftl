@@ -13,13 +13,13 @@
 <h3>${text.admin_taxon_title}</h3>
 <p>${text.admin_taxon_body}:</p>
 <form action="${baseURL}/admin">
-	<input name="taxonSearch" type="text" size="50" id="taxon-autocomplete" placeholder="${text.taxon_autocomplete_placeholder}" /> <button>Valitse</button>
+	<input name="taxonSearch" type="text" size="50" id="taxon-autocomplete" placeholder="${text.taxon_autocomplete_placeholder}" /> <button class="ui-state-active">Valitse</button>
 </form>
 
 <h3>${text.admin_single_title}</h3>
 <p>${text.admin_single_body}:</p>
 <form action="${baseURL}/admin">
-	<input name="imageSearch" type="text" size="80" /> <button>Muokkaa</button>
+	<input name="imageSearch" type="text" size="80" /> <button class="ui-state-active">Muokkaa</button>
 </form>
 
 <h3>${text.admin_add_image_title}</h3>

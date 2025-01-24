@@ -180,6 +180,7 @@ $(document).ready(function() {
     $("#fileInput").on("change", function() {
         if (this.files.length > 0) {
             $("#dropText p").text(this.files[0].name);
+            $("#saveButton").button("enable");
         }
     });
 

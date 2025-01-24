@@ -8,7 +8,7 @@
     <#if page?starts_with("admin-")>
     	<link rel="stylesheet" href="${staticURL}/style_admin.css?${staticContentTimestamp}">
     </#if>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
     <link rel="icon" href="${staticURL}/laji.ico?${staticContentTimestamp}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdn.laji.fi/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
@@ -44,7 +44,7 @@
             <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
             <li><a href="${baseURL}/curate">${text.menu_curate}</a></li>
             <#if user?? && user.admin><li><a href="${baseURL}/admin">${text.menu_admin}</a></li></#if>
-            <li id="locale-menu-item"><span title="${text.change_language}">🌍</span>
+            <li id="locale-menu-item"><span title="${text.change_language}"><i class="fa fa-globe" aria-hidden="true"></i></span>
                 <select id="locale-selector" onchange="changeLocale()">
                     <option value="en" <#if locale == "en">selected="selected"</#if> >English</option>
                     <option value="fi" <#if locale == "fi">selected="selected"</#if> >Suomi</option>
