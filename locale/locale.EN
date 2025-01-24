@@ -20,6 +20,8 @@ menu_image_select = Image select
 
 error_header = Sorry! Something went wrong...
 
+browse_title = Browse | Browsing and content creation
+
 admin_main = Admin | Image Management
 admin_single_title = Edit a single image
 admin_single_body = Enter the image URL (e.g., https://image.laji.fi/MM.123/kuva.jpg) or the image identifier (e.g., MM.123 or http://tun.fi/MM.123)

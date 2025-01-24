@@ -20,6 +20,8 @@ menu_image_select = Kuvan valinta
 
 error_header = Pahoittelut! Jokin meni vikaan...
 
+browse_title = Selaa | Lajikuvien selaus ja sisällön tuottaminen
+
 admin_main = Admin | Kuvien ylläpito
 admin_single_title = Muokkaa yhtä kuvaa
 admin_single_body = Kirjoita kuvan osoite (esim https://image.laji.fi/MM.123/kuva.jpg) tai kuvan tunniste (esim MM.123 tai http://tun.fi/MM.123) tai jokin muu kuvassa esiintyvä teksti

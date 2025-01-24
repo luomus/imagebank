@@ -20,6 +20,8 @@ menu_image_select = Bildval
 
 error_header = Tyvärr! Något gick fel...
 
+browse_title = Bläddra | Bläddring och innehållsskapande
+
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild
 admin_single_body = Ange bildens adress (t.ex. https://image.laji.fi/MM.123/kuva.jpg) eller bildens identifierare (t.ex. MM.123 eller http://tun.fi/MM.123)
