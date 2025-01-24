@@ -24,6 +24,9 @@
 
     <script>
     	<#include "javascript.ftl">
+    	<#if page?starts_with("admin-")>
+    		<#include "javascript-admin.ftl">
+    	</#if>
     </script>
 </head>
 <body>
