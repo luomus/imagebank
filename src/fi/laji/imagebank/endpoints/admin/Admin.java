@@ -1,4 +1,4 @@
-package fi.laji.imagebank.endpoints;
+package fi.laji.imagebank.endpoints.admin;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 
+import fi.laji.imagebank.endpoints.ImageBankBaseServlet;
 import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.Image;
 import fi.luomus.commons.containers.rdf.Qname;

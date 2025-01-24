@@ -1,4 +1,4 @@
-package fi.laji.imagebank.endpoints;
+package fi.laji.imagebank.endpoints.admin;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;

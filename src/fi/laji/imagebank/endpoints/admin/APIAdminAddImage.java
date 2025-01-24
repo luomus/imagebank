@@ -1,4 +1,4 @@
-package fi.laji.imagebank.endpoints;
+package fi.laji.imagebank.endpoints.admin;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
