@@ -166,7 +166,7 @@ $(document).ready(function() {
     }).on("drop", function(event) {
         event.preventDefault();
         $(this).removeClass("hover");
-        var files = event.originalEvent.dataTransfer.files;
+        let files = event.originalEvent.dataTransfer.files;
         $("#fileInput")[0].files = files;
         $("#fileInput").trigger("change");
     }).on("click", function() {
@@ -187,7 +187,7 @@ $(document).ready(function() {
     $("#imageUploadForm").submit(function(event) {
         event.preventDefault(); 
         if ($("#fileInput").prop('files').length < 1) return false;
-        var formData = new FormData(this);
+        const formData = new FormData(this);
         console.log(formData);
         $.ajax({
             url: $(this).attr("action"),
