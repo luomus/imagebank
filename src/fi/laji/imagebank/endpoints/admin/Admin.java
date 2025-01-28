@@ -249,6 +249,7 @@ public class Admin extends ImageBankBaseServlet {
 		params(req, "tags").forEach(meta::addTag);
 		meta.setSortOrder(intV(req, "sortOrder"));
 		meta.setFullResolutionMediaAvailable(boolV(req, "fullResolutionMediaAvailable"));
+		meta.setSecret(boolV(req, "secret"));
 
 		String fi = param(req, "taxonDescriptionCaptionFI");
 		String sv = param(req, "taxonDescriptionCaptionSV");
