@@ -116,7 +116,7 @@ public class Admin extends ImageBankBaseServlet {
 		}
 		Taxon t = getTaxonomyDAO().getTaxon(taxonId);
 		getTaxonImageDAO().reloadImages(t);
-		boolean multiPrimary = t.getMultimediaInternal().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
+		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
 		return data.setViewName("admin-taxon")
 				.setData("taxon", t)
 				.setData(TAXON_SEARCH, taxonSearch)

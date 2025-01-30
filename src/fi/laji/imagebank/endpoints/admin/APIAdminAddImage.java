@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import fi.laji.imagebank.models.User;
+import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.ResponseData;
+import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.kuvapalvelu.model.Meta;
 
 @WebServlet(urlPatterns = {"/admin/add/*"})
@@ -35,16 +37,27 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 		InputStream stream = filePart.getInputStream();
 
-		Meta meta = meta(req);
+		String taxonId = req.getParameter("taxonId");
+		Meta meta = meta(req, taxonId);
 
 		String id = getMediaApiClient().uploadImage(stream, fileName, meta);
 
+		if (taxonId != null) {
+			reloadImages(taxonId);
+		}
 		getSession(req).setFlashSuccess(getText("admin_image_add_success", req));
 		return new ResponseData(id, "text/plain");
 	}
 
-	private Meta meta(HttpServletRequest req) {
-		String taxonId = req.getParameter("taxonId");
+	private void reloadImages(String taxonId) throws Exception {
+		getTaxonImageDAO().reloadImages(getTaxon(taxonId));
+	}
+
+	private Taxon getTaxon(String taxonId) throws Exception {
+		return getTaxonomyDAO().getTaxon(new Qname(taxonId));
+	}
+
+	private Meta meta(HttpServletRequest req, String taxonId) {
 		String secret = req.getParameter("secret");
 		Meta meta = new Meta();
 		if (taxonId != null) {

@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.zaxxer.hikari.HikariDataSource;
 
-import fi.luomus.commons.containers.Content;
 import fi.luomus.commons.containers.Image;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
@@ -78,7 +77,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 				if (imageChanges(prevImageId, imageId)) {
 					add(image, images, isSecret);
 					prevImageId = imageId;
-					image = new Image(imageId, Content.DEFAULT_DESCRIPTION_CONTEXT);
+					image = new Image(imageId);
 					isSecret = null;
 				}
 				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
@@ -98,7 +97,8 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 			List<Image> images = images(t.getId());
 			t.clearMultimedia();
 			for (Image i : images) {
-				t.addMultimedia(i, t);
+				i.setTaxon(t);
+				t.addMultimedia(i);
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException("Loading images for " + t.getId(), e);
@@ -138,7 +138,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 				if (imageChanges(prevImageId, imageId)) {
 					add(image, images, isSecret);
 					prevImageId = imageId;
-					image = new Image(imageId, Content.DEFAULT_DESCRIPTION_CONTEXT);
+					image = new Image(imageId);
 					isSecret = null;
 				}
 				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
