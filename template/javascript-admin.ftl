@@ -92,6 +92,10 @@ $(document).ready(function() {
 		$(".mass-tag-select-body").toggle();
 	});
      
+	$(".mass-tag-select select").each(function() {
+        $(this).val(''); // Clear the value
+    });
+    
 	const activeTags = {};
      
 	$(".mass-tag-select select").change(function() {
@@ -108,18 +112,20 @@ $(document).ready(function() {
    		$(".tag-hover").remove();
     	if (has) {
     		let hoverElement = $('<div class="tag-hover">${text.admin_click_to_add_tags}: </div>');
-    		hoverElement.html(hoverElement.html() + Object.values(activeTags).map(tag => tag.label).join(", "));
-    		$("body").append(hoverElement);
+        	Object.entries(activeTags).forEach(([name, tag]) => {
+            	hoverElement.append('<span class="tag" data-type="' + name + '">' + tag.label + '</span> ');
+        	});
+        	$("body").append(hoverElement);
     	}
 	});
 	
-    $(document).on("mousemove", function (event) {
-    	$(".tag-hover").css({
-        	top: event.clientY + 10 + "px", // 10px below the cursor
-        	left: event.clientX + 10 + "px" // 10px to the right of the cursor
-    	});
+	$(document).on("mousemove", function (event) {
+		$(".tag-hover").css({
+			top: event.pageY + 10 + "px",
+			left: event.pageX + 10 + "px"
+		});
 	});
-
+	
 	$(".taxon-image").click(function() {
     	if (Object.keys(activeTags).length === 0) return true;
 		const image = $(this);
