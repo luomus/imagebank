@@ -26,6 +26,6 @@ public class TestConfig {
 	}
 
 	private static File path(String folder) {
-		return new File(folder + File.separator + "app-conf" + File.separator + ImageBankBaseServlet.CONFIG_FILE);
+		return new File(folder + File.separator + "app-conf" + File.separator + "tests_" + ImageBankBaseServlet.CONFIG_FILE);
 	}
 }

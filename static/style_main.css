@@ -36,7 +36,7 @@ header a {
 
 #main-logo {
 	position: absolute;
-	top: 10px;
+	top: 8px;
 	left: 10px;
 	color: #e7f5fe;
   	font-weight: 700;
@@ -101,7 +101,6 @@ nav.main-nav ul li a:hover, footer ul li a:hover {
 #login-info {
 	background-color: rgba(250,250,250,0.8);
 	color: rgb(50,80,125);
-	font-size: 80%;
 	border: 1px solid rgba(100,100,100,0.1);
 	border-radius: 3px;
 	padding-left: 5px;
@@ -144,10 +143,11 @@ footer {
 
 h2, h3, h4, h5 {
 	color: rgb(18, 65, 107);
-	margin: 0;
+	margin-top: 0.4em;
+	margin-bottom: 0.2em;
 }
 h2 {
-	margin-bottom: 0.2em;
+	
 }
 
 h3 {

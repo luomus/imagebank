@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import fi.laji.imagebank.dao.DAO;
+import fi.laji.imagebank.dao.DAOImple;
 import fi.laji.imagebank.dao.DataSourceDefinition;
 import fi.laji.imagebank.dao.TaxonImageDAO;
 import fi.laji.imagebank.dao.TaxonImageDAOImple;
 import fi.laji.imagebank.dao.TaxonomyDAOImple;
+import fi.laji.imagebank.models.Preferences;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.KeyValuePair;
@@ -75,6 +78,10 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			}
 		}
 		return dataSource;
+	}
+
+	protected DAO getDAO() {
+		return new DAOImple(getDataSource());
 	}
 
 	private static HikariDataSource triplestoreDataSource = null;
@@ -144,6 +151,14 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 				User user = (User) session.getObject(Constant.USER);
 				if (user != null) {
 					responseData.setData(Constant.USER, user);
+					Preferences preferences = (Preferences) session.getObject(Constant.PREFERENCES);
+					if (preferences == null) {
+						preferences = getDAO().getPreferences(user.getId().toString());
+						if (preferences != null) {
+							session.setObject(Constant.PREFERENCES, preferences);
+						}
+					}
+					if (preferences != null) responseData.setData(Constant.PREFERENCES, preferences);
 				}
 			}
 			String flashError = session.getFlashError();

@@ -53,7 +53,7 @@ ErrorReporting_SMTP_Subject =
 #Imagebank internal database
 DBdriver = oracle.jdbc.OracleDriver
 DBurl = jdbc:oracle:thin:@//xxx:1521/xxx
-DBusername = 
+DBusername = imagebank_tests|dev|production
 DBpassword = 
 
 #Taxonomy database (triplestore)
@@ -68,7 +68,7 @@ TriplestoreUsername =
 TriplestorePassword = 
 
 #MediaAPI HTTP Client
-MediaAPI_DBdriver = not-used
+MediaAPI_DBdriver = driver-not-used-but-some-value-required-here
 MediaAPI_DBurl = https://...
 MediaAPI_DBusername = 
 MediaAPI_DBpassword = 

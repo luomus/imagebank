@@ -17,14 +17,15 @@
         <fieldset>
         	<legend>${text.group_select}</legend>
         	<select id="groupSelect" name="group">
-            	<optgroup label="Vertebrates">
-                	<option value="mammals" selected>Mammals</option>
-                	<option value="birds">Birds</option>
-            	</optgroup>
-            	<optgroup label="Invertebrates">
-                	<option value="insects">Insects</option>
-                	<option value="mollusks">Mollusks</option>
-            	</optgroup>
+            	<#assign first = true>
+            	<#list taxonGroups as group>
+            		<#if !group.hasParents()>
+            			<#if first><#assign first = false><#else></optgroup></#if>
+            			<optgroup label="${group.name.forLocale(locale)}">
+            		</#if>
+            		<option value="${group.qname}">${group.name.forLocale(locale)}</option>
+				</#list>
+				</optgroup>
         	</select>
         </fieldset>
     </div>
@@ -108,5 +109,7 @@
     </div>
    	</div>
 </section>
-			
+
+
+
 <#include "footer.ftl">
