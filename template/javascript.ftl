@@ -8,23 +8,6 @@ $(document).ready(function() {
     	}	
 	});
 	
-	$("#preferences select").not("#groupSelect").chosen({width: "15em"});
-	$("#preferences #groupSelect").chosen({width: "25em"});
-	
-	$("#preferences input[type='checkbox']").checkboxradio();
-	$("#preferences input[type='radio']").checkboxradio();
-	
-	$("#preferencesHeader").click(function() {
-		togglePreferences();
-		setPreference("showPreferences", !$("#preferences").hasClass("minimized")); 
-	});
-	
-	$("#preferences select, #preferences input[type='radio']").on('change', function() {
-		const preference = $(this).attr('name');
-		const value = $(this).val();
-		setPreference(preference, value);
-	});
-	
 	$("#taxon-autocomplete").autocomplete({
 		source: function (request, response) {
 			$.ajax({
@@ -65,6 +48,13 @@ function changeLocale() {
 	});
 }
 
+function togglePreferences() {
+	$("#preferencesBody").toggle();
+	$("#preferences").toggleClass("minimized");
+}
+
+
+
 <#if preferences??>
 	let preferences = JSON.parse('${preferences.json}');
 	
@@ -97,20 +87,78 @@ function changeLocale() {
 </#if>
 	
 	function getPreference(preference) {
-		return preferences[preference] || "null";
+		return preferences[preference] || false;
 	}
 	function getBooleanPreference(preference) {
-		return preferences[preference] === undefined ? true : preferences[preference];
+		if (preferences[preference] === undefined) return true;
+    	return preferences[preference] === true || preferences[preference] === "true";
 	}
-
-	function togglePreferences() {
-		$("#preferencesBody").toggle();
-		$("#preferences").toggleClass("minimized");
+	function getArrayPreference(preference) {
+		let arrPref = preferences[preference]; 
+		if (arrPref === undefined) return [];
+		if (Array.isArray(arrPref)) return arrPref;
+    	return preferences[preference].split(',');
 	}
 	
+<#if page == "browse">
+
 $(document).ready(function() {
+
+	$("#preferencesHeader").click(function() {
+		togglePreferences();
+		setPreference("showPreferences", !$("#preferences").hasClass("minimized")); 
+	});
+	
+	$("#preferences select, #preferences input[type='radio']").on('change', function() {
+		const preference = $(this).attr('name');
+		const value = $(this).val();
+		setPreference(preference, value);
+	});
+
 	if (!getBooleanPreference("showPreferences")) {
 		togglePreferences();
 	}
+	
+	if (getPreference("group")) {
+		$("#groupSelect").val(getPreference("group"));
+	}
+	
+	if (getPreference("order")) {
+		$("#"+getPreference("order")).prop('checked', true);
+	}
+	
+	if (getPreference("taxa")) {
+		$("#"+getPreference("taxa")).prop('checked', true);
+	}
+	
+	if (getArrayPreference("taxonRanks")) {
+		let selectedRanks = getArrayPreference("taxonRanks");
+		if (selectedRanks.length !== 0) {
+			$("#taxonRankSelect").val(selectedRanks);
+		}
+	}
+	
+	if (getPreference("pageSize")) {
+		$("#pageSizeSelect").val(getPreference("pageSize"));
+	}
+	
+	if (getPreference("imageSize")) {
+		$("#"+getPreference("imageSize")).prop('checked', true);
+	}
+	
+	if (getPreference("contentCreation")) {
+		$("#"+getPreference("contentCreation")).prop('checked', true);
+	}
+	
+	$("#preferences select").not("#groupSelect").chosen({width: "15em"});
+	$("#preferences #groupSelect").chosen({width: "25em"});
+	
+	$("#preferences input[type='checkbox']").checkboxradio();
+	$("#preferences input[type='radio']").checkboxradio();
+	
+    
 	$("#preferences").show();
+	
 });
+
+</#if>

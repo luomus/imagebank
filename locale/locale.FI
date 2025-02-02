@@ -24,7 +24,8 @@ browse_title = Selaa | Lajikuvat ja sisällöntuotanto
 curate_title = Laadunvalvonta | Kuvien kuratointi
 
 preferences = Asetukset
-group_select = Lajiryhmä
+group = Eliöryhmä
+group_select = Valitse ensin eliöryhmä
 order = Järjestys
 taxonomic = Taksonominen
 alphabetic = Aakkosjärjestys

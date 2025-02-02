@@ -24,7 +24,8 @@ browse_title = Bläddra | Bläddring och innehållsskapande
 curate_title = Kvalitetskontroll | Bildkuratering
 
 preferences = Inställningar
-group_select = Artgrupp
+group = Organismgrupp
+group_select = Välj en organismgrupp  
 order = Ordning
 taxonomic = Taxonomisk
 alphabetic = Alfabetisk

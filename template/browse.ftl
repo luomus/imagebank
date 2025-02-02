@@ -15,8 +15,8 @@
 	<div id="preferencesBody">
     <div class="preferences-group">
         <fieldset>
-        	<legend>${text.group_select}</legend>
-        	<select id="groupSelect" name="group">
+        	<legend>${text.group}</legend>
+        	<select id="groupSelect" name="group" data-placeholder="${text.group_select}">
             	<#assign first = true>
             	<#list taxonGroups as group>
             		<#if !group.hasParents()>
@@ -53,9 +53,9 @@
     <div class="preferences-group">
     	<fieldset>
     		<legend>${text.taxon_ranks_preference}</legend>
-			<select id="taxonRankSelect" name="taxonRanks" multiple>
+			<select id="taxonRankSelect" name="taxonRanks" multiple data-placeholder=" ">
 				<#list speciesTaxonRanks?keys as rank>
-        	   	<option value="${rank}" <#if defaultTaxonRanks?seq_contains(rank)>selected="selected"</#if>>${speciesTaxonRanks[rank].forLocale(locale)?html}</option>
+        	   	<option value="${rank}" <#if defaultTaxonRanks?seq_contains(rank)>selected="selected"</#if>>${(speciesTaxonRanks[rank].forLocale(locale)!rank)?html}</option>
         	   	</#list>
         	</select>
         </fieldset>
@@ -68,10 +68,10 @@
     		<label for="category_filter_primary">Pääkuva</label>
     		<input type="checkbox" name="category_filter_primary" id="category_filter_primary" checked>
     		
-    		<label for="category_filter_adult">Aikuiset</label>
+    		<label for="category_filter_adult">Aikuiset TODO</label>
     		<input type="checkbox" name="category_filter_adult" id="category_filter_adult" checked>
     		
-    		<label for="category_filter_larva">Toukat</label>
+    		<label for="category_filter_larva">Toukat TODO</label>
     		<input type="checkbox" name="category_filter_larva" id="category_filter_larva" checked>
         </fieldset>
     </div>
@@ -90,20 +90,20 @@
     <div class="preferences-group">
     	<fieldset>
     		<legend>${text.image_size}</legend>
-    		<label title="${text.image_size_large}" for="largeImage"><i class="fa fa-image fa-image-largeImage" aria-hidden="true"></i></label> 
-    		<input type="radio" name="imageSize" id="largeImage" value="large_image" checked>
-    		<label title="${text.image_size_small}" for="smallImage"><i class="fa fa-image fa-image-smallImage" aria-hidden="true"></i></label>
-    		<input type="radio" name="imageSize" id="smallImage" value="small_image">
+    		<label title="${text.image_size_large}" for="large_image"><i class="fa fa-image fa-image-largeImage" aria-hidden="true"></i></label> 
+    		<input type="radio" name="imageSize" id="large_image" value="large_image" checked>
+    		<label title="${text.image_size_small}" for="small_image"><i class="fa fa-image fa-image-smallImage" aria-hidden="true"></i></label>
+    		<input type="radio" name="imageSize" id="small_image" value="small_image">
     	</fieldset>
     </div>
 
     <div class="preferences-group">
         <fieldset>
             <legend>${text.content_creation_preference}</legend>
-            <label for="contentCreationOn">${text.on}</label>
-    		<input type="radio" name="contentCreation" id="contentCreationOn" value="on" checked>
-    		<label for="contentCreationOff">${text.off}</label>
-    		<input type="radio" name="contentCreation" id="contentCreationOff" value="off">
+            <label for="cc_on">${text.on}</label>
+    		<input type="radio" name="contentCreation" id="cc_on" value="cc_on" checked>
+    		<label for="cc_off">${text.off}</label>
+    		<input type="radio" name="contentCreation" id="cc_off" value="cc_off">
         </fieldset>
     </div>
    	</div>

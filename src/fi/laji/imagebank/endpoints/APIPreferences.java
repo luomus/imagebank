@@ -17,7 +17,7 @@ public class APIPreferences extends APIBaseServlet {
 	private static final long serialVersionUID = 4529091225338013409L;
 
 	private static final Set<Character> ALLOWED =
-			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_".chars().mapToObj(c -> (char) c).collect(Collectors.toSet());
+			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_,".chars().mapToObj(c -> (char) c).collect(Collectors.toSet());
 
 	@Override
 	protected ResponseData processPost(HttpServletRequest req, HttpServletResponse res) throws Exception {
