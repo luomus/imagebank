@@ -209,15 +209,24 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		}
 	}
 
+	@Override
+	protected String getLocale(HttpServletRequest req) {
+		return getSetLocale(req, getSession(req, false));
+	}
+
+	protected String getLocaleParameter(HttpServletRequest req) {
+		return super.getLocale(req);
+	}
+
 	protected String getText(String text, HttpServletRequest req) {
 		return getLocalizedTexts().getText(text, getSetLocale(req, getSession(req, false)));
 	}
 
 	private String getSetLocale(HttpServletRequest req, SessionHandler session) {
-		if (!session.hasSession()) return getLocale(req);
+		if (!session.hasSession()) return super.getLocale(req);
 		String sessionLocale = session.get("locale");
 		if (sessionLocale == null) {
-			sessionLocale = getLocale(req);
+			sessionLocale = super.getLocale(req);
 			session.setObject("locale", sessionLocale);
 		}
 		return sessionLocale;
@@ -273,6 +282,10 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		} catch (Exception e1) {
 			throw new ServletException(e);
 		}
+	}
+
+	protected boolean notGiven(String s) {
+		return s == null || s.isEmpty();
 	}
 
 }

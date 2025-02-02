@@ -42,6 +42,7 @@ content_creation_preference = Innehållsskapande
 on = På
 off = Av
 close = Stäng
+no_matches = Inga resultat matchar
 
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild

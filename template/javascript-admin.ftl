@@ -85,8 +85,8 @@ $(document).ready(function() {
     	.after($("<div class='time-format-help'><span class='date-part'>YYYY-MM-DD</span><b>T</b><span class='time-part'>hh:mm:ss</span>.000+0Z:00</div>"))
     	.attr('placeholder', 'YYYY-MM-DDThh:mm:ss.000+0Z:00');
     
-	$(".admin-image-edit select").not(".bool-select").chosen({width: "30em"}); 
-	$(".admin-image-edit select.bool-select").chosen({width: "10em"});
+	$(".admin-image-edit select").not(".bool-select").chosen({width: "30em", no_results_text: "${text.no_matches}"}); 
+	$(".admin-image-edit select.bool-select").chosen({width: "10em", no_results_text: "${text.no_matches}"});
      
 	$(".mass-tag-select-header").click(function() {
 		$(".mass-tag-select-body").toggle();

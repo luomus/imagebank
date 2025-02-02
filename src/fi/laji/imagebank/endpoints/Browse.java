@@ -1,6 +1,5 @@
 package fi.laji.imagebank.endpoints;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.InformalTaxonGroup;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.services.ResponseData;
@@ -22,13 +22,64 @@ public class Browse extends ImageBankBaseServlet {
 
 	@Override
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		Collection<InformalTaxonGroup> groups = getTaxonomyDAO().getInformalTaxonGroups().values();
-		// TODO REMOVE SOME groups here
+		String groupId = getId(req);
+		if (notGiven(groupId)) {
+			User user = getUser(req);
+			if (user != null) {
+				groupId = getDAO().getPreference(user.getId().toString(), "group");
+			}
+			if (groupId != null) {
+				InformalTaxonGroup group = getTaxonomyDAO().getInformalTaxonGroups().get(groupId);
+				if (group != null) {
+					return redirectTo(getConfig().baseURL()+"/"+slug(group, req) +"/");
+				}
+
+			}
+		}
+
+		InformalTaxonGroup group = getTaxonomyDAO().getInformalTaxonGroups().get(groupId);
+
+		if (group == null) {
+			return initResponseData(req).setViewName("browse-groupselect")
+					.setData("taxonGroups", getTaxonomyDAO().getInformalTaxonGroups().values());
+		}
+
+		String path = req.getPathInfo();
+		if (Utils.countNumberOf("/", path) <= 1) {
+			String slug = slug(group, req);
+			return redirectTo(getConfig().baseURL()+"/browse/"+slug+"/"+groupId);
+		}
 
 		return initResponseData(req).setViewName("browse")
-				.setData("taxonGroups", groups)
+				.setData("taxonGroups", getTaxonomyDAO().getInformalTaxonGroups().values())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
 				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS);
+	}
+
+	private String slug(InformalTaxonGroup group, HttpServletRequest req) {
+		if (group == null) return null;
+		String name = group.getName(getLocale(req));
+		String slug = name.toLowerCase()
+				.replace(" and ", "-")
+				.replace(" ja ", "-")
+				.replace(" och ", "-")
+				.replace(" ym.", "-")
+				.replace(" ", "-")
+				.replace("(", "-")
+				.replace(")", "-")
+				.replace("ä", "a")
+				.replace("ö", "o")
+				.replace("å", "a")
+				.replace("é", "e")
+				.replace(",", "-")
+				.replace(".", "-");
+		while (slug.contains("--")) {
+			slug = slug.replace("--", "-");
+		}
+		while (slug.endsWith("-")) {
+			slug = slug.substring(0, slug.length()-1);
+		}
+		return slug;
 	}
 
 	private static Map<String, LocalizedText> speciesTaxonRanks = null;

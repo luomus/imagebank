@@ -13,7 +13,7 @@ public class APISetLocale extends APIBaseServlet {
 
 	@Override
 	protected ResponseData processPost(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		String locale = getLocale(req);
+		String locale = getLocaleParameter(req);
 		getSession(req).setObject("locale", locale);
 		return new ResponseData("ok", "text/plain");
 	}

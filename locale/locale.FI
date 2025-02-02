@@ -42,6 +42,7 @@ content_creation_preference = Sisällöntuotto
 on = Päällä
 off = Pois päältä
 close = Sulje
+no_matches = Ei osumia termillä
 
 admin_main = Admin | Kuvien ylläpito
 admin_single_title = Muokkaa yhtä kuvaa

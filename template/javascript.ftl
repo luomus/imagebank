@@ -32,7 +32,15 @@ $(document).ready(function() {
 			return false; // Prevent default autocomplete behavior
 		}
 	});
-    
+   
+    if (getPreference("group")) {
+    	let group = getPreference("group");
+    	let browse = $("#menu_browse");
+    	let curate =  $("#menu_curate");
+		$(browse).attr('href', browse.attr('href')+'/'+group);
+		$(curate).attr('href', curate.attr('href')+'/'+group);
+	}
+            
 });
 
 function changeLocale() {
@@ -61,18 +69,17 @@ function togglePreferences() {
 	localStorage.setItem("userPreferences", JSON.stringify(preferences));
 	
 	function setPreference(preference, value) {
-		$.ajax({
-            	url: '${baseURL}/api/preferences?preference=' +encodeURIComponent(preference)+ '&value=' +encodeURIComponent(value),
-            	type: 'POST',
-            	success: function() {
-                	preferences[preference] = value;
-            	},
-            	error: function() {
-                	// Refresh the page to display the failure reason via flash message
-					window.scrollTo(0, 0);
-        			window.location.reload();
-            	}
-		});
+		return $.ajax({
+        	url: '${baseURL}/api/preferences',
+        	type: 'POST',
+        	data: { preference, value }
+    	}).done(function() {
+        	preferences[preference] = value;
+    	}).fail(function() {
+        	// Refresh the page to display the failure reason via flash message
+        	window.scrollTo(0, 0);
+        	window.location.reload();
+    	});
 	}
 <#else>
 	let preferences = JSON.parse(localStorage.getItem("userPreferences"));
@@ -83,6 +90,7 @@ function togglePreferences() {
 	function setPreference(preference, value) {
 		preferences[preference] = value;
 		localStorage.setItem("userPreferences", JSON.stringify(preferences));
+		return $.Deferred().resolve();
 	}
 </#if>
 	
@@ -101,64 +109,5 @@ function togglePreferences() {
 	}
 	
 <#if page == "browse">
-
-$(document).ready(function() {
-
-	$("#preferencesHeader").click(function() {
-		togglePreferences();
-		setPreference("showPreferences", !$("#preferences").hasClass("minimized")); 
-	});
-	
-	$("#preferences select, #preferences input[type='radio']").on('change', function() {
-		const preference = $(this).attr('name');
-		const value = $(this).val();
-		setPreference(preference, value);
-	});
-
-	if (!getBooleanPreference("showPreferences")) {
-		togglePreferences();
-	}
-	
-	if (getPreference("group")) {
-		$("#groupSelect").val(getPreference("group"));
-	}
-	
-	if (getPreference("order")) {
-		$("#"+getPreference("order")).prop('checked', true);
-	}
-	
-	if (getPreference("taxa")) {
-		$("#"+getPreference("taxa")).prop('checked', true);
-	}
-	
-	if (getArrayPreference("taxonRanks")) {
-		let selectedRanks = getArrayPreference("taxonRanks");
-		if (selectedRanks.length !== 0) {
-			$("#taxonRankSelect").val(selectedRanks);
-		}
-	}
-	
-	if (getPreference("pageSize")) {
-		$("#pageSizeSelect").val(getPreference("pageSize"));
-	}
-	
-	if (getPreference("imageSize")) {
-		$("#"+getPreference("imageSize")).prop('checked', true);
-	}
-	
-	if (getPreference("contentCreation")) {
-		$("#"+getPreference("contentCreation")).prop('checked', true);
-	}
-	
-	$("#preferences select").not("#groupSelect").chosen({width: "15em"});
-	$("#preferences #groupSelect").chosen({width: "25em"});
-	
-	$("#preferences input[type='checkbox']").checkboxradio();
-	$("#preferences input[type='radio']").checkboxradio();
-	
-    
-	$("#preferences").show();
-	
-});
-
+	<#include "javascript-preferences.ftl">
 </#if>

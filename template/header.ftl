@@ -41,8 +41,8 @@
 
     <nav class="main-nav" role="navigation" aria-label="Main Navigation">
         <ul>
-            <li><a href="${baseURL}/browse">${text.menu_browse}</a></li>
-            <li><a href="${baseURL}/curate">${text.menu_curate}</a></li>
+            <li><a id="menu_browse" href="${baseURL}/browse">${text.menu_browse}</a></li>
+            <li><a id="menu_curate" href="${baseURL}/curate">${text.menu_curate}</a></li>
             <#if user?? && user.admin><li><a href="${baseURL}/admin">${text.menu_admin}</a></li></#if>
             <li id="locale-menu-item"><span title="${text.change_language}"><i class="fa fa-globe" aria-hidden="true"></i></span>
                 <select id="locale-selector" onchange="changeLocale()">

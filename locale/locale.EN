@@ -42,6 +42,7 @@ content_creation_preference = Content creation
 on = On
 off = Off
 close = Close
+no_matches = No results match
 
 admin_main = Admin | Image Management
 admin_single_title = Edit a single image
