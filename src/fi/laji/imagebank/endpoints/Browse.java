@@ -38,7 +38,6 @@ public class Browse extends ImageBankBaseServlet {
 			Map<String, LocalizedText> taxonRanks = new LinkedHashMap<>();
 			boolean include = false;
 			for (Map.Entry<String, LocalizedText> e : getTaxonomyDAO().getTaxonRankLabels().entrySet()) {
-				System.out.println(e.getKey());
 				if (e.getKey().equals("MX.aggregate")) include = true;
 				if (include) {
 					taxonRanks.put(e.getKey(), e.getValue());
