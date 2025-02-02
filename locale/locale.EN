@@ -40,6 +40,7 @@ image_size_large = Large
 content_creation_preference = Content creation
 on = On
 off = Off
+close = Close
 
 admin_main = Admin | Image Management
 admin_single_title = Edit a single image

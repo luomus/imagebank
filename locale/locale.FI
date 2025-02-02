@@ -40,6 +40,7 @@ image_size_large = Suuri
 content_creation_preference = Sisällöntuotto
 on = Päällä
 off = Pois päältä
+close = Sulje
 
 admin_main = Admin | Kuvien ylläpito
 admin_single_title = Muokkaa yhtä kuvaa

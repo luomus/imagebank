@@ -8,14 +8,15 @@ $(document).ready(function() {
     	}	
 	});
 	
-	$("#preferences select").not("#groupSelect").chosen({width: "8em"});
+	$("#preferences select").not("#groupSelect").chosen({width: "15em"});
 	$("#preferences #groupSelect").chosen({width: "25em"});
 	
 	$("#preferences input[type='checkbox']").checkboxradio();
 	$("#preferences input[type='radio']").checkboxradio();
 	
 	$("#preferencesHeader").click(function() {
-		$("#preferencesBody").toggle();
+		togglePreferences();
+		setPreference("showPreferences", !$("#preferences").hasClass("minimized")); 
 	});
 	
 	$("#preferences select, #preferences input[type='radio']").on('change', function() {
@@ -66,7 +67,9 @@ function changeLocale() {
 
 <#if preferences??>
 	let preferences = JSON.parse('${preferences.json}');
-
+	
+	localStorage.setItem("userPreferences", JSON.stringify(preferences));
+	
 	function setPreference(preference, value) {
 		$.ajax({
             	url: '${baseURL}/api/preferences?preference=' +encodeURIComponent(preference)+ '&value=' +encodeURIComponent(value),
@@ -92,3 +95,22 @@ function changeLocale() {
 		localStorage.setItem("userPreferences", JSON.stringify(preferences));
 	}
 </#if>
+	
+	function getPreference(preference) {
+		return preferences[preference] || "null";
+	}
+	function getBooleanPreference(preference) {
+		return preferences[preference] === undefined ? true : preferences[preference];
+	}
+
+	function togglePreferences() {
+		$("#preferencesBody").toggle();
+		$("#preferences").toggleClass("minimized");
+	}
+	
+$(document).ready(function() {
+	if (!getBooleanPreference("showPreferences")) {
+		togglePreferences();
+	}
+	$("#preferences").show();
+});

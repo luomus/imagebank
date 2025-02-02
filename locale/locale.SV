@@ -40,6 +40,7 @@ image_size_large = Stor
 content_creation_preference = Innehållsskapande
 on = På
 off = Av
+close = Stäng
 
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild

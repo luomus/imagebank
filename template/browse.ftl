@@ -10,8 +10,8 @@
 		
 <h2>${text.browse_title}</h2>
 
-<section id="preferences" class="preferences">
-    <div id="preferencesHeader"><span class="ui-icon ui-icon-gear"></span>  &nbsp; ${text.preferences}<span class="ui-icon ui-icon-caret-2-n-s"></span></div>
+<section id="preferences" class="preferences" style="display: none;">
+    <div id="preferencesHeader"><span class="ui-icon ui-icon-gear"></span>  &nbsp; ${text.preferences} &nbsp; <button class="button" style="float: right;" >${text.close}</button></div>
 	<div id="preferencesBody">
     <div class="preferences-group">
         <fieldset>
@@ -54,10 +54,9 @@
     	<fieldset>
     		<legend>${text.taxon_ranks_preference}</legend>
 			<select id="taxonRankSelect" name="taxonRanks" multiple>
-        	   	<option value="aggre" selected>aggr</option>
-            	<option value="species" selected>species</option>
-            	<option value="subspecies">subspecies</option>
-            	<option value="variety">variety</option>
+				<#list speciesTaxonRanks?keys as rank>
+        	   	<option value="${rank}" <#if defaultTaxonRanks?seq_contains(rank)>selected="selected"</#if>>${speciesTaxonRanks[rank].forLocale(locale)?html}</option>
+        	   	</#list>
         	</select>
         </fieldset>
     </div>
@@ -92,9 +91,9 @@
     	<fieldset>
     		<legend>${text.image_size}</legend>
     		<label title="${text.image_size_large}" for="largeImage"><i class="fa fa-image fa-image-largeImage" aria-hidden="true"></i></label> 
-    		<input type="radio" name="imageSize" id="largeImage" value="largeImage" checked>
+    		<input type="radio" name="imageSize" id="largeImage" value="large_image" checked>
     		<label title="${text.image_size_small}" for="smallImage"><i class="fa fa-image fa-image-smallImage" aria-hidden="true"></i></label>
-    		<input type="radio" name="imageSize" id="smallImage" value="smallImage">
+    		<input type="radio" name="imageSize" id="smallImage" value="small_image">
     	</fieldset>
     </div>
 

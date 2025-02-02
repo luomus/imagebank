@@ -154,7 +154,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 					Preferences preferences = (Preferences) session.getObject(Constant.PREFERENCES);
 					if (preferences == null) {
 						preferences = getDAO().getPreferences(user.getId().toString());
-						if (preferences != null) {
+						if (preferences != null && !preferences.isEmpty()) {
 							session.setObject(Constant.PREFERENCES, preferences);
 						}
 					}

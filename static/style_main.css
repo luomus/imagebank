@@ -430,9 +430,13 @@ li {
     background-color: #f9f9f9;
     display: inline-block;
 }
-.preferences .ui-icon {
-
+.preferences.minimized {
+	float: right;
 }
+.preferences.minimized .button {
+	display: none;
+}
+
 .preferences #preferencesHeader {
     font-size: 1em;
     margin-bottom: 0.2em;
@@ -440,7 +444,6 @@ li {
     border-radius: 5px 5px 0px 0px;
     user-select: none;
     line-height: 2em;
-    min-width: 30em;
 }
 
 .preferences #preferencesBody {

@@ -23,4 +23,8 @@ public class Preferences implements Serializable {
 		return this;
 	}
 
+	public boolean isEmpty() {
+		return preferences.isEmpty();
+	}
+
 }
