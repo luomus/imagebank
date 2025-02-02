@@ -1,8 +1,11 @@
 package fi.laji.imagebank.endpoints;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.InformalTaxonGroup;
 import fi.luomus.commons.containers.LocalizedText;
+import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.utils.Utils;
 
@@ -41,7 +45,7 @@ public class Browse extends ImageBankBaseServlet {
 
 		if (group == null) {
 			return initResponseData(req).setViewName("browse-groupselect")
-					.setData("taxonGroups", getTaxonomyDAO().getInformalTaxonGroups().values());
+					.setData("taxonGroups", filteredTaxonGroups());
 		}
 
 		String path = req.getPathInfo();
@@ -51,7 +55,7 @@ public class Browse extends ImageBankBaseServlet {
 		}
 
 		return initResponseData(req).setViewName("browse")
-				.setData("taxonGroups", getTaxonomyDAO().getInformalTaxonGroups().values())
+				.setData("taxonGroups", filteredTaxonGroups())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
 				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS);
 	}
@@ -97,6 +101,40 @@ public class Browse extends ImageBankBaseServlet {
 			speciesTaxonRanks = taxonRanks;
 		}
 		return speciesTaxonRanks;
+	}
+
+	private static Collection<InformalTaxonGroup> groups = null;
+
+	private Collection<InformalTaxonGroup> filteredTaxonGroups() throws Exception {
+		Map<String, InformalTaxonGroup> allGroups = getTaxonomyDAO().getInformalTaxonGroups();
+		if (groups == null) {
+			Map<String, InformalTaxonGroup> map = new LinkedHashMap<>(allGroups);
+			remove("MVL.1141", map, allGroups); // petolinnut ja pöllöt
+			removeChild("MVL.343", map, allGroups); // putkilokasvit children
+			removeChild("MVL.2", map, allGroups); // nisäkkäät children
+			removeChild("MVL.27", map, allGroups); // kalat children
+			groups = map.values();
+		}
+		return groups;
+	}
+
+	private void remove(String id, Map<String, InformalTaxonGroup> map, Map<String, InformalTaxonGroup> allGroups) {
+		map.remove(id);
+		removeChild(id, map, allGroups);
+	}
+
+	private void removeChild(String id, Map<String, InformalTaxonGroup> map, Map<String, InformalTaxonGroup> allGroups) {
+		map.entrySet().removeIf(e -> allParents(e.getValue(), allGroups).contains(id));
+	}
+
+	private Set<String> allParents(InformalTaxonGroup group, Map<String, InformalTaxonGroup> allGroups) {
+		Set<String> parents = new HashSet<>();
+		if (group == null) return parents;
+		for (Qname parentId : group.getParents()) {
+			parents.add(parentId.toString());
+			parents.addAll(allParents(allGroups.get(parentId.toString()), allGroups));
+		}
+		return parents;
 	}
 
 }
