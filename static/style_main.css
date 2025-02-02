@@ -479,3 +479,7 @@ li {
 .preferences .fa-image-largeImage {
 	font-size: 110%;
 }
+
+.preferences .chosen-container .chosen-results {
+	max-height: 35em;
+}
