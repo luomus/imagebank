@@ -126,6 +126,8 @@ group_unmodifiable = Unmodifiable fields
 label_sourceSystem = Source system
 label_uploadedBy = Uploaded By
 label_uploadDateTime = Upload Date Time
+label_modifiedBy = Modified By
+label_modifiedDateTime = Modified Date Time
 label_secret = Secret
 label_originalFilename = Original Filename
 

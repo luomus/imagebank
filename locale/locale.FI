@@ -126,5 +126,7 @@ group_unmodifiable = Ei-muokattavat kentät
 label_sourceSystem = Lähdejärjestelmä
 label_uploadedBy = Lataaja
 label_uploadDateTime = Latausajankohta
+label_modifiedBy = Muokkaaja
+label_modifiedDateTime = Muokkausajankohta
 label_secret = Salainen
 label_originalFilename = Alkuperäinen tiedostonimi

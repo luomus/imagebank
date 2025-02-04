@@ -126,5 +126,7 @@ group_unmodifiable = Oföränderliga fält
 label_sourceSystem = Källsystem
 label_uploadedBy = Uppladdad av
 label_uploadDateTime = Uppladdningstidpunkt
+label_modifiedBy = Ändrad av  
+label_modifiedDateTime = Ändringstidpunkt
 label_secret = Hemlig
 label_originalFilename = Ursprungligt filnamn

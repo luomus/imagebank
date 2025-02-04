@@ -83,6 +83,12 @@
         	<label for="uploadDateTime">${text.label_uploadDateTime}:</label>
         	<span>${(meta.uploadDateTime!"")?html}</span><br>
 
+			<label for="modifiedBy">${text.label_modifiedBy}:</label>
+        	<span>${(meta.modifiedBy!"")?html}</span><br>
+        
+        	<label for="modifiedDateTime">${text.label_modifiedDateTime}:</label>
+        	<span>${(meta.modifiedDateTime!"")?html}</span><br>
+        	
         	<label for="originalFilename">${text.label_originalFilename}:</label>
         	<span>${(meta.originalFilename!"")?html}</span><br>
     	</fieldset>

@@ -230,12 +230,14 @@ public class Admin extends ImageBankBaseServlet {
 
 	private Meta parseMeta(HttpServletRequest req) {
 		Meta meta = new Meta();
+
+		User user = getUser(req);
+		meta.setModifiedBy(user.getId().toString());
+
 		meta.getCapturers().addAll(params(req, "capturers"));
 		meta.setRightsOwner(param(req, "rightsOwner"));
 		meta.setLicense(param(req, "license"));
 		meta.setCaptureDateTime(date(req, "captureDateTime"));
-		meta.setUploadedBy(param(req, "uploadedBy"));
-		meta.setUploadDateTime(date(req, "uploadDateTime"));
 		params(req, "taxonIds").forEach(meta.getIdentifications()::addTaxonId);
 		params(req, "verbatim").forEach(meta.getIdentifications()::addVerbatim);
 		params(req, "primaryForTaxon").forEach(meta::addPrimaryForTaxon);
