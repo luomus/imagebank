@@ -32,6 +32,7 @@ import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
 
 public abstract class ImageBankBaseServlet extends BaseServlet {
 
+	private static final int MONTH = 60*24*30;
 	private static final Qname MM_TYPE_ENUM = new Qname("MM.typeEnum");
 	private static final Qname MM_SIDE_ENUM = new Qname("MM.sideEnum");
 	private static final Qname MY_SEXES = new Qname("MY.sexes");
@@ -147,6 +148,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		String locale = getSetLocale(req, session);
 		ResponseData responseData = new ResponseData().setDefaultLocale(locale);
 		if (session.hasSession()) {
+			session.setTimeout(MONTH);
 			if (session.isAuthenticatedFor(getConfig().systemId())) {
 				User user = (User) session.getObject(Constant.USER);
 				if (user != null) {
@@ -224,10 +226,20 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	private String getSetLocale(HttpServletRequest req, SessionHandler session) {
 		if (!session.hasSession()) return super.getLocale(req);
-		String sessionLocale = session.get("locale");
+		String sessionLocale = session.get(Constant.LOCALE);
 		if (sessionLocale == null) {
+			User user = getUser(req);
+			if (user != null) {
+				try {
+					String preferencesLocale = getDAO().getPreference(user.getId().toString(), Constant.LOCALE);
+					if (preferencesLocale != null) {
+						session.setObject(Constant.LOCALE, preferencesLocale);
+						return preferencesLocale;
+					}
+				} catch (Exception e) {}
+			}
 			sessionLocale = super.getLocale(req);
-			session.setObject("locale", sessionLocale);
+			session.setObject(Constant.LOCALE, sessionLocale);
 		}
 		return sessionLocale;
 	}
