@@ -27,7 +27,8 @@ SystemQname = KE.1621
 LajiAuthURL = https://fmnh-ws-test-24.it.helsinki.fi/laji-auth
 
 DevelopmentMode = YES
-#DevelopmentMode = NO
+#StagingMode = NO
+#ProductionMode = NO
 
 BaseURL = //localhost:8081/imagebank
 StaticURL = //localhost:8081/imagebank/static
