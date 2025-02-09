@@ -12,7 +12,7 @@
 	<classpathentry kind="lib" path="WEB-INF/lib/fluent-hc-4.3.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/freemarker-2-3-19.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/guava-17.0.jar"/>
-	<classpathentry kind="lib" path="WEB-INF/lib/HikariCP-4.0.3.jar"/>
+	<classpathentry kind="lib" path="WEB-INF/lib/HikariCP-4.0.3.jar" sourcepath="E:/esko-local/apache-maven-3.6.3/.m2/repository/com/zaxxer/HikariCP/4.0.3/HikariCP-4.0.3-sources.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/httpclient-4.3.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/httpclient-cache-4.3.5.jar"/>
 	<classpathentry kind="lib" path="WEB-INF/lib/httpcore-4.3.2.jar"/>
