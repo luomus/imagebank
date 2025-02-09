@@ -22,6 +22,10 @@
 			  integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM="
 			  crossorigin="anonymous"></script>
 
+    <#if inProductionMode>
+    	<script defer data-domain="imagebank.laji.fi" src="https://plausible.io/js/script.js"></script>
+    </#if>
+    
     <script src="${staticURL}/chosen/chosen.jquery.min.js?${staticContentTimestamp}"></script>
 	<link href="${staticURL}/chosen/chosen.min.css?${staticContentTimestamp}" rel="stylesheet" />
 
@@ -63,6 +67,7 @@
             	</#if>
             </li>
         </ul>
+        <#if inDevelopmentMode><span style="color: red;">DEV MODE</span></#if>
     </nav>
 
     <main>
