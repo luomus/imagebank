@@ -2,20 +2,29 @@ package fi.laji.imagebank.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.http.client.methods.HttpGet;
 
 import com.zaxxer.hikari.HikariDataSource;
 
 import fi.laji.imagebank.models.Preferences;
+import fi.luomus.commons.config.Config;
 import fi.luomus.commons.db.connectivity.SimpleTransactionConnection;
 import fi.luomus.commons.db.connectivity.TransactionConnection;
+import fi.luomus.commons.http.HttpClientService;
+import fi.luomus.commons.json.JSONObject;
+import fi.luomus.commons.utils.Cached;
 import fi.luomus.commons.utils.Utils;
 
 public class DAOImple implements DAO {
 
 	private final HikariDataSource dataSource;
+	private final Config config;
 
-	public DAOImple(HikariDataSource dataSource) {
+	public DAOImple(HikariDataSource dataSource, Config config) {
 		this.dataSource = dataSource;
+		this.config = config;
 	}
 
 	@Override
@@ -74,6 +83,38 @@ public class DAOImple implements DAO {
 		} finally {
 			Utils.close(p, rs);
 		}
+	}
+
+	private final Cached<String, String> personNameCache = new Cached<>(new Cached.CacheLoader<String, String>() {
+
+		@Override
+		public String load(String personId) {
+			try (HttpClientService client = apiClient()){
+				JSONObject res = client.contentAsJson(new HttpGet(apiURL()+"person/by-id/"+personId));
+				String fullName = res.getString("fullName");
+				if (fullName == null || fullName.isEmpty()) return null;
+				return fullName;
+			} catch (Exception e) {
+				return null;
+			}
+		}
+	}, 10, TimeUnit.HOURS, 1000);
+
+	@Override
+	public String getPersonFulName(String personId) {
+		try {
+			return personNameCache.get(personId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected HttpClientService apiClient() {
+		return new HttpClientService(config.get("LajiAPI_AccessToken"));
+	}
+
+	protected String apiURL() {
+		return config.get("LajiAPI_URL");
 	}
 
 }

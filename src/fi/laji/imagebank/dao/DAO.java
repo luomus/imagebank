@@ -10,4 +10,6 @@ public interface DAO {
 
 	Preferences getPreferences(String userId) throws Exception;
 
+	String getPersonFulName(String personId);
+
 }

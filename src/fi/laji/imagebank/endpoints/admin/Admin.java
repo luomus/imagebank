@@ -146,6 +146,18 @@ public class Admin extends ImageBankBaseServlet {
 		.setData(TAXON_SEARCH, taxonSearch)
 		.setData(IMAGE_SEARCH, imageSearch);
 
+		String uploadedBy = image.get().getMeta().getUploadedBy();
+		String modifiedBy = image.get().getMeta().getModifiedBy();
+
+		if (given(uploadedBy)) {
+			String fullName = getDAO().getPersonFulName(uploadedBy);
+			if (given(fullName)) data.setData("uploadedByFullName", fullName);
+		}
+		if (given(modifiedBy)) {
+			String fullName = getDAO().getPersonFulName(modifiedBy);
+			if (given(fullName)) data.setData("modifiedByFullName", fullName);
+		}
+
 		List<String> ref = new ArrayList<>();
 		if (given(taxonSearch)) ref.add(TAXON_SEARCH + "=" + taxonSearch);
 		if (taxon != null) ref.add(TAXON_ID + "=" + taxon.getId());

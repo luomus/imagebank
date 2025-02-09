@@ -78,13 +78,13 @@
         	<span><@mapV meta.sourceSystem sourceSystems /><br>
 
         	<label for="uploadedBy">${text.label_uploadedBy}:</label>
-        	<span>${(meta.uploadedBy!"")?html}</span><br>
+        	<span>${(meta.uploadedBy!"")?html} ${(uploadedByFullName!"")?html}</span><br>
         
         	<label for="uploadDateTime">${text.label_uploadDateTime}:</label>
         	<span>${(meta.uploadDateTime!"")?html}</span><br>
 
 			<label for="modifiedBy">${text.label_modifiedBy}:</label>
-        	<span>${(meta.modifiedBy!"")?html}</span><br>
+        	<span>${(meta.modifiedBy!"")?html} ${(modifiedByFullName!"")?html}</span><br>
         
         	<label for="modifiedDateTime">${text.label_modifiedDateTime}:</label>
         	<span>${(meta.modifiedDateTime!"")?html}</span><br>

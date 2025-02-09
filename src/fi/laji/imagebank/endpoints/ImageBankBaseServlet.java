@@ -81,8 +81,17 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		return dataSource;
 	}
 
+	private static DAOImple dao = null;
+
 	protected DAO getDAO() {
-		return new DAOImple(getDataSource());
+		if (dao == null) {
+			synchronized (LOCK) {
+				if (dao == null) {
+					dao = new DAOImple(getDataSource(), getConfig());
+				}
+			}
+		}
+		return dao;
 	}
 
 	private static HikariDataSource triplestoreDataSource = null;

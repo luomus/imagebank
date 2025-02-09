@@ -10,6 +10,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import fi.laji.imagebank.dao.DAOImple;
 import fi.laji.imagebank.dao.DataSourceDefinition;
+import fi.luomus.commons.config.Config;
 
 public class DAOTests {
 
@@ -18,8 +19,9 @@ public class DAOTests {
 
 	@Before
 	public void init() {
-		dataSource = DataSourceDefinition.initDataSource(TestConfig.getConfig().connectionDescription());
-		dao = new DAOImple(dataSource);
+		Config config = TestConfig.getConfig();
+		dataSource = DataSourceDefinition.initDataSource(config.connectionDescription());
+		dao = new DAOImple(dataSource, config);
 	}
 
 	@After
@@ -38,6 +40,12 @@ public class DAOTests {
 
 		assertEquals("{\"preference\":\"value2\",\"preference2\":\"value3\"}",
 				dao.getPreferences("MA.123").getJson());
+	}
+
+	@Test
+	public void personFullName() {
+		assertEquals("Esko Piirainen", dao.getPersonFulName("MA.5"));
+		assertEquals(null, dao.getPersonFulName("MA.xxx"));
 	}
 
 }
