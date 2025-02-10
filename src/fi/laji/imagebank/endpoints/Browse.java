@@ -1,5 +1,6 @@
 package fi.laji.imagebank.endpoints;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -16,6 +17,8 @@ import fi.luomus.commons.containers.InformalTaxonGroup;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.ResponseData;
+import fi.luomus.commons.taxonomy.CategorizedTaxonImages;
+import fi.luomus.commons.taxonomy.CategorizedTaxonImages.SingleCategoryDef;
 import fi.luomus.commons.utils.Utils;
 
 @WebServlet(urlPatterns = {"/browse/*"})
@@ -28,20 +31,17 @@ public class Browse extends ImageBankBaseServlet {
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String groupId = getId(req);
 		if (notGiven(groupId)) {
-			User user = getUser(req);
-			if (user != null) {
-				groupId = getDAO().getPreference(user.getId().toString(), "group");
-			}
-			if (groupId != null) {
+			groupId = groupIdFromPreferences(req, groupId);
+			if (given(groupId)) {
 				InformalTaxonGroup group = getTaxonomyDAO().getInformalTaxonGroups().get(groupId);
 				if (group != null) {
 					return redirectTo(getConfig().baseURL()+"/"+slug(group, req) +"/");
 				}
-
 			}
 		}
 
-		InformalTaxonGroup group = getTaxonomyDAO().getInformalTaxonGroups().get(groupId);
+		Map<String, InformalTaxonGroup> groups = getTaxonomyDAO().getInformalTaxonGroups();
+		InformalTaxonGroup group = groups.get(groupId);
 
 		if (group == null) {
 			return initResponseData(req).setViewName("browse-groupselect")
@@ -54,10 +54,33 @@ public class Browse extends ImageBankBaseServlet {
 			return redirectTo(getConfig().baseURL()+"/browse/"+slug+"/"+groupId);
 		}
 
+		List<SingleCategoryDef> defs = CategorizedTaxonImages.getDefs(getGroupIds(group, groups));
+
 		return initResponseData(req).setViewName("browse")
 				.setData("taxonGroups", filteredTaxonGroups())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
-				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS);
+				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS)
+				.setData("defs", defs);
+	}
+
+	private List<Qname> getGroupIds(InformalTaxonGroup group, Map<String, InformalTaxonGroup> groups) {
+		List<Qname> ids = new ArrayList<>();
+		ids.add(group.getQname());
+		for (Qname parentId : group.getParents()) {
+			InformalTaxonGroup parent = groups.get(parentId.toString());
+			if (parent != null) {
+				ids.addAll(getGroupIds(parent, groups));
+			}
+		}
+		return ids;
+	}
+
+	private String groupIdFromPreferences(HttpServletRequest req, String groupId) throws Exception {
+		User user = getUser(req);
+		if (user != null) {
+			groupId = getDAO().getPreference(user.getId().toString(), "group");
+		}
+		return groupId;
 	}
 
 	private String slug(InformalTaxonGroup group, HttpServletRequest req) {

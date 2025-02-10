@@ -186,15 +186,22 @@
     <div class="preferences-group">
     	<fieldset>
     		<legend>${text.category_filter}</legend>
-    		
-    		<label for="category_filter_primary">Pääkuva</label>
-    		<input type="checkbox" name="category_filter_primary" id="category_filter_primary" checked>
-    		
-    		<label for="category_filter_adult">Aikuiset TODO</label>
-    		<input type="checkbox" name="category_filter_adult" id="category_filter_adult" checked>
-    		
-    		<label for="category_filter_larva">Toukat TODO</label>
-    		<input type="checkbox" name="category_filter_larva" id="category_filter_larva" checked>
+    		<#-- <#list defs as def>
+    			<#if def.defs?has_content>
+    				<#list def.defs as subDef>
+    					<label for="category_filter_${subDef.id}">${def.title.forLocale(locale)}: ${subDef.title.forLocale(locale)}</label>
+    					<input type="checkbox" name="category_filter_${subDef.id}" id="category_filter_${subDef.id}" checked>
+    				</#list>
+    			<#else>
+    				<label for="category_filter_${def.id}">${def.title.forLocale(locale)}</label>
+    				<input type="checkbox" name="category_filter_${def.id}" id="category_filter_${def.id}" checked>
+    			</#if>
+    		</#list>
+    		-->
+    		<#list defs as def>
+    			<label for="category_filter_${def.id}">${def.title.forLocale(locale)}</label>
+    			<input type="checkbox" name="category_filter_${def.id}" id="category_filter_${def.id}" checked>
+    		</#list>
         </fieldset>
     </div>
 
@@ -228,6 +235,7 @@
     		<input type="radio" name="contentCreation" id="cc_off" value="cc_off">
         </fieldset>
     </div>
+
    	</div>
 </section>
 </#macro>

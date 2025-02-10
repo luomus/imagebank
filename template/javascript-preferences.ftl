@@ -15,6 +15,12 @@ $(document).ready(function() {
 		});
 	});
 
+	$("#preferences input[type='checkbox']").on('change', function() {
+		const preference = $(this).attr('name');
+		const value = $(this).prop('checked');
+		setPreference(preference, value);
+	});
+	
 	if (!getBooleanPreference("showPreferences")) {
 		togglePreferences();
 	}
@@ -38,6 +44,12 @@ $(document).ready(function() {
 		}
 	}
 	
+	$.each(preferences, function(key, value) {
+    	if (key.startsWith("category_filter_")) {
+        	$("#" + key).prop("checked", value);
+    	}
+	});
+
 	if (getPreference("pageSize")) {
 		$("#pageSizeSelect").val(getPreference("pageSize"));
 	}
