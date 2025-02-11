@@ -64,6 +64,7 @@ public class Admin extends ImageBankBaseServlet {
 		ResponseData data = initResponseData(req);
 		String imageSearch = trim(req.getParameter(IMAGE_SEARCH));
 		String taxonSearch = trim(req.getParameter(TAXON_SEARCH));
+		String taxonId = trim(req.getParameter(TAXON_ID));
 		String id = trim(getId(req));
 
 		if (given(id)) {
@@ -73,6 +74,10 @@ public class Admin extends ImageBankBaseServlet {
 			if (id.startsWith("MX.")) {
 				return taxonEdit(new Qname(id), data, taxonSearch, req);
 			}
+		}
+
+		if (given(taxonId)) {
+			return taxonEdit(new Qname(taxonId), data, taxonSearch, req);
 		}
 
 		if (given(imageSearch)) {
@@ -138,6 +143,7 @@ public class Admin extends ImageBankBaseServlet {
 			if (getTaxonomyDAO().getTaxonContainer().hasTaxon(taxonId)) {
 				taxon = getTaxonomyDAO().getTaxon(taxonId);
 				data.setData("taxon", taxon);
+				data.setData(TAXON_ID, taxon.getId().toString());
 			}
 		}
 
