@@ -38,8 +38,9 @@ $(document).ready(function() {
 	$("#groupSelect").on('change', function() {
 		let val = $("#groupSelect").val();
 		if (!val) return;
-		setPreference("group", val);
-		window.location.href = '${baseURL}/browse/'+val;
+		setPreference("group", val).done(function() {
+			window.location.href = '${baseURL}/browse/'+val;
+		});
 	})
 });
 
