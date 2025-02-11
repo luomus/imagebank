@@ -40,9 +40,11 @@
 </#if>
 
 <div class="image-grid">
-	<#list taxon.categorizedMultimedia.groupedFlatImages as image>
-		<a class="taxon-image" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
-	</#list>
+	<#if taxon.multimedia?has_content>
+		<#list taxon.categorizedMultimedia.groupedFlatImages as image>
+			<a class="taxon-image" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
+		</#list>
+	</#if>
 	<@adminImageUpload/>	
 </div>
 
