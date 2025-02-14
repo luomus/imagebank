@@ -250,7 +250,7 @@ li {
 	margin-top: 1em;
 }
 .box-header h5 {
-	text-decoration: underline;
+	font-size: 1em;
 	display: inline;
 }
 
@@ -488,19 +488,34 @@ li {
 
 #browse-panel {
 	display: grid;
-	grid-template-columns: 200px auto;
-	grid-template-rows: 50px auto;
+	grid-template-columns: 250px auto;
+	grid-template-rows: auto auto;
+	gap: 0px 5px;
 }
 
-#browse-tree-header, #browse-taxa-header, #browse-tree, #browse-taxa {
-	display: flex;
-	align-items: flex-start;
-	padding: 10px;
-	border: 1px solid #ccc;
+#browse-tree-header {
+	border: 1px solid #003eff;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	text-align: center;
+	padding: 0.5em;
+	background-color: #007fff;
+	color: white;
 }
-
+#browse-tree-header h5 {
+	color: white;
+}
+#browse-tree {
+	grid-column: 1;
+	z-index: 2;
+}
+#browse-taxa {
+	grid-column: 2;
+	z-index: 1;
+}
 #browse-taxa.expanded {
-	grid-template-columns: 0 auto;
+	grid-column: 1 / span 2;
+	border-left: 5px solid #007fff;
 }
 
 

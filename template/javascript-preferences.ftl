@@ -1,3 +1,8 @@
+function togglePreferences() {
+	$("#preferencesBody").toggle();
+	$("#preferences").toggleClass("minimized");
+}
+
 $(document).ready(function() {
 
 	$("#preferencesHeader").click(function() {

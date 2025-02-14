@@ -56,13 +56,6 @@ function changeLocale() {
 	});
 }
 
-function togglePreferences() {
-	$("#preferencesBody").toggle();
-	$("#preferences").toggleClass("minimized");
-}
-
-
-
 <#if preferences??>
 	let preferences = JSON.parse('${preferences.json}');
 	
@@ -110,4 +103,5 @@ function togglePreferences() {
 	
 <#if page == "browse">
 	<#include "javascript-preferences.ftl">
+	<#include "javascript-browse.ftl">
 </#if>

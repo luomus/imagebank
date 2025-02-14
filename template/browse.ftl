@@ -13,60 +13,19 @@
 <@preferences/>
 
 <div style="clear:both;" />
+
 <div id="browse-panel">
-	<div id="browse-tree-header">
-		Tree header
+	<div id="browse-tree-header" class="box-header">
+		<h5>Heimot</h5> <span class="ui-icon ui-icon-caret-2-n-s"></span>
 	</div>
 	<div id="browse-taxa-header">
 		Taxa header
 	</div>
-	<div id="browse-tree">
-			Tree
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
-			Some here</br>
+	<div id="browse-tree" class="box">
+			Tree</br>
 			Some here</br>
 	</div>
-	<div id="browse-taxa">
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
-			Taxa Long Taxa Content is Long
+	<div id="browse-taxa" class="box">
 			Taxa Long Taxa Content is Long
 	</div>
 </div>
