@@ -119,36 +119,22 @@ fieldset#unmodifieable-meta-fields {
 	z-index: 10;
 }
 
-.mass-tag-select {
-	border: 1px solid #ddd;
-    padding: 1em;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+#mass-tag-select {
     max-width: 45em;
-    font-size: 80%;
   	display: inline-block;
   	float: right;
-  	margin-top: -100px;
+  	margin-top: -120px;
+  	font-size: 80%;
 }
-.mass-tag-select-header {
-	cursor: pointer;
-	user-select: none;
-}
-.mass-tag-select-header h5 {
-	text-decoration: underline;
-	display: inline;
-}
-.mass-tag-select-body {
-	
-}
-.mass-tag-select > div > div {
+#mass-tag-select > div > div {
 	display: inline-block;
 	padding: 2px;
 }
-.mass-tag-select label {
+#mass-tag-select label {
 	display: inline-block;
 	width: 8em;
 }
-.mass-tag-select select {
+#mass-tag-select select {
 	width: 10em;
 }
 

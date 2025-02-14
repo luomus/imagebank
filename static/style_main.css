@@ -235,14 +235,32 @@ li {
 	font-size: 150%;
 }
 
+.box {
+	border: 1px solid #ddd;
+    padding: 1em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.box-header {
+	cursor: pointer;
+	user-select: none;
+}
+.box-body {
+	border-top: 1px solid #ccc;
+	padding-top: 1em;
+	margin-top: 1em;
+}
+.box-header h5 {
+	text-decoration: underline;
+	display: inline;
+}
+
 .info, .warning, .error, .danger-zone, .success, .custom-tooltip-class {
 	background-color: #e7f3fe; 
 	border-left: 5px solid rgb(150,180,205); 
     padding: 1em 2em 1em 1em;
     margin: 20px 0;
     border-radius: 8px;
-    font-family: Arial, sans-serif;
-    color: #333; 
+    color: #333;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     max-width: 60em;
 }
@@ -424,10 +442,7 @@ li {
 	font-size: 0.8em;
 }
 .preferences {
-    border: 1px solid #ccc;
-    padding: 5px;
-    background-color: #f9f9f9;
-    display: block;
+    margin-bottom: 2em;    
 }
 .preferences.minimized {
 	float: right;
@@ -436,16 +451,6 @@ li {
 	display: none;
 }
 
-.preferences #preferencesHeader {
-    font-size: 1em;
-    cursor: pointer;
-    user-select: none;
-    line-height: 2.5em;
-}
-
-.preferences #preferencesBody {
-    border-top: 1px solid #ccc;
-}
 
 .preferences-group {
 	display: inline-block;

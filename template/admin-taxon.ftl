@@ -18,9 +18,9 @@
 
 <#if multiPrimary><div class="info warning"><p>WARNING: Taxon has MULTIPLE PRIMARY images</p></div></#if>
 
-<div class="mass-tag-select">
-	<div class="mass-tag-select-header"><h5>${text.admin_tag_images}</h5> <span class="ui-icon ui-icon-caret-2-n-s"></span></div>
-	<div class="mass-tag-select-body">
+<div id="mass-tag-select" class="box">
+	<div id="mass-tag-select-header" class="box-header"><h5>${text.admin_tag_images}</h5> <span class="ui-icon ui-icon-caret-2-n-s"></span></div>
+	<div id="mass-tag-select-body" class="box-body">
 		<@select "type" types />
         <@select "sex" sexes />
         <@select "lifeStage" lifeStages />

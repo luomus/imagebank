@@ -132,9 +132,9 @@
 </#macro>
 
 <#macro preferences>
-<section id="preferences" class="preferences" style="display: none;">
-    <div id="preferencesHeader"><span class="ui-icon ui-icon-gear"></span>  &nbsp; ${text.preferences} &nbsp; <button class="button" style="float: right;" >${text.close}</button></div>
-	<div id="preferencesBody">
+<section id="preferences" class="box preferences" style="display: none;">
+    <div id="preferencesHeader" class="box-header"><span class="ui-icon ui-icon-gear"></span>  &nbsp; <h5>${text.preferences}</h5> &nbsp; <button class="button" style="float: right;" >${text.close}</button></div>
+	<div id="preferencesBody" class="box-body">
     <div class="preferences-group">
         <fieldset>
         	<legend>${text.group}</legend>

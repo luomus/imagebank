@@ -88,17 +88,17 @@ $(document).ready(function() {
 	$(".admin-image-edit select").not(".bool-select").chosen({width: "30em", no_results_text: "${text.no_matches}"}); 
 	$(".admin-image-edit select.bool-select").chosen({width: "10em", no_results_text: "${text.no_matches}"});
      
-	$(".mass-tag-select-header").click(function() {
-		$(".mass-tag-select-body").toggle();
+	$("#mass-tag-select-header").click(function() {
+		$("#mass-tag-select-body").toggle();
 	});
      
-	$(".mass-tag-select select").each(function() {
+	$("#mass-tag-select select").each(function() {
         $(this).val(''); // Clear the value
     });
     
 	const activeTags = {};
      
-	$(".mass-tag-select select").change(function() {
+	$("#mass-tag-select select").change(function() {
      	const name = $(this).attr("name");
     	const value = $(this).val(); // The select's value
     	const label = $(this).find("option:selected").text(); // The human-readable label
@@ -149,7 +149,7 @@ $(document).ready(function() {
 	});
     
     $("#mass-tag-clear-button").click(function() {
-    	 $(".mass-tag-select select").val('').change();
+    	 $("#mass-tag-select select").val('').change();
     });
     	
 	$("#mass-tag-done-button").click(function() { window.location.reload(); });
