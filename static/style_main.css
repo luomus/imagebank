@@ -426,9 +426,8 @@ li {
 .preferences {
     border: 1px solid #ccc;
     padding: 5px;
-    border-radius: 8px;
     background-color: #f9f9f9;
-    display: inline-block;
+    display: block;
 }
 .preferences.minimized {
 	float: right;
@@ -439,11 +438,9 @@ li {
 
 .preferences #preferencesHeader {
     font-size: 1em;
-    margin-bottom: 0.2em;
     cursor: pointer;
-    border-radius: 5px 5px 0px 0px;
     user-select: none;
-    line-height: 2em;
+    line-height: 2.5em;
 }
 
 .preferences #preferencesBody {
@@ -483,3 +480,22 @@ li {
 .preferences .chosen-container .chosen-results {
 	max-height: 35em;
 }
+
+#browse-panel {
+	display: grid;
+	grid-template-columns: 200px auto;
+	grid-template-rows: 50px auto;
+}
+
+#browse-tree-header, #browse-taxa-header, #browse-tree, #browse-taxa {
+	display: flex;
+	align-items: flex-start;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+
+#browse-taxa.expanded {
+	grid-template-columns: 0 auto;
+}
+
+
