@@ -2,6 +2,7 @@ package fi.laji.imagebank.endpoints;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ public class APIPreferences extends APIBaseServlet {
 
 		String preference = clean(req.getParameter("preference"));
 		String value = clean(req.getParameter("value"));
+		if (value == null) value = clean(req.getParameterValues("value[]"));
+
 		if (preference == null) return status(400, res);
 		if (value == null) return status(400, res);
 
@@ -34,6 +37,11 @@ public class APIPreferences extends APIBaseServlet {
 		getSession(req, true).setObject(Constant.PREFERENCES, getDAO().getPreferences(userId));
 
 		return new ResponseData("ok", "text/plain");
+	}
+
+	private String clean(String[] parameterValues) {
+		if (parameterValues == null) return null;
+		return clean(Stream.of(parameterValues).collect(Collectors.joining(",")));
 	}
 
 	private String clean(String s) {
