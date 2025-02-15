@@ -21,7 +21,7 @@ header {
 	color: black;
 	padding: 10px 0;
 	text-align: center;
-	border-top: 2.5em solid hsl(204,70%,40%);
+	border-top: 3.1em solid hsl(204,70%,40%);
 }
 
 a {
@@ -36,7 +36,7 @@ header a {
 
 #main-logo {
 	position: absolute;
-	top: 8px;
+	top: 0.7em;
 	left: 10px;
 	color: #e7f5fe;
   	font-weight: 700;
@@ -130,7 +130,7 @@ footer {
 
 #missionstatement {
 	font-size: 0.8em;
-	margin: 3em;
+	margin: 2em;
 	max-width: 30em;
 	display: inline-block;
 	text-align: left;
@@ -139,7 +139,7 @@ footer {
 	vertical-align: bottom;
 }
 #logos img {
-	margin: 0 2em;
+	margin: 1em 2em;
 }
 #username {
 	font-weight: bold;
