@@ -4,7 +4,9 @@ finbif = FinBIF
 finbif_short = FinBIF
 privacy_policy = Privacy policy
 privacy_policy_link = https://laji.fi/privacypolicy
-finbif_mission = The Finnish Biodiversity Information Facility (FinBIF) is an open access data repository for researchers, government and the public. FinBIF consolidates many collections and datasets of living Finland in a single source. Our online portal, laji.fi, allows you to browse, search and download information about all forms of biological life, and to record and share your own observations. FinBIF is committed to the sharing and promotion of open access data.
+accessibility_statement = NOP
+accessibility_statement_link = NOP
+finbif_mission = The Finnish Biodiversity Information Facility (FinBIF) is an open access data repository for researchers, government and the public. FinBIF consolidates many collections and datasets of living Finland in a single source. FinBIF is committed to the sharing and promotion of open access data.
 
 documentation = Documentation
 support = Support and feedback

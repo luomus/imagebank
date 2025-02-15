@@ -4,6 +4,8 @@ finbif = Finlands Artdatacenter
 finbif_short = FinBIF
 privacy_policy = Integritetspolicy
 privacy_policy_link = https://laji.fi/privacypolicy
+accessibility_statement = NOP
+accessibility_statement_link = NOP
 finbif_mission = Finlands Artdatacenter samlar och förenar finländska artinformationsdata som en konsekvent och öppen enhet för forskning och utbildning, förvaltning och den breda allmänheten.
 
 documentation =  Instruktioner

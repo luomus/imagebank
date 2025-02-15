@@ -4,6 +4,8 @@ finbif = Suomen Lajitietokeskus
 finbif_short = LAJI.FI
 privacy_policy = Tietosuojaseloste
 privacy_policy_link = https://laji.fi/tietosuojaseloste
+accessibility_statement = Saavutettavuusseloste
+accessibility_statement_link = https://laji.fi/about/3863
 finbif_mission = Suomen Lajitietokeskus kerää ja yhdistää suomalaisen lajitiedon yhtenäiseksi ja avoimeksi kokonaisuudeksi tutkimuksen ja opetuksen, hallinnon sekä suuren yleisön käyttöön.
 
 documentation = Ohjeet
