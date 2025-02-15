@@ -59,6 +59,7 @@ nav.main-nav ul, footer ul {
 nav.main-nav ul li, footer ul li {
 	display: inline;
 	margin: 0 15px;
+	white-space: nowrap;
 }
 
 nav.main-nav ul li a {
@@ -127,6 +128,19 @@ footer {
 	font-size: 120%;
 }
 
+#missionstatement {
+	font-size: 0.8em;
+	margin: 3em;
+	max-width: 30em;
+	display: inline-block;
+	text-align: left;
+}
+#logos {
+	vertical-align: bottom;
+}
+#logos img {
+	margin: 0 2em;
+}
 #username {
 	font-weight: bold;
 }
@@ -160,6 +174,10 @@ h3 {
 
 li {
 	list-style-type: none;
+}
+
+.hidden {
+	display: none;
 }
 
 .speciesName {
@@ -505,6 +523,9 @@ li {
 #browse-tree-header h5 {
 	color: white;
 }
+#browse-tree-header .ui-icon {
+	filter: invert(1) brightness(1000%);
+}
 #browse-tree {
 	grid-column: 1;
 	z-index: 2;
@@ -518,4 +539,9 @@ li {
 	border-left: 5px solid #007fff;
 }
 
+.openclose {
+	font-size: 80%;
+	text-decoration: underline;
+	margin-left: 1em;
+}
 

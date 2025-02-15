@@ -2,6 +2,9 @@ imagebank = Bildbanken
 tagline = Identifiera Finlands Arter
 finbif = Finlands Artdatacenter
 finbif_short = FinBIF
+privacy_policy = Integritetspolicy
+privacy_policy_link = https://laji.fi/privacypolicy
+finbif_mission = Finlands Artdatacenter samlar och förenar finländska artinformationsdata som en konsekvent och öppen enhet för forskning och utbildning, förvaltning och den breda allmänheten.
 
 documentation =  Instruktioner
 support = Support och feedback
@@ -42,7 +45,10 @@ content_creation_preference = Innehållsskapande
 on = På
 off = Av
 close = Stäng
+open = Öppna
 no_matches = Inga resultat matchar
+
+taxon_tree = Taxonomiska nivåer
 
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild

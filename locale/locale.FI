@@ -2,6 +2,9 @@ imagebank = Kuvapankki
 tagline = Tunnista Suomen lajit
 finbif = Suomen Lajitietokeskus
 finbif_short = LAJI.FI
+privacy_policy = Tietosuojaseloste
+privacy_policy_link = https://laji.fi/tietosuojaseloste
+finbif_mission = Suomen Lajitietokeskus kerää ja yhdistää suomalaisen lajitiedon yhtenäiseksi ja avoimeksi kokonaisuudeksi tutkimuksen ja opetuksen, hallinnon sekä suuren yleisön käyttöön.
 
 documentation = Ohjeet
 support = Tuki ja palaute
@@ -42,7 +45,10 @@ content_creation_preference = Sisällöntuotto
 on = Päällä
 off = Pois päältä
 close = Sulje
+open = Avaa
 no_matches = Ei osumia termillä
+
+taxon_tree = Taksonomiset tasot
 
 admin_main = Admin | Kuvien ylläpito
 admin_single_title = Muokkaa yhtä kuvaa
