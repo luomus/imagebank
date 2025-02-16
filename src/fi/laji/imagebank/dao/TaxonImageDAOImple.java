@@ -15,7 +15,6 @@ import fi.luomus.commons.db.connectivity.SimpleTransactionConnection;
 import fi.luomus.commons.db.connectivity.TransactionConnection;
 import fi.luomus.commons.reporting.ErrorReporter;
 import fi.luomus.commons.taxonomy.Taxon;
-import fi.luomus.commons.taxonomy.TaxonomyDAO;
 import fi.luomus.commons.taxonomy.TripletToImageHandlers;
 import fi.luomus.commons.utils.Utils;
 

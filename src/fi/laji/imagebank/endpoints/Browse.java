@@ -57,6 +57,7 @@ public class Browse extends ImageBankBaseServlet {
 		List<SingleCategoryDef> defs = CategorizedTaxonImages.getDefs(getGroupIds(group, groups));
 
 		return initResponseData(req).setViewName("browse")
+				.setData("groupId", groupId)
 				.setData("taxonGroups", filteredTaxonGroups())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
 				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS)

@@ -25,6 +25,7 @@ import org.apache.http.client.methods.HttpGet;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import fi.laji.imagebank.dao.TaxonomyCaches.TreeTerms;
 import fi.luomus.commons.config.Config;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
@@ -46,7 +47,6 @@ import fi.luomus.commons.taxonomy.TaxonContainer;
 import fi.luomus.commons.taxonomy.TaxonSearch;
 import fi.luomus.commons.taxonomy.TaxonSearchDAOSQLQueryImple;
 import fi.luomus.commons.taxonomy.TaxonSearchResponse;
-import fi.luomus.commons.taxonomy.TaxonomyDAO;
 import fi.luomus.commons.taxonomy.TaxonomyDAOBaseImple;
 import fi.luomus.commons.taxonomy.iucn.HabitatObject;
 import fi.luomus.commons.utils.Cached;
@@ -54,7 +54,7 @@ import fi.luomus.commons.utils.DateUtils;
 import fi.luomus.commons.utils.FileUtils;
 import fi.luomus.commons.utils.Utils;
 
-public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoCloseable {
+public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoCloseable, TaxonomyDAO {
 
 	private static final List<String> INCLUDED_PREDICATES = Utils.list(
 			"MX.scientificName",
@@ -93,6 +93,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 	private final HikariDataSource dataSource;
 
 	private TaxonContainer taxonContainer = null;
+	private TaxonomyCaches caches = null;
 
 	private static final Object LOCK = new Object();
 
@@ -105,6 +106,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		this.cachedTaxonSearches = new Cached<>(
 				new TaxonSearchLoader(), 12, TimeUnit.HOURS, taxonSearchCacheSize());
 		startNightlyTasks();
+		this.caches = new TaxonomyCaches(this);
 		System.out.println(this.getClass().getSimpleName() + " created!");
 	}
 
@@ -133,6 +135,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 					reloadTriplets();
 					reloadHabitats();
 					reloadObsCounts();
+					caches.clearCaches();
 					cachedTaxonSearches.invalidateAll();
 					taxonContainer = null;
 					getTaxonContainer();
@@ -733,6 +736,11 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			client.contentToStream(new HttpGet(url), out);
 		}
 		return tempFile;
+	}
+
+	@Override
+	public List<Taxon> getTree(TreeTerms terms) {
+		return caches.getTree(terms);
 	}
 
 }

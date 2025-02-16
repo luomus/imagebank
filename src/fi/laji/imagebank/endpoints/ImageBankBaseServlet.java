@@ -13,6 +13,7 @@ import fi.laji.imagebank.dao.DAOImple;
 import fi.laji.imagebank.dao.DataSourceDefinition;
 import fi.laji.imagebank.dao.TaxonImageDAO;
 import fi.laji.imagebank.dao.TaxonImageDAOImple;
+import fi.laji.imagebank.dao.TaxonomyDAO;
 import fi.laji.imagebank.dao.TaxonomyDAOImple;
 import fi.laji.imagebank.models.Preferences;
 import fi.laji.imagebank.models.User;
@@ -25,7 +26,6 @@ import fi.luomus.commons.services.BaseServlet;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
 import fi.luomus.commons.taxonomy.TaxonSearchDataSourceDefinition;
-import fi.luomus.commons.taxonomy.TaxonomyDAO;
 import fi.luomus.commons.utils.Utils;
 import fi.luomus.kuvapalvelu.client.MediaApiClient;
 import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
@@ -119,7 +119,6 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		}
 		return taxonomyDAO;
 	}
-
 
 	private static TaxonImageDAOImple taxonImageDAO;
 
@@ -307,6 +306,17 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	protected boolean notGiven(String s) {
 		return s == null || s.isEmpty();
+	}
+
+	protected boolean given(Object ...objects) {
+		for (Object o : objects) {
+			if (!given(o)) return false;
+		}
+		return true;
+	}
+
+	protected boolean given(Object o) {
+		return o != null && !o.toString().isEmpty();
 	}
 
 }

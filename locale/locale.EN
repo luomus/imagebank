@@ -49,8 +49,10 @@ off = Off
 close = Close
 open = Open
 no_matches = No results match
+show_more = Show more
 
 taxon_tree = Taxonomic Levels
+taxon_tree_no_taxa = No taxa to display at this level
 
 admin_main = Admin | Image Management
 admin_single_title = Edit a single image
@@ -101,6 +103,7 @@ invalid_datetime = Invalid date/time format
 invalid_boolean = Invalid value, should be true/false
 file_missing = Please, provide a file!
 file_too_large = The file is too large. The maximum size is 50MB.
+invalid_parameters = Invalid parameters
 
 group_authors = Authors
 label_capturers = Capturers 

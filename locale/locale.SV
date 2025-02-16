@@ -49,8 +49,10 @@ off = Av
 close = Stäng
 open = Öppna
 no_matches = Inga resultat matchar
+show_more = Visa mer
 
 taxon_tree = Taxonomiska nivåer
+taxon_tree_no_taxa = Inga taxon att visa på denna nivå
 
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild
@@ -101,6 +103,7 @@ invalid_datetime = Ogiltigt datum/tidsformat
 invalid_boolean = Ogiltigt värde, ska vara true/false
 file_missing = Fil saknas!
 file_too_large = Filen är för stor. Den maximala storleken är 50 MB.
+invalid_parameters = Ogiltiga parametrar
 
 group_authors = Författare
 label_capturers = Fotograf

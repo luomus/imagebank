@@ -49,8 +49,10 @@ off = Pois päältä
 close = Sulje
 open = Avaa
 no_matches = Ei osumia termillä
+show_more = Näytä kaikki
 
 taxon_tree = Taksonomiset tasot
+taxon_tree_no_taxa = Ei tämän tason taksoneita näytettäväksi
 
 admin_main = Admin | Kuvien ylläpito
 admin_single_title = Muokkaa yhtä kuvaa
@@ -101,6 +103,7 @@ invalid_datetime = Tuntematon päivämäärä/aikaformaatti
 invalid_boolean = Tuntematon arvo, pitäisi olla true/false
 file_missing = Tiedosto puuttuu!
 file_too_large = Tiedosto on liian suuri. Maksimikoko on 50MB.
+invalid_parameters = Epäkelvot parametrit
 
 group_authors = Tekijät
 label_capturers = Kuvaajat

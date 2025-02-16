@@ -3,6 +3,10 @@ function togglePreferences() {
 	$("#preferences").toggleClass("minimized");
 }
 
+function preferenceChangeHook(preference, value) {
+    // Default: do nothing
+}
+
 $(document).ready(function() {
 
 	$("#preferencesHeader").click(function() {
@@ -17,6 +21,7 @@ $(document).ready(function() {
 			if (preference == "group") {
 				window.location.href = '${baseURL}/browse/'+value;
 			}
+			preferenceChangeHook(preference, value);
 		});
 	});
 

@@ -30,6 +30,8 @@
 				<option value="MX.supergenus">${taxonRanks["MX.supergenus"].forLocale(locale)}</option>
 				<option value="MX.genus">${taxonRanks["MX.genus"].forLocale(locale)}</option>
 			</select>
+			<div id="browse-tree-content">
+			</div>
 	</div>
 	<div id="browse-taxa" class="box">
 			Taxa Long Taxa Content is Long

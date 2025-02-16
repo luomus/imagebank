@@ -538,10 +538,12 @@ li {
 	grid-column: 1 / span 2;
 	border-left: 5px solid #007fff;
 }
-
-.openclose {
+.openclose, .showMore {
 	font-size: 80%;
 	text-decoration: underline;
 	margin-left: 1em;
 }
-
+#browse-tree-content {
+	margin-top: 1em;
+	font-size: 0.9em;
+}
