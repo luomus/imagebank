@@ -27,7 +27,6 @@
 				<option value="MX.subfamily">${taxonRanks["MX.subfamily"].forLocale(locale)}</option>
 				<option value="MX.tribe">${taxonRanks["MX.tribe"].forLocale(locale)}</option>
 				<option value="MX.subtribe">${taxonRanks["MX.subtribe"].forLocale(locale)}</option>
-				<option value="MX.supergenus">${taxonRanks["MX.supergenus"].forLocale(locale)}</option>
 				<option value="MX.genus">${taxonRanks["MX.genus"].forLocale(locale)}</option>
 			</select>
 			<div id="browse-tree-content">
