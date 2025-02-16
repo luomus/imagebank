@@ -194,7 +194,6 @@ $(document).ready(function() {
         event.preventDefault(); 
         if ($("#fileInput").prop('files').length < 1) return false;
         const formData = new FormData(this);
-        console.log(formData);
         $.ajax({
             url: $(this).attr("action"),
             type: "POST",
