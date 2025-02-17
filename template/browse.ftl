@@ -10,6 +10,8 @@
 		
 <h2>${text.browse_title}</h2>
 
+<p>Rakenteilla. Tässä osiossa selataan kuvia ja luodaan sisältöä.</p>
+
 <@preferences/>
 
 <div style="clear:both;" />
