@@ -15,8 +15,8 @@ function loadTree() {
 			const container = $("#browse-tree-content");
    			container.html(response);
     		const items = container.find("ol").find("li");
-			if (items.length > 50) {
-        		items.slice(50).hide();
+			if (items.length > 75) {
+        		items.slice(75).hide();
 				const showMoreBtn = $('<a href="#">')
 					.text("${text.show_more}")
 					.addClass("showMore")
