@@ -11,6 +11,11 @@
 <h2>${text.browse_title}</h2>
 
 <p>Rakenteilla. Tässä osiossa selataan kuvia ja luodaan sisältöä.</p>
+<br />
+
+
+<h3 style="display:inline-block;">${group.name.forLocale(locale)?html}</h3> <a class="change" href="${baseURL}/browse?change=true">${text.change}</a>
+
 
 <@preferences/>
 

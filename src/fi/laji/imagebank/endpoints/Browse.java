@@ -29,6 +29,7 @@ public class Browse extends ImageBankBaseServlet {
 
 	@Override
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		String changeGroup = req.getParameter("change");
 		String groupId = getId(req);
 		if (notGiven(groupId)) {
 			groupId = groupIdFromPreferences(req, groupId);
@@ -43,7 +44,9 @@ public class Browse extends ImageBankBaseServlet {
 		Map<String, InformalTaxonGroup> groups = getTaxonomyDAO().getInformalTaxonGroups();
 		InformalTaxonGroup group = groups.get(groupId);
 
-		if (group == null) {
+		System.out.println("öö? " + changeGroup);
+		if (group == null || changeGroup != null) {
+			System.out.println("mutmut");
 			return initResponseData(req).setViewName("browse-groupselect")
 					.setData("taxonGroups", filteredTaxonGroups());
 		}
@@ -57,6 +60,7 @@ public class Browse extends ImageBankBaseServlet {
 		List<SingleCategoryDef> defs = CategorizedTaxonImages.getDefs(getGroupIds(group, groups));
 
 		return initResponseData(req).setViewName("browse")
+				.setData("group", group)
 				.setData("groupId", groupId)
 				.setData("taxonGroups", filteredTaxonGroups())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())

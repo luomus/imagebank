@@ -50,6 +50,7 @@ close = Close
 open = Open
 no_matches = No results match
 show_more = Show more
+change = Change
 
 taxon_tree = Taxonomic Levels
 taxon_tree_no_taxa = No taxa to display at this level
@@ -94,7 +95,7 @@ clear_all = Clear all
 
 yes = Yes
 no = No
-
+ 
 must_be_admin = You are not logged in or lack permissions for this section!
 unknown_taxon = Unknown taxon ID provided!
 unknown_image = Unknown image ID provided!

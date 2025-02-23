@@ -30,7 +30,7 @@ curate_title = Laadunvalvonta | Kuvien kuratointi
 
 preferences = Asetukset
 group = Eliöryhmä
-group_select = Valitse ensin eliöryhmä
+group_select = Valitse eliöryhmä
 order = Järjestys
 taxonomic = Taksonominen
 alphabetic = Aakkosjärjestys
@@ -50,6 +50,7 @@ close = Sulje
 open = Avaa
 no_matches = Ei osumia termillä
 show_more = Näytä kaikki
+change = Vaihda
 
 taxon_tree = Taksonomiset tasot
 taxon_tree_no_taxa = Ei tämän tason taksoneita näytettäväksi

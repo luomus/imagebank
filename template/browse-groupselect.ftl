@@ -29,10 +29,6 @@
 <script>
 $(document).ready(function() {
 
-	if (getPreference("group")) {
-    	window.location.href = '${baseURL}/browse/'+getPreference("group");
-	}
-	
 	$("#groupSelect").chosen({width: "25em", no_results_text: "${text.no_matches}"});
 	
 	$("#groupSelect").on('change', function() {
