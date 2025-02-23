@@ -44,9 +44,7 @@ public class Browse extends ImageBankBaseServlet {
 		Map<String, InformalTaxonGroup> groups = getTaxonomyDAO().getInformalTaxonGroups();
 		InformalTaxonGroup group = groups.get(groupId);
 
-		System.out.println("öö? " + changeGroup);
 		if (group == null || changeGroup != null) {
-			System.out.println("mutmut");
 			return initResponseData(req).setViewName("browse-groupselect")
 					.setData("taxonGroups", filteredTaxonGroups());
 		}
