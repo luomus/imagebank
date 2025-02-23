@@ -14,20 +14,6 @@ function loadTree() {
         success: function(response) {
 			const container = $("#browse-tree-content");
    			container.html(response);
-    		const items = container.find("ol").find("li");
-			if (items.length > 75) {
-        		items.slice(75).hide();
-				const showMoreBtn = $('<a href="#">')
-					.text("${text.show_more}")
-					.addClass("showMore")
-					.on("click", function (e) {
-						e.preventDefault();
-						items.show();
-						$(this).remove();
-						return false;
-					});
-		        container.append(showMoreBtn);
-    		}
         },
         error: function() {
             // Refresh the page to display the failure reason via flash message

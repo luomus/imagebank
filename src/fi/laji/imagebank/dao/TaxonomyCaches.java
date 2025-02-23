@@ -1,8 +1,11 @@
 package fi.laji.imagebank.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,18 +91,59 @@ public class TaxonomyCaches {
 		return new CacheLoader<TaxonomyCaches.TreeTerms, List<Taxon>>() {
 			@Override
 			public List<Taxon> load(TreeTerms terms) {
+				if ("order_alphabetic".equals(terms.order)) {
+					return alphaOrder(terms);
+				}
+				return taxonomicOrder(terms);
+			}
+
+			private List<Taxon> taxonomicOrder(TreeTerms terms) {
+				Set<Qname> acceptedRanks = acceptedRanks(terms);
+				Set<Taxon> taxa = new HashSet<>();
+				for (Taxon t : dao.getTaxonContainer().getAll()) {
+					if (t.getInformalTaxonGroupsNoOrder().contains(terms.groupId) && terms.rank.equals(t.getTaxonRank())) {
+						if (!terms.onlyFinnish || t.isFinnish()) {
+							taxa.add(t);
+							for (Qname parentRank : acceptedRanks) {
+								Taxon parent = t.getParentOfRank(parentRank);
+								if (parent != null) taxa.add(parent);
+							}
+						}
+					}
+				}
+				List<Taxon> sorted = new ArrayList<>(taxa);
+				Collections.sort(sorted, Taxon.TAXONOMIC_ORDER_COMPARATOR);
+				return sorted;
+			}
+
+			private List<Taxon> alphaOrder(TreeTerms terms) {
 				List<Taxon> taxa = new ArrayList<>();
 				for (Taxon t : dao.getTaxonContainer().getAll()) {
 					if (t.getInformalTaxonGroupsNoOrder().contains(terms.groupId) && terms.rank.equals(t.getTaxonRank())) {
-						if (!terms.onlyFinnish || t.isFinnish()) taxa.add(t);
+						if (!terms.onlyFinnish || t.isFinnish()) {
+							taxa.add(t);
+						}
 					}
 				}
-				if ("order_taxonomic".equals(terms.order)) {
-					Collections.sort(taxa, Taxon.TAXONOMIC_ORDER_COMPARATOR);
-				} else {
-					Collections.sort(taxa, Taxon.TAXON_ALPHA_COMPARATOR);
-				}
+				Collections.sort(taxa, Taxon.TAXON_ALPHA_COMPARATOR);
 				return taxa;
+			}
+
+			private Set<Qname> acceptedRanks(TreeTerms terms) {
+				List<Qname> rankOrder = Arrays.asList(
+						new Qname("MX.order"),
+						new Qname("MX.suborder"),
+						new Qname("MX.superfamily"),
+						new Qname("MX.family"),
+						new Qname("MX.subfamily"),
+						new Qname("MX.tribe"),
+						new Qname("MX.genus")
+						);
+				int index = rankOrder.indexOf(terms.rank);
+				Set<Qname> ranks = new HashSet<>(rankOrder.subList(0, index + 1));
+				ranks.remove(new Qname("MX.tribe"));
+				ranks.add(terms.rank);
+				return ranks;
 			}
 		};
 	}

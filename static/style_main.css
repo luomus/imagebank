@@ -551,3 +551,16 @@ li {
 h3.browse a {
 	font-size: inherit;
 }
+
+#browse-tree-content .order			{ font-size: 120%; font-weight: bold; font-variant: small-caps; margin-bottom: 1em; margin-top: 1em; }
+#browse-tree-content .suborder 		{ font-size: 115%; font-weight: bold; }
+#browse-tree-content .superfamily 	{ font-size: 110%; font-weight: bold; margin-top: 1em; border-top: 1px solid grey; }
+#browse-tree-content .family		{ font-size: 105%; text-decoration: underline; margin-top: 0.5em;}
+#browse-tree-content .subfamily 	{ font-size: 100%; font-weight: bold; }
+
+#browse-tree-content {
+	max-height: 500px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+

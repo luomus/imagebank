@@ -11,6 +11,13 @@
 	</#if>
 </#macro>
 
+<#macro printNameRank taxon>
+	<@printScientificName taxon />
+	<#if taxon.taxonRank?has_content>
+		<span class="taxonRank">[${taxonRanks[taxon.taxonRank].forLocale(locale)}]</span>
+	</#if>
+</#macro>
+
 <#macro printScientificName taxon>
 	<span class="scientificName <#if taxon.isCursiveName()>speciesName</#if>">${(taxon.scientificName!taxon.vernacularName.forLocale("en")!taxon.qname)?html}</span>
 </#macro>
