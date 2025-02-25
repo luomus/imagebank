@@ -564,3 +564,8 @@ h3.browse a {
 	overflow-x: hidden;
 }
 
+#browse-tree-content .taxonRank {
+	font-weight: normal;
+	font-size: 90%;
+	float: right;
+}
