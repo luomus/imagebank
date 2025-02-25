@@ -51,6 +51,8 @@ open = Open
 no_matches = No results match
 show_more = Show more
 change = Change
+select = Select
+edit = Edit
 
 taxon_tree = Taxonomic Levels
 taxon_tree_no_taxa = No taxa to display at this level

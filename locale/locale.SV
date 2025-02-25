@@ -51,6 +51,8 @@ open = Öppna
 no_matches = Inga resultat matchar
 show_more = Visa mer
 change = Ändra
+select = Välj
+edit = Redigera
 
 taxon_tree = Taxonomiska nivåer
 taxon_tree_no_taxa = Inga taxon att visa på denna nivå

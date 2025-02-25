@@ -51,6 +51,8 @@ open = Avaa
 no_matches = Ei osumia termillä
 show_more = Näytä kaikki
 change = Vaihda
+select = Valitse
+edit = Muokkaa
 
 taxon_tree = Taksonomiset tasot
 taxon_tree_no_taxa = Ei tämän tason taksoneita näytettäväksi
