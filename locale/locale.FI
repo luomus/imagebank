@@ -132,6 +132,7 @@ label_taxonDescriptionCaptionEN = Lajikuvaus - EN
 
 group_misc = Muut
 label_sortOrder = Järjestys
+sort_order_info = 0 = kuva näytetään ensin, isommat luvut näytetään myöhemmin
 label_documentIds = Dokumenttitunnisteet
 label_tags = Avainsanat
 label_fullResolutionMediaAvailable = Täysversion pyyntölomake

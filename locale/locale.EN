@@ -132,6 +132,7 @@ label_taxonDescriptionCaptionEN = Taxon Description Caption - EN
 
 group_misc = Misc
 label_sortOrder = Sort Order
+sort_order_info = 0 = shown first, large numbers shown later
 label_documentIds = Document IDs
 label_tags = Keywords
 label_fullResolutionMediaAvailable = Full version request form

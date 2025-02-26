@@ -61,7 +61,10 @@
 
     	<fieldset>
         	<legend>${text.group_misc}</legend>
-			<@inputNumber "sortOrder" meta.sortOrder />
+        	<div>
+				<@inputNumber "sortOrder" meta.sortOrder /> 
+				<label>&nbsp;</label><span>${text.sort_order_info}</span>
+			</div>
 			<@inputMulti "documentIds" 40 meta.documentIds />
 			<@inputMulti "tags" 40 meta.tags />
 			<@selectBool "fullResolutionMediaAvailable" meta.fullResolutionMediaAvailable!false />

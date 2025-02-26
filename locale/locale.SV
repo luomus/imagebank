@@ -132,6 +132,7 @@ label_taxonDescriptionCaptionEN = Taxonbeskrivningstext - EN
 
 group_misc = Övrigt
 label_sortOrder = Sorteringsordning
+sort_order_info = 0 = visas först, stora nummer visas senare
 label_documentIds = Dokument-ID
 label_tags = Nyckelord
 label_fullResolutionMediaAvailable = Formulär för begäran om fullversion
