@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
 
+import fi.laji.imagebank.dao.TaxonomyDAO;
 import fi.laji.imagebank.endpoints.ImageBankBaseServlet;
 import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.Image;
@@ -119,13 +120,30 @@ public class Admin extends ImageBankBaseServlet {
 			getSession(req).setFlashError(getText("unknown_taxon", req));
 			return redirectTo(getConfig().baseURL()+"/admin");
 		}
-		Taxon t = getTaxonomyDAO().getTaxon(taxonId);
+		TaxonomyDAO dao = getTaxonomyDAO();
+		Taxon t = dao.getTaxon(taxonId);
 		getTaxonImageDAO().reloadImages(t);
 		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
 		return data.setViewName("admin-taxon")
 				.setData("taxon", t)
+				.setData("nextTaxon", next(t, t.isSpecies(), dao))
+				.setData("prevTaxon", prev(t, t.isSpecies(), dao))
 				.setData(TAXON_SEARCH, taxonSearch)
 				.setData("multiPrimary", multiPrimary);
+	}
+
+	private Taxon prev(Taxon t, boolean expectSpecies, TaxonomyDAO dao) {
+		Taxon prev = dao.prev(t);
+		if (prev == null) return null;
+		if (expectSpecies == prev.isSpecies()) return prev;
+		return prev(prev, expectSpecies, dao);
+	}
+
+	private Taxon next(Taxon t, boolean expectSpecies, TaxonomyDAO dao) {
+		Taxon next = dao.next(t);
+		if (next == null) return null;
+		if (expectSpecies == next.isSpecies()) return next;
+		return next(next, expectSpecies, dao);
 	}
 
 	private ResponseData singleImageEdit(Qname mediaId, ResponseData data, String imageSearch, HttpServletRequest req) throws Exception {

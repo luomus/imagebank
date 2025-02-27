@@ -10,13 +10,18 @@
         </#if>
         <li><@printScientificName taxon/></li>
     </ol>
+    <#if prevTaxon?? || nextTaxon??>
+    <div id="taxonPrevNext">
+    	<#if prevTaxon??>
+			<a href="${baseURL}/admin/${prevTaxon.id}">&larr; <@printNames prevTaxon/></a> 
+			<#if nextTaxon??>|</#if>
+		</#if>
+		<#if nextTaxon??>
+			<a href="${baseURL}/admin/${nextTaxon.id}"><@printNames nextTaxon/> &rarr;</a>
+		</#if>
+	</div>
+	</#if>
 </nav>
-
-<h2>${text.admin_main}</h2>
-
-<h3><@printNames taxon/> | ${taxon.id}</h3>
-
-<#if multiPrimary><div class="info warning"><p>WARNING: Taxon has MULTIPLE PRIMARY images</p></div></#if>
 
 <div id="mass-tag-select" class="box">
 	<div id="mass-tag-select-header" class="box-header"><h5>${text.admin_tag_images}</h5> <span class="ui-icon ui-icon-caret-2-n-s"></span></div>
@@ -32,6 +37,16 @@
         </div>
 	</div>
 </div>
+
+<h2>${text.admin_main}</h2>
+
+
+
+<h3><@printNames taxon/> | ${taxon.id}</h3>
+
+<#if multiPrimary><div class="info warning"><p>WARNING: Taxon has MULTIPLE PRIMARY images</p></div></#if>
+
+
 
 <#if taxon.multimedia?has_content>
 <h4>${text.admin_select_image} ...</h4>

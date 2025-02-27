@@ -3,8 +3,10 @@ package fi.laji.imagebank.dao;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +18,8 @@ import fi.luomus.commons.utils.Cached;
 import fi.luomus.commons.utils.Cached.CacheLoader;
 
 public class TaxonomyCaches {
+
+	private static final Object LOCK = new Object();
 
 	public static class TreeTerms {
 		Qname groupId;
@@ -79,6 +83,7 @@ public class TaxonomyCaches {
 
 	public void clearCaches() {
 		treeCache.invalidateAll();
+		chain = null;
 	}
 
 	public List<Taxon> getTree(TreeTerms terms) {
@@ -166,6 +171,55 @@ public class TaxonomyCaches {
 
 	private static boolean given(Object o) {
 		return o != null && !o.toString().isEmpty();
+	}
+
+	private static class Node {
+		private final Taxon self;
+		private Node prev;
+		private Node next;
+		public Node(Taxon self) {
+			this.self = self;
+		}
+	}
+
+	private Map<Taxon, Node> chain = null;
+
+	private Map<Taxon, Node> getChain() {
+		if (chain == null) {
+			synchronized (LOCK) {
+				if (chain == null) {
+					chain = initChain();
+				}
+			}
+		}
+		return chain;
+	}
+
+	private Map<Taxon, Node> initChain() {
+		List<Taxon> all = new ArrayList<>(dao.getTaxonContainer().getAll());
+		Map<Taxon, Node> chain = new HashMap<>(all.size());
+		Collections.sort(all, Taxon.TAXONOMIC_ORDER_COMPARATOR);
+		Node prevNode = null;
+		for (Taxon currentTaxon : all) {
+			Node currentNode = new Node(currentTaxon);
+			currentNode.prev = prevNode;
+			if (prevNode != null) prevNode.next = currentNode;
+			chain.put(currentTaxon, currentNode);
+			prevNode = currentNode;
+		}
+		return chain;
+	}
+
+	public Taxon next(Taxon self) {
+		Node nextNode = getChain().get(self).next;
+		if (nextNode != null) return nextNode.self;
+		return null;
+	}
+
+	public Taxon prev(Taxon self) {
+		Node prevNode = getChain().get(self).prev;
+		if (prevNode != null) return prevNode.self;
+		return null;
 	}
 
 }

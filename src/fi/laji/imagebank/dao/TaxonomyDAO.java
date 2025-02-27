@@ -9,4 +9,7 @@ public interface TaxonomyDAO extends fi.luomus.commons.taxonomy.TaxonomyDAO {
 
 	List<Taxon> getTree(TreeTerms terms);
 
+	Taxon next(Taxon self);
+
+	Taxon prev(Taxon self);
 }

@@ -159,6 +159,7 @@ h2, h3, h4, h5 {
 	color: rgb(18, 65, 107);
 	margin-top: 0.4em;
 	margin-bottom: 0.2em;
+	white-space: nowrap;
 }
 h2 {
 	
@@ -227,7 +228,9 @@ li {
     left: -20px;
     line-height: 3em;
 }
-
+.breadcrumb ol {
+	display: inline-block;
+}
 .breadcrumb li {
     margin-right: 0.5em;
     display: inline;

@@ -743,4 +743,14 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		return caches.getTree(terms);
 	}
 
+	@Override
+	public Taxon next(Taxon self) {
+		return caches.next(self);
+	}
+
+	@Override
+	public Taxon prev(Taxon self) {
+		return caches.prev(self);
+	}
+
 }
