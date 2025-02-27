@@ -30,6 +30,10 @@ public class Browse extends ImageBankBaseServlet {
 	@Override
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		String changeGroup = req.getParameter("change");
+		if ("true".equals(changeGroup)) {
+			return selectGroup(req);
+		}
+
 		String groupId = getId(req);
 		if (notGiven(groupId)) {
 			groupId = groupIdFromPreferences(req, groupId);
@@ -44,9 +48,8 @@ public class Browse extends ImageBankBaseServlet {
 		Map<String, InformalTaxonGroup> groups = getTaxonomyDAO().getInformalTaxonGroups();
 		InformalTaxonGroup group = groups.get(groupId);
 
-		if (group == null || changeGroup != null) {
-			return initResponseData(req).setViewName("browse-groupselect")
-					.setData("taxonGroups", filteredTaxonGroups());
+		if (group == null) {
+			return selectGroup(req);
 		}
 
 		String path = req.getPathInfo();
@@ -64,6 +67,11 @@ public class Browse extends ImageBankBaseServlet {
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
 				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS)
 				.setData("defs", defs);
+	}
+
+	private ResponseData selectGroup(HttpServletRequest req) throws Exception {
+		return initResponseData(req).setViewName("browse-groupselect")
+				.setData("taxonGroups", filteredTaxonGroups());
 	}
 
 	private List<Qname> getGroupIds(InformalTaxonGroup group, Map<String, InformalTaxonGroup> groups) {
