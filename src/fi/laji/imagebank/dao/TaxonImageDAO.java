@@ -7,7 +7,7 @@ import fi.luomus.commons.taxonomy.Taxon;
 
 public interface TaxonImageDAO extends AutoCloseable {
 
-	Taxon reloadImages(Taxon t);
+	Taxon reloadImages(Taxon t) throws Exception;
 
 	List<Image> search(String searchTerm);
 

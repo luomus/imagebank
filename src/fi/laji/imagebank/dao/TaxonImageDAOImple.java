@@ -91,12 +91,11 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 	}
 
 	@Override
-	public Taxon reloadImages(Taxon t) {
+	public Taxon reloadImages(Taxon t) throws Exception {
 		try {
-			List<Image> images = images(t.getId());
+			List<Image> images = images(t);
 			t.clearMultimedia();
 			for (Image i : images) {
-				i.setTaxon(t);
 				t.addMultimedia(i);
 			}
 		} catch (SQLException e) {
@@ -112,7 +111,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 			" AND      subjectname IN ( SELECT subjectname FROM s WHERE predicatename = 'rdf:type'    AND objectname = 'MM.image') " +
 			" ORDER BY subjectname, predicatename ";
 
-	private List<Image> images(Qname taxonId) throws SQLException {
+	private List<Image> images(Taxon taxon) throws Exception {
 		List<Image> images = new ArrayList<>();
 		TransactionConnection con = null;
 		PreparedStatement p = null;
@@ -120,7 +119,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 		try {
 			con = new SimpleTransactionConnection(dataSource.getConnection());
 			p = con.prepareStatement(SINGLE_TAXON_SQL);
-			p.setString(1, taxonId.toString());
+			p.setString(1, taxon.getId().toString());
 			rs = p.executeQuery();
 			Qname prevImageId = new Qname("");
 			Image image = null;
@@ -138,6 +137,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 					add(image, images, isSecret);
 					prevImageId = imageId;
 					image = new Image(imageId);
+					image.setTaxon(taxon);
 					isSecret = null;
 				}
 				addStatementToImage(image, predicate, objectname, resourceliteral, locale);
