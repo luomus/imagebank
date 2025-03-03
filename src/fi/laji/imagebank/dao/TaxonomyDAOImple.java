@@ -25,6 +25,7 @@ import org.apache.http.client.methods.HttpGet;
 
 import com.zaxxer.hikari.HikariDataSource;
 
+import fi.laji.imagebank.dao.TaxonomyCaches.SpeciesTerms;
 import fi.laji.imagebank.dao.TaxonomyCaches.TreeTerms;
 import fi.luomus.commons.config.Config;
 import fi.luomus.commons.containers.LocalizedText;
@@ -751,6 +752,16 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 	@Override
 	public Taxon prev(Taxon self) {
 		return caches.prev(self);
+	}
+
+	@Override
+	public List<Taxon> getSpecies(SpeciesTerms terms) {
+		return caches.getSpecies(terms);
+	}
+
+	@Override
+	public int getSpeciesCount(SpeciesTerms terms) {
+		return caches.getSpeciesCount(terms);
 	}
 
 }

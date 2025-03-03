@@ -2,6 +2,7 @@ package fi.laji.imagebank.dao;
 
 import java.util.List;
 
+import fi.laji.imagebank.dao.TaxonomyCaches.SpeciesTerms;
 import fi.laji.imagebank.dao.TaxonomyCaches.TreeTerms;
 import fi.luomus.commons.taxonomy.Taxon;
 
@@ -12,4 +13,8 @@ public interface TaxonomyDAO extends fi.luomus.commons.taxonomy.TaxonomyDAO {
 	Taxon next(Taxon self);
 
 	Taxon prev(Taxon self);
+
+	List<Taxon> getSpecies(SpeciesTerms terms);
+
+	int getSpeciesCount(SpeciesTerms terms);
 }

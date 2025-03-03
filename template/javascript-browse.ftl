@@ -23,9 +23,33 @@ function loadTree() {
     });
 }
 
+function loadSpecies(page = 1) {
+	const order = getPreference("order") || "order_taxonomic";
+	const taxa = getPreference("taxa") || "taxa_finnish";
+	const taxonRanks = getPreference("taxonRanks") || [];
+	const pageSize = getPreference("pageSize") || "100";
+	$.ajax({
+        url: "${baseURL}/api/species/${groupId}?page=" + page + "&order=" + order + "&taxa=" + taxa + "&taxonRanks=" + taxonRanks + "&pageSize=" + pageSize,
+        type: "GET",
+        success: function(response) {
+			const container = $("#browse-taxa");
+   			container.html(response);
+        },
+        error: function() {
+            // Refresh the page to display the failure reason via flash message
+			window.scrollTo(0, 0);
+        	window.location.reload();
+        }
+    });
+}
+
 preferenceChangeHook = function(preference, value) {
     if (preference === "taxa" || preference === "order") {
         loadTree();
+        loadSpecies();
+    }
+    if (preference === "taxonRanks" || preference === "pageSize") {
+    	loadSpecies();
     }
 };
 
@@ -50,6 +74,7 @@ $(document).ready(function() {
 	}
 	
 	loadTree();
+	loadSpecies();
 	
 	$("#browse-panel").show();
 		

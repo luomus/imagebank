@@ -572,3 +572,37 @@ h3.browse a {
 	font-size: 90%;
 	float: right;
 }
+
+.pager {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.pager-btn {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
+.pager-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.pager-btn.active {
+    font-weight: bold;
+    background-color: #007fff;
+    color: white;
+    border-color: #003eff;
+}
+
+.pager-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
