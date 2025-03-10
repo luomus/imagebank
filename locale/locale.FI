@@ -63,6 +63,8 @@ admin_single_body = Kirjoita kuvan osoite (esim https://image.laji.fi/MM.123/kuv
 admin_taxon_title = Muokkaa taksonin kuvia
 admin_taxon_body = Kirjoita taksonin tunniste (esim MX.123) tai tieteellinen tai suomenkielinen nimi
 admin_add_image_title = Lataa kuva
+admin_add_image_title_multi = Lataa kuvia
+admin_add_image_info = Mene taksonin sivulle lisätäksesi useita kuvia kyseiselle taksonille.
 admin_select_image = Valitse muokattava kuva
 admin_info = <p>Admin -osio on ylläpitotyökalu, jota ei ole tarkoitettu tavalliseen lajikuvien kuratointiin.</p><p>Täällä voit muokata kaikkia kuvia; myös Kotkassa lisättyjä näytekuvia ja Vihkon kautta lisättyjä havaintokuvia.</p><p>Voit muokata kuvien kaikkia tietoja, joita Kuvapankin lajikuvaosiossa ei voi muokata, esim lisenssi, kuvaajan nimi, avainsanat.</p><p>Voit myös kokonaan poistaa kuvia.</p>
 admin_edit_image = Muokkaa kuvaa
@@ -81,13 +83,14 @@ taxon_autocomplete_placeholder = Par apollo, L dryas, Metalimnobia, ukkoetana, M
 select_taxon = Valitse taksoni
 exact_matches = Täsmälliset osumat
 partial_matches = Osittaiset osumat
-likely_matches = Todennäköiset osumat
+likely_matches = Mahdollinen vastaavuus
 no_taxon_matches = Ei osumia hakusanalla
 taxon_search_term = Hakutulokset nimellä
 
 no_images = Ei kuvia
 no_image = Ei kuvaa
 drop_image = Pudota kuvatiedosto tähän tai klikkaa valitaksesi kuva koneeltasi.
+drop_image_multi = Pudota kuvatiedostot tähän tai klikkaa valitaksesi kuvat koneeltasi.
 
 save = Tallenna
 save_success = Tallennettu onnistuneesti!
@@ -109,8 +112,9 @@ file_too_large = Tiedosto on liian suuri. Maksimikoko on 50MB.
 invalid_parameters = Epäkelvot parametrit
 
 group_authors = Tekijät
+label_capturer = Kuvaaja
 label_capturers = Kuvaajat
-label_rightsOwner = Lisenssin omistaja
+label_rightsOwner = Oikeudenhaltija
 label_license = Lisenssi
 label_captureDateTime = Kuvaushetki
 

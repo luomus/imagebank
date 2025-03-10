@@ -63,6 +63,8 @@ admin_single_body = Ange bildens adress (t.ex. https://image.laji.fi/MM.123/kuva
 admin_taxon_title = Redigera taxonbilder
 admin_taxon_body = Ange taxonens identifierare (t.ex. MX.123) eller dess vetenskapliga eller svenska namn
 admin_add_image_title = Ladda upp bild
+admin_add_image_title_multi = Ladda upp bilder
+admin_add_image_info = Gå till taxonsidan för att lägga till flera bilder.
 admin_select_image = Välj en bild att redigera
 admin_info = <p>Admin-sektionen är ett underhållsverktyg och är inte avsett för vanlig artbildskuratering.</p><p>Här kan du redigera alla bilder, inklusive provbilder som lagts till i Kotka och observationsbilder som lagts till via Vihko.</p><p>Du kan redigera alla bildinformationer som inte kan ändras i artbildssektionen, t.ex. licens, fotografens namn och nyckelord.</p><p>Du kan även helt ta bort bilder.</p>
 admin_edit_image = Redigera bild
@@ -88,6 +90,7 @@ taxon_search_term = Matchar med sökterm
 no_images = Inga bilder
 no_image = Ingen bild
 drop_image = Dra och släpp en bild här, eller klicka för att välja en.
+drop_image_multi = Dra och släpp bilder här, eller klicka för att välja flera.
 
 save = Spara
 save_success = Sparat!
@@ -109,8 +112,9 @@ file_too_large = Filen är för stor. Den maximala storleken är 50 MB.
 invalid_parameters = Ogiltiga parametrar
 
 group_authors = Författare
-label_capturers = Fotograf
-label_rightsOwner = Licensägare
+label_capturer = Fotograf
+label_capturers = Fotografer
+label_rightsOwner = Rättighetsinnehavare
 label_license = Licens
 label_captureDateTime = Registreringstidpunkt
 

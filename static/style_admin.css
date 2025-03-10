@@ -182,3 +182,10 @@ fieldset#unmodifieable-meta-fields {
 #taxonPrevNext a {
 	text-decoration: none;
 }
+
+.taxon-image.new-image {
+	box-shadow: 0 0 10px 10px rgba(100, 195, 100, 0.75); 
+}
+.new-image .image-wrapper {
+	background-color: rgba(100, 195, 100, 0.75);
+}

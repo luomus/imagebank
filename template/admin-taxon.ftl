@@ -57,10 +57,12 @@
 <div class="image-grid">
 	<#if taxon.multimedia?has_content>
 		<#list taxon.categorizedMultimedia.groupedFlatImages as image>
-			<a class="taxon-image" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
+			<a class="taxon-image <@addNewImageClass image/>" href="${baseURL}/admin/${image.id}?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if>"><img class="admin-image" src="${image.largeURL?html}" <@imageData image/> /></a>
 		</#list>
 	</#if>
-	<@adminImageUpload/>	
+	<@adminImageUpload true/>	
 </div>
+
+<#macro addNewImageClass image><#if newImages?? && newImages?seq_contains(image.id)>new-image</#if></#macro>
 
 <#include "footer.ftl">

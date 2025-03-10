@@ -25,6 +25,9 @@
 <h3>${text.admin_add_image_title}</h3>
 <@adminImageUpload/>
 
+<p class="info">${text.admin_add_image_info}</p>
+
+<br />
 <br />
 <div class="info">
 	${text.admin_info}

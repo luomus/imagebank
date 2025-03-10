@@ -185,7 +185,8 @@ $(document).ready(function() {
     
     $("#fileInput").on("change", function() {
         if (this.files.length > 0) {
-            $("#dropText p").text(this.files[0].name);
+        	let fileNames = Array.from(this.files).map(file => file.name).join(", ");
+            $("#dropText p").text(fileNames);
             $("#saveButton").button("enable");
         }
     });

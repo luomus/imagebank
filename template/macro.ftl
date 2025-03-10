@@ -115,15 +115,15 @@
 	</div>
 </#macro>
 
-<#macro adminImageUpload>
+<#macro adminImageUpload multi=false>
 	<form class="image-upload-form" id="imageUploadForm" action="${baseURL}/admin/add<#if taxon??>?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if></#if>" method="POST" enctype="multipart/form-data">
-		<fieldset>
-			<legend>Upload Image</legend>
+		<fieldset id="adminMetaForm">
+			<legend><#if multi>${text.admin_add_image_title_multi}<#else>${text.admin_add_image_title}</#if></legend>
 			    <div id="dropArea">
-      				<input type="file" id="fileInput" name="image" accept="image/*" hidden />
+      				<input type="file" id="fileInput" name="images" accept="image/*" <#if multi>multiple</#if> hidden />
       				<div id="dropText">
         				<i class="fa fa-camera" aria-hidden="true"></i>
-        				<p>${text.drop_image}</p>
+        				<p><#if multi>${text.drop_image_multi}<#else>${text.drop_image}</#if></p>
       				</div>
     			</div>
     			<#if !taxon??>
@@ -132,6 +132,11 @@
         				<span class="ui-icon ui-icon-info" title="${text.admin_secret_image_help}">?</span>
         				<input type="checkbox" id="secretCheckbox" name="secret">
         			</div>
+        		</#if>
+        		<#if multi>
+        			<@input "capturer" 30 user.fullName />
+					<@input "rightsOwner" 30 "Luomus" />
+        			<@select "license" licenses "MZ.intellectualRightsCC-BY-4.0"/>
         		</#if>
 			<button type="submit" id="saveButton" disabled>${text.save}</button>
 		</fieldset>

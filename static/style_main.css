@@ -287,6 +287,19 @@ li {
     max-width: 60em;
 }
 
+p.info {
+	padding: 2px;
+	padding-left: 10px;
+	margin: 1em 0;
+	border-left: 5px solid rgb(150,180,205);
+	border-radius: 0;
+	display: block;
+	width: max-content;
+	background-color: #e7f3fe;
+	box-shadow: none;
+	display: block;
+}
+
 .ui-tooltip {
     border: 1px solid red;
     background: #111;

@@ -63,6 +63,8 @@ admin_single_body = Enter the image URL (e.g., https://image.laji.fi/MM.123/kuva
 admin_taxon_title = Edit taxon images
 admin_taxon_body = Enter the taxon identifier (e.g., MX.123) or its scientific or Finnish name
 admin_add_image_title = Upload image
+admin_add_image_title_multi = Upload images
+admin_add_image_info = Go to the taxon page to add multiple images for that taxon.
 admin_select_image = Select an image to edit
 admin_info = <p>The Admin section is a maintenance tool, not intended for regular species image curation.</p><p>Here, you can edit all images, including specimen images added in Kotka and observation images added through Notebook.</p><p>You can edit all the image details that cannot be modified in the ImageBank species image section, such as license, photographer's name, and keywords.</p><p>You can also completely remove images.</p>
 admin_edit_image = Edit image
@@ -88,6 +90,7 @@ taxon_search_term = Matches with search term
 no_images = No images
 no_image = No image
 drop_image = Drag & drop an image here, or click to select one
+drop_image_multi = Drag & drop images here, or click to select them
 
 save = Save
 save_success = Saved!
@@ -109,8 +112,9 @@ file_too_large = The file is too large. The maximum size is 50MB.
 invalid_parameters = Invalid parameters
 
 group_authors = Authors
-label_capturers = Capturers 
-label_rightsOwner = License Owner
+label_capturer = Photographer
+label_capturers = Photographers 
+label_rightsOwner = Rights Holder
 label_license = License
 label_captureDateTime = Capture Date Time
 

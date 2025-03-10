@@ -1,7 +1,12 @@
 package fi.laji.imagebank.endpoints.admin;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import fi.laji.imagebank.models.User;
+import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.ResponseData;
+import fi.luomus.commons.session.SessionHandler;
 import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.kuvapalvelu.model.Meta;
 
@@ -23,10 +30,13 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 
 	@Override
 	protected ResponseData processPost(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		Part filePart = null;
+		Collection<Part> fileParts;
 		try {
-			filePart = req.getPart("image");
-			if (filePart == null || filePart.getSize() == 0) {
+			fileParts = req.getParts().stream()
+					.filter(part -> "images".equals(part.getName()) && part.getSize() > 0)
+					.collect(Collectors.toList());
+
+			if (fileParts.isEmpty()) {
 				getSession(req).setFlashError(getText("file_missing", req));
 				return status(400, res);
 			}
@@ -34,19 +44,39 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 			getSession(req).setFlashError(getText("file_too_large", req));
 			return status(400, res);
 		}
-		String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-		InputStream stream = filePart.getInputStream();
 
 		String taxonId = req.getParameter("taxonId");
-		Meta meta = meta(req, taxonId);
+		String capturer = req.getParameter("capturer");
+		String rightsOwner = req.getParameter("rightsOwner");
+		String license = req.getParameter("license");
 
-		String id = getMediaApiClient().uploadImage(stream, fileName, meta);
+		List<String> uploadedIds = new ArrayList<>();
+
+		for (Part filePart : fileParts) {
+			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+			try (InputStream stream = filePart.getInputStream()) {
+				Meta meta = meta(req, taxonId, capturer, rightsOwner, license);
+				String id = getMediaApiClient().uploadImage(stream, fileName, meta);
+				uploadedIds.add(id);
+			} catch (IOException e) {
+				getSession(req).setFlashError(getText("file_upload_failed", req));
+				return status(500, res);
+			}
+		}
 
 		if (taxonId != null) {
 			reloadImages(taxonId);
 		}
-		getSession(req).setFlashSuccess(getText("admin_image_add_success", req));
-		return new ResponseData(id, "text/plain");
+
+		SessionHandler ses = getSession(req);
+		ses.setFlashSuccess(getText("admin_image_add_success", req));
+		ses.setObject(Constant.NEW_IMAGES, uploadedIds);
+
+		if (uploadedIds.size() == 1) {
+			return new ResponseData(uploadedIds.get(0), "text/plain");
+		}
+		if (taxonId == null) throw new IllegalStateException("Impossible state");
+		return new ResponseData(taxonId, "text/plain");
 	}
 
 	private void reloadImages(String taxonId) throws Exception {
@@ -57,7 +87,7 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		return getTaxonomyDAO().getTaxon(new Qname(taxonId));
 	}
 
-	private Meta meta(HttpServletRequest req, String taxonId) {
+	private Meta meta(HttpServletRequest req, String taxonId, String capturer, String rightsOwner, String license) {
 		String secret = req.getParameter("secret");
 		Meta meta = new Meta();
 		if (taxonId != null) {
@@ -67,10 +97,10 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 			meta.setSecret(true);
 		}
 		User user = getUser(req);
-		meta.setLicense("MZ.intellectualRightsCC-BY-4.0");
 		meta.setUploadedBy(user.getId().toString());
-		meta.setRightsOwner("Luomus");
-		meta.addCapturer(user.getFullName());
+		meta.addCapturer(!given(capturer) ? user.getFullName() : capturer);
+		meta.setRightsOwner(!given(rightsOwner) ? "Luomus" : rightsOwner);
+		meta.setLicense(!given(license) ? "MZ.intellectualRightsCC-BY-4.0" : license);
 		return meta;
 	}
 

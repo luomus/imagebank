@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 import fi.laji.imagebank.dao.TaxonomyDAO;
 import fi.laji.imagebank.endpoints.ImageBankBaseServlet;
 import fi.laji.imagebank.models.User;
+import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.Image;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.ResponseData;
@@ -124,12 +125,22 @@ public class Admin extends ImageBankBaseServlet {
 		Taxon t = dao.getTaxon(taxonId);
 		getTaxonImageDAO().reloadImages(t);
 		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
+		List<String> newImages = newImages(req);
 		return data.setViewName("admin-taxon")
 				.setData("taxon", t)
 				.setData("nextTaxon", next(t, t.isSpecies(), dao))
 				.setData("prevTaxon", prev(t, t.isSpecies(), dao))
 				.setData(TAXON_SEARCH, taxonSearch)
-				.setData("multiPrimary", multiPrimary);
+				.setData("multiPrimary", multiPrimary)
+				.setData("newImages", newImages);
+	}
+
+
+	@SuppressWarnings("unchecked")
+	private List<String> newImages(HttpServletRequest req) {
+		Object o = getSession(req).getObject(Constant.NEW_IMAGES);
+		if (o == null) return null;
+		return (List<String>) o;
 	}
 
 	private Taxon prev(Taxon t, boolean expectSpecies, TaxonomyDAO dao) {
