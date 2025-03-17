@@ -9,6 +9,7 @@ accessibility_statement_link = NOP
 finbif_mission = The Finnish Biodiversity Information Facility (FinBIF) is an open access data repository for researchers, government and the public. FinBIF consolidates many collections and datasets of living Finland in a single source. FinBIF is committed to the sharing and promotion of open access data.
 
 documentation = Documentation
+doc_link = https://info.laji.fi/en/frontpage/instructions-to-species-image-management-image-bank/
 support = Support and feedback
 change_language = Change language
 

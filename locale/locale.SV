@@ -9,6 +9,7 @@ accessibility_statement_link = NOP
 finbif_mission = Finlands Artdatacenter samlar och förenar finländska artinformationsdata som en konsekvent och öppen enhet för forskning och utbildning, förvaltning och den breda allmänheten.
 
 documentation =  Instruktioner
+doc_link = https://info.laji.fi/en/frontpage/instructions-to-species-image-management-image-bank/
 support = Support och feedback
 change_language = Change language | Byt språk
 
