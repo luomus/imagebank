@@ -44,9 +44,7 @@
 
 
 
-<#if taxon.multimedia?has_content>
-<h4>${text.admin_select_image} ...</h4>
-<#else>
+<#if !taxon.multimedia?has_content>
 <h4>${text.no_images}!</h4>
 </#if>
 
