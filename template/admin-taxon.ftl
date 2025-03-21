@@ -10,17 +10,7 @@
         </#if>
         <li><@printScientificName taxon/></li>
     </ol>
-    <#if prevTaxon?? || nextTaxon??>
-    <div id="taxonPrevNext">
-    	<#if prevTaxon??>
-			<a href="${baseURL}/admin/${prevTaxon.id}">&larr; <@printNames prevTaxon/></a> 
-			<#if nextTaxon??>|</#if>
-		</#if>
-		<#if nextTaxon??>
-			<a href="${baseURL}/admin/${nextTaxon.id}"><@printNames nextTaxon/> &rarr;</a>
-		</#if>
-	</div>
-	</#if>
+    
 </nav>
 
 <div id="mass-tag-select" class="box">
@@ -41,6 +31,12 @@
 <h2>${text.admin_main}</h2>
 
 
+<#if prevTaxon??>
+	<p><a href="${baseURL}/admin/${prevTaxon.id}">&larr; <@printNames prevTaxon/></a></p> 
+</#if>
+<#if nextTaxon??>
+	<p>&nbsp;&nbsp;&nbsp;<a href="${baseURL}/admin/${nextTaxon.id}"><@printNames nextTaxon/> &rarr;</a></p>
+</#if>
 
 <h3><@printNames taxon/> | ${taxon.id}</h3>
 
