@@ -128,8 +128,8 @@ public class Admin extends ImageBankBaseServlet {
 		List<String> newImages = newImages(req);
 		return data.setViewName("admin-taxon")
 				.setData("taxon", t)
-				.setData("nextTaxon", next(t, t.isSpecies(), dao))
-				.setData("prevTaxon", prev(t, t.isSpecies(), dao))
+				.setData("nextTaxon", next(t, t.isSpecies(), t.isFinnish(), dao))
+				.setData("prevTaxon", prev(t, t.isSpecies(), t.isFinnish(), dao))
 				.setData(TAXON_SEARCH, taxonSearch)
 				.setData("multiPrimary", multiPrimary)
 				.setData("newImages", newImages);
@@ -143,18 +143,18 @@ public class Admin extends ImageBankBaseServlet {
 		return (List<String>) o;
 	}
 
-	private Taxon prev(Taxon t, boolean expectSpecies, TaxonomyDAO dao) {
+	private Taxon prev(Taxon t, boolean expectSpecies, boolean expectFinnish, TaxonomyDAO dao) {
 		Taxon prev = dao.prev(t);
 		if (prev == null) return null;
-		if (expectSpecies == prev.isSpecies()) return prev;
-		return prev(prev, expectSpecies, dao);
+		if (expectSpecies == prev.isSpecies() && (!expectFinnish || prev.isFinnish())) return prev;
+		return prev(prev, expectSpecies, expectFinnish, dao);
 	}
 
-	private Taxon next(Taxon t, boolean expectSpecies, TaxonomyDAO dao) {
+	private Taxon next(Taxon t, boolean expectSpecies, boolean expectFinnish, TaxonomyDAO dao) {
 		Taxon next = dao.next(t);
 		if (next == null) return null;
-		if (expectSpecies == next.isSpecies()) return next;
-		return next(next, expectSpecies, dao);
+		if (expectSpecies == next.isSpecies() && (!expectFinnish || next.isFinnish())) return next;
+		return next(next, expectSpecies, expectFinnish, dao);
 	}
 
 	private ResponseData singleImageEdit(Qname mediaId, ResponseData data, String imageSearch, HttpServletRequest req) throws Exception {
