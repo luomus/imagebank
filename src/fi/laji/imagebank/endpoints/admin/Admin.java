@@ -145,16 +145,24 @@ public class Admin extends ImageBankBaseServlet {
 
 	private Taxon prev(Taxon t, boolean expectSpecies, boolean expectFinnish, TaxonomyDAO dao) {
 		Taxon prev = dao.prev(t);
-		if (prev == null) return null;
-		if (expectSpecies == prev.isSpecies() && (!expectFinnish || prev.isFinnish())) return prev;
-		return prev(prev, expectSpecies, expectFinnish, dao);
+		while (prev != null) {
+			if (expectSpecies == prev.isSpecies() && (!expectFinnish || prev.isFinnish())) {
+				return prev;
+			}
+			prev = dao.prev(prev);
+		}
+		return null;
 	}
 
 	private Taxon next(Taxon t, boolean expectSpecies, boolean expectFinnish, TaxonomyDAO dao) {
 		Taxon next = dao.next(t);
-		if (next == null) return null;
-		if (expectSpecies == next.isSpecies() && (!expectFinnish || next.isFinnish())) return next;
-		return next(next, expectSpecies, expectFinnish, dao);
+		while (next != null) {
+			if (expectSpecies == next.isSpecies() && (!expectFinnish || next.isFinnish())) {
+				return next;
+			}
+			next = dao.next(next);
+		}
+		return null;
 	}
 
 	private ResponseData singleImageEdit(Qname mediaId, ResponseData data, String imageSearch, HttpServletRequest req) throws Exception {
