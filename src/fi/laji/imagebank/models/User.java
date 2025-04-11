@@ -31,7 +31,8 @@ public class User implements Serializable {
 		if (roles == null || roles.isEmpty()) return Type.NORMAL;
 		if (roles.contains("MA.admin")) return Type.ADMIN;
 		if (roles.contains("MA.taxonEditorUser")) return Type.ADMIN;
-		if (roles.contains("MA.taxonEditorUserDescriptionWriterOnly")) return Type.CURATOR;
+		// TODO restore this when curation is available if (roles.contains("MA.taxonEditorUserDescriptionWriterOnly")) return Type.CURATOR;
+		if (roles.contains("MA.taxonEditorUserDescriptionWriterOnly")) return Type.ADMIN;
 		if (roles.contains("MA.luomusSpaceCalendarUser")) return Type.CURATOR;
 		return Type.NORMAL;
 	}
