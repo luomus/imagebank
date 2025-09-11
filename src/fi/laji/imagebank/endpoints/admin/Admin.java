@@ -292,7 +292,11 @@ public class Admin extends ImageBankBaseServlet {
 		meta.getCapturers().addAll(params(req, "capturers"));
 		meta.setRightsOwner(param(req, "rightsOwner"));
 		meta.setLicense(param(req, "license"));
-		meta.setCaptureDateTime(date(req, "captureDateTime"));
+		try {
+			meta.setCaptureDateTime(date(req, "captureDateTime"));
+		} catch (Exception e) {
+			throw validationFailure("captureDateTime", "invalid_datetime", req);
+		}
 		params(req, "taxonIds").forEach(meta.getIdentifications()::addTaxonId);
 		params(req, "verbatim").forEach(meta.getIdentifications()::addVerbatim);
 		params(req, "primaryForTaxon").forEach(meta::addPrimaryForTaxon);
@@ -342,11 +346,7 @@ public class Admin extends ImageBankBaseServlet {
 	private DateTime date(HttpServletRequest req, String param) {
 		String s = param(req, param);
 		if (!given(s)) return null;
-		try {
-			return DateTime.parse(s);
-		} catch (Exception e) {
-			throw validationFailure(param, "invalid_datetime", req);
-		}
+		return DateTime.parse(s);
 	}
 
 	private String param(HttpServletRequest req, String param) {
