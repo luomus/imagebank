@@ -257,7 +257,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 	}
 
 	private TaxonSearchResponse uncachedTaxonSearch(TaxonSearch taxonSearch) throws Exception {
-		return new TaxonSearchDAOSQLQueryImple(this, dataSource, "ltkm_luonto").search(taxonSearch);
+		return new TaxonSearchDAOSQLQueryImple("ltkm_luonto.TAXON_SEARCH_MATERIALIZED_V3", this, dataSource).search(taxonSearch);
 	}
 
 	public RuntimeException exceptionAndReport(String message, Exception e) {
