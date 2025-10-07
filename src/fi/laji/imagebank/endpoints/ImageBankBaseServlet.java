@@ -43,6 +43,15 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 	public static final String CONFIG_FILE = "imagebank.properties";
 	private static final Object LOCK = new Object();
 
+	private static final Map<String, String> SOURCE_SYSTEMS = Utils.map(
+			new KeyValuePair("KE.1181", "Kerttu"),
+			new KeyValuePair("KE.176", "Löydös"),
+			new KeyValuePair("KE.3", "Kotka"),
+			new KeyValuePair("KE.321", "Pinkka"),
+			new KeyValuePair("KE.441", "Laji.fi / Vihko"),
+			new KeyValuePair("KE.341", "Satellite Data"),
+			new KeyValuePair("KE.1841", "Image Bank"));
+
 	@Override
 	protected String configFileName() {
 		return CONFIG_FILE;
@@ -211,15 +220,6 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		}
 		return null;
 	}
-
-	private static final Map<String, String> SOURCE_SYSTEMS = Utils.map(
-			new KeyValuePair("KE.1181", "Kerttu"),
-			new KeyValuePair("KE.176", "Löydös"),
-			new KeyValuePair("KE.3", "Kotka"),
-			new KeyValuePair("KE.321", "Pinkka"),
-			new KeyValuePair("KE.441", "Laji.fi / Vihko"),
-			new KeyValuePair("KE.341", "Satellite Data"),
-			new KeyValuePair("KE.1841", "Image Bank"));
 
 	protected User getUser(HttpServletRequest req) {
 		SessionHandler session = getSession(req, false);
