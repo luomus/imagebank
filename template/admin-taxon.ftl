@@ -16,11 +16,11 @@
 <div id="mass-tag-select" class="box">
 	<div id="mass-tag-select-header" class="box-header"><h5>${text.admin_tag_images}</h5> <span class="ui-icon ui-icon-caret-2-n-s"></span></div>
 	<div id="mass-tag-select-body" class="box-body">
-		<@select "type" types />
-        <@select "sex" sexes />
-        <@select "lifeStage" lifeStages />
-        <@select "plantLifeStage" plantLifeStages />
-        <@select "side" sides />
+		<@select "type" types admin_selected_tag_type />
+        <@select "sex" sexes admin_selected_tag_sex />
+        <@select "lifeStage" lifeStages admin_selected_tag_lifeStage />
+        <@select "plantLifeStage" plantLifeStages  admin_selected_tag_plantLifeStage />
+        <@select "side" sides admin_selected_tag_side />
         <div>
         	<button id="mass-tag-clear-button" type="button">${text.clear_all}</button>
         	<button id="mass-tag-done-button" style="display:none" type="button">${text.admin_tag_done}</button>

@@ -91,33 +91,49 @@ $(document).ready(function() {
 	$("#mass-tag-select-header").click(function() {
 		$("#mass-tag-select-body").toggle();
 	});
-     
-	$("#mass-tag-select select").each(function() {
-        $(this).val(''); // Clear the value
-    });
     
-	const activeTags = {};
-     
-	$("#mass-tag-select select").change(function() {
-     	const name = $(this).attr("name");
-    	const value = $(this).val(); // The select's value
-    	const label = $(this).find("option:selected").text(); // The human-readable label
-   		let has = false;
-		if (value) {
-			activeTags[name] = { value, label };
-			has = true;
-    	} else {
-			delete activeTags[name];
-    	}
-   		$(".tag-hover").remove();
-    	if (has) {
-    		let hoverElement = $('<div class="tag-hover">${text.admin_click_to_add_tags}: </div>');
+	let activeTags = {};
+    
+    const saveSelectedTags = $.debounce(function () {
+		setPreference("admin_selected_tags", btoa(JSON.stringify(activeTags)));
+	}, 2000);
+
+	function saveSelectedTagsNow() {
+    	setPreference("admin_selected_tags", btoa(JSON.stringify(activeTags)));
+	}
+	
+	function updateTagsHover() {
+		$(".tag-hover").remove();
+    	if (Object.keys(activeTags).length > 0) {
+        	let hoverElement = $('<div class="tag-hover">${text.admin_click_to_add_tags}: </div>');
         	Object.entries(activeTags).forEach(([name, tag]) => {
             	hoverElement.append('<span class="tag" data-type="' + name + '">' + tag.label + '</span> ');
         	});
         	$("body").append(hoverElement);
     	}
+	}
+	
+	$("#mass-tag-select select").change(function() {
+     	const name = $(this).attr("name");
+    	const value = $(this).val(); // The select's value
+    	const label = $(this).find("option:selected").text(); // The human-readable label
+		if (value) {
+			activeTags[name] = { value, label };
+    	} else {
+			delete activeTags[name];
+    	}
+   		updateTagsHover();
+    	saveSelectedTags();
 	});
+
+    $("#mass-tag-clear-button").click(function() {
+    	 $("#mass-tag-select select").val('');
+    	 activeTags = {};
+    	 updateTagsHover(); 
+    	 saveSelectedTagsNow();
+    });
+    
+	$("#mass-tag-done-button").click(function() { window.location.reload(); });
 	
 	$(document).on("mousemove", function (event) {
 		$(".tag-hover").css({
@@ -147,12 +163,6 @@ $(document).ready(function() {
     	});
     	return false;
 	});
-    
-    $("#mass-tag-clear-button").click(function() {
-    	 $("#mass-tag-select select").val('').change();
-    });
-    	
-	$("#mass-tag-done-button").click(function() { window.location.reload(); });
     
 	<#if taxon??>
      	const makePrimaryButton = $('<button id="makePrimary" type="button">${text.admin_make_primary}</button>').button();
@@ -212,5 +222,6 @@ $(document).ready(function() {
         });
     });
     
-
+	$("#mass-tag-select select").trigger("change");
+	
 });

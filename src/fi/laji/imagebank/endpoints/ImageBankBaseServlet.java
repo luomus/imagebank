@@ -170,11 +170,12 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 				User user = (User) session.getObject(Constant.USER);
 				if (user != null) {
 					responseData.setData(Constant.USER, user);
-					Preferences preferences = (Preferences) session.getObject(Constant.PREFERENCES);
+					Preferences preferences = getPreferences(session);
 					if (preferences == null) {
 						preferences = getDAO().getPreferences(user.getId().toString());
 						session.setObject(Constant.PREFERENCES, preferences);
 					}
+					responseData.setData(Constant.PREFERENCES, preferences);
 					String defaultLicense = preferences.get(Constant.USER_DEFAULT_LICENSE);
 					if (given(defaultLicense)) {
 						responseData.setData(Constant.USER_DEFAULT_LICENSE, defaultLicense);
@@ -201,6 +202,10 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 			responseData.setData(Constant.USER_DEFAULT_LICENSE, "MZ.intellectualRightsCC-BY-4.0");
 		}
 		return responseData;
+	}
+
+	protected Preferences getPreferences(SessionHandler session) {
+		return (Preferences) session.getObject(Constant.PREFERENCES);
 	}
 
 	protected void invalidatePreferences(HttpServletRequest req) {
