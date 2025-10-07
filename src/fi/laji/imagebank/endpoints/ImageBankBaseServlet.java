@@ -218,7 +218,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 	protected String getUsersDefaultLicense(HttpServletRequest req) {
 		SessionHandler session = getSession(req);
 		if (session != null) {
-			Preferences preferences = (Preferences) session.getObject(Constant.PREFERENCES);
+			Preferences preferences = getPreferences(session);
 			if (preferences != null) {
 				return preferences.get(Constant.USER_DEFAULT_LICENSE);
 			}
