@@ -63,5 +63,4 @@ public class APIPreferences extends APIBaseServlet {
 		return userId;
 	}
 
-
 }

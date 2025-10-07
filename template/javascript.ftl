@@ -87,20 +87,31 @@ function changeLocale() {
 	}
 </#if>
 	
-	function getPreference(preference) {
-		return preferences[preference] || false;
-	}
-	function getBooleanPreference(preference) {
-		if (preferences[preference] === undefined) return true;
-    	return preferences[preference] === true || preferences[preference] === "true";
-	}
-	function getArrayPreference(preference) {
-		let arrPref = preferences[preference]; 
-		if (arrPref === undefined) return [];
-		if (Array.isArray(arrPref)) return arrPref;
-    	return preferences[preference].split(',');
-	}
+function getPreference(preference) {
+	return preferences[preference] || false;
+}
+
+function getBooleanPreference(preference) {
+	if (preferences[preference] === undefined) return true;
+   	return preferences[preference] === true || preferences[preference] === "true";
+}
+
+function getArrayPreference(preference) {
+	let arrPref = preferences[preference]; 
+	if (arrPref === undefined) return [];
+	if (Array.isArray(arrPref)) return arrPref;
+   	return preferences[preference].split(',');
+}
 	
+$.debounce = function (fn, delay = 300) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fn.apply(context, args), delay);
+  };
+};
+
 <#if page == "browse">
 	<#include "javascript-preferences.ftl">
 	<#include "javascript-browse.ftl">
