@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fi.laji.imagebank.models.User;
-import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.services.ResponseData;
 
 @WebServlet(urlPatterns = {"/api/preferences/*"})
@@ -33,8 +32,7 @@ public class APIPreferences extends APIBaseServlet {
 		if (value == null) return status(400, res);
 
 		getDAO().savePreference(userId, preference, value);
-
-		getSession(req, true).setObject(Constant.PREFERENCES, getDAO().getPreferences(userId));
+		invalidatePreferences(req);
 
 		return new ResponseData("ok", "text/plain");
 	}

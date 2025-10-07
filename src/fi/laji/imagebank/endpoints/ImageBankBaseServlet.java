@@ -164,11 +164,12 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 					Preferences preferences = (Preferences) session.getObject(Constant.PREFERENCES);
 					if (preferences == null) {
 						preferences = getDAO().getPreferences(user.getId().toString());
-						if (preferences != null && !preferences.isEmpty()) {
-							session.setObject(Constant.PREFERENCES, preferences);
-						}
+						session.setObject(Constant.PREFERENCES, preferences);
 					}
-					if (preferences != null) responseData.setData(Constant.PREFERENCES, preferences);
+					String defaultLicense = preferences.get(Constant.USER_DEFAULT_LICENSE);
+					if (given(defaultLicense)) {
+						responseData.setData(Constant.USER_DEFAULT_LICENSE, defaultLicense);
+					}
 				}
 			}
 			String flashError = session.getFlashError();
@@ -187,7 +188,28 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		responseData.setData("sides", dao.getAlt(MM_SIDE_ENUM));
 		responseData.setData("types", dao.getAlt(MM_TYPE_ENUM));
 		responseData.setData("sourceSystems", SOURCE_SYSTEMS);
+		if (!responseData.getDatamodel().containsKey(Constant.USER_DEFAULT_LICENSE)) {
+			responseData.setData(Constant.USER_DEFAULT_LICENSE, "MZ.intellectualRightsCC-BY-4.0");
+		}
 		return responseData;
+	}
+
+	protected void invalidatePreferences(HttpServletRequest req) {
+		SessionHandler session = getSession(req);
+		if (session != null) {
+			session.remove(Constant.PREFERENCES);
+		}
+	}
+
+	protected String getUsersDefaultLicense(HttpServletRequest req) {
+		SessionHandler session = getSession(req);
+		if (session != null) {
+			Preferences preferences = (Preferences) session.getObject(Constant.PREFERENCES);
+			if (preferences != null) {
+				return preferences.get(Constant.USER_DEFAULT_LICENSE);
+			}
+		}
+		return null;
 	}
 
 	private static final Map<String, String> SOURCE_SYSTEMS = Utils.map(

@@ -27,4 +27,8 @@ public class Preferences implements Serializable {
 		return preferences.isEmpty();
 	}
 
+	public String get(String preference) {
+		return preferences.get(preference);
+	}
+
 }

@@ -136,8 +136,9 @@
         		<#if multi>
         			<@input "capturer" 30 user.fullName />
 					<@input "rightsOwner" 30 "Luomus" />
-        			<@select "license" licenses "MZ.intellectualRightsCC-BY-4.0"/>
+        			<@select "license" licenses defaultLicense />
         		</#if>
+        		${defaultLicense!"NOLICEN"}
 			<button type="submit" id="saveButton" disabled>${text.save}</button>
 		</fieldset>
 	</form>

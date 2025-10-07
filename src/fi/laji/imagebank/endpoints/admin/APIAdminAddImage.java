@@ -48,14 +48,17 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		String taxonId = req.getParameter("taxonId");
 		String capturer = req.getParameter("capturer");
 		String rightsOwner = req.getParameter("rightsOwner");
-		String license = req.getParameter("license");
+		String userSubmittedLicense = req.getParameter("license");
+		String license = !given(userSubmittedLicense) ? "MZ.intellectualRightsCC-BY-4.0" : userSubmittedLicense;
+
+		User user = getUser(req);
 
 		List<String> uploadedIds = new ArrayList<>();
 
 		for (Part filePart : fileParts) {
 			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 			try (InputStream stream = filePart.getInputStream()) {
-				Meta meta = meta(req, taxonId, capturer, rightsOwner, license);
+				Meta meta = meta(req, taxonId, capturer, rightsOwner, license, user);
 				String id = getMediaApiClient().uploadImage(stream, fileName, meta);
 				uploadedIds.add(id);
 			} catch (IOException e) {
@@ -72,10 +75,20 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		ses.setFlashSuccess(getText("admin_image_add_success", req));
 		ses.setObject(Constant.NEW_IMAGES, uploadedIds);
 
+		if (given(userSubmittedLicense)) {
+			String currentLicense = getUsersDefaultLicense(req);
+			if (!userSubmittedLicense.equals(currentLicense)) {
+				getDAO().savePreference(user.getId().toString(), Constant.USER_DEFAULT_LICENSE, userSubmittedLicense);
+				invalidatePreferences(req);
+			}
+
+		}
+
 		if (uploadedIds.size() == 1) {
 			return new ResponseData(uploadedIds.get(0), "text/plain");
 		}
 		if (taxonId == null) throw new IllegalStateException("Impossible state");
+
 		return new ResponseData(taxonId, "text/plain");
 	}
 
@@ -87,7 +100,7 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		return getTaxonomyDAO().getTaxon(new Qname(taxonId));
 	}
 
-	private Meta meta(HttpServletRequest req, String taxonId, String capturer, String rightsOwner, String license) {
+	private Meta meta(HttpServletRequest req, String taxonId, String capturer, String rightsOwner, String license, User user) {
 		String secret = req.getParameter("secret");
 		Meta meta = new Meta();
 		if (taxonId != null) {
@@ -96,7 +109,6 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		if ("on".equals(secret)) {
 			meta.setSecret(true);
 		}
-		User user = getUser(req);
 		meta.setUploadedBy(user.getId().toString());
 		meta.addCapturer(!given(capturer) ? user.getFullName() : capturer);
 		meta.setRightsOwner(!given(rightsOwner) ? "Luomus" : rightsOwner);
