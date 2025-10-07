@@ -114,17 +114,21 @@ $(document).ready(function() {
 	}
 	
 	$("#mass-tag-select select").change(function() {
-     	const name = $(this).attr("name");
-    	const value = $(this).val(); // The select's value
-    	const label = $(this).find("option:selected").text(); // The human-readable label
-		if (value) {
-			activeTags[name] = { value, label };
-    	} else {
-			delete activeTags[name];
-    	}
+		updateActiveTagsFromSelect(this);
    		updateTagsHover();
     	saveSelectedTags();
 	});
+
+	function updateActiveTagsFromSelect(selectElement) {
+    	const name = $(selectElement).attr("name");
+    	const value = $(selectElement).val();
+    	const label = $(selectElement).find("option:selected").text();
+	    if (value) {
+    	    activeTags[name] = { value, label };
+    	} else {
+        	delete activeTags[name];
+    	}
+	}
 
     $("#mass-tag-clear-button").click(function() {
     	 $("#mass-tag-select select").val('');
@@ -134,6 +138,12 @@ $(document).ready(function() {
     });
     
 	$("#mass-tag-done-button").click(function() { window.location.reload(); });
+	
+	
+	$("#mass-tag-select select").each(function() {
+        updateActiveTagsFromSelect(this);
+    });
+    updateTagsHover();
 	
 	$(document).on("mousemove", function (event) {
 		$(".tag-hover").css({
@@ -221,7 +231,5 @@ $(document).ready(function() {
             }
         });
     });
-    
-	$("#mass-tag-select select").trigger("change");
 	
 });
