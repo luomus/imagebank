@@ -102,15 +102,6 @@ function getArrayPreference(preference) {
 	if (Array.isArray(arrPref)) return arrPref;
    	return preferences[preference].split(',');
 }
-	
-$.debounce = function (fn, delay = 300) {
-  let timeout;
-  return function (...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => fn.apply(context, args), delay);
-  };
-};
 
 <#if page == "browse">
 	<#include "javascript-preferences.ftl">

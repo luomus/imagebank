@@ -94,12 +94,23 @@ $(document).ready(function() {
     
 	let activeTags = {};
     
-    const saveSelectedTags = $.debounce(function () {
-		setPreference("admin_selected_tags", btoa(JSON.stringify(activeTags)));
-	}, 2000);
-
-	function saveSelectedTagsNow() {
-    	setPreference("admin_selected_tags", btoa(JSON.stringify(activeTags)));
+    function saveSelectedTags() {
+		localStorage.setItem("admin_selected_tags", JSON.stringify(activeTags));
+	}
+	
+	function loadSelectedTags() {
+		try {
+			const saved = JSON.parse(localStorage.getItem("admin_selected_tags") || "{}");
+			if (saved && typeof saved === "object") {
+				activeTags = saved;
+				Object.entries(activeTags).forEach(([name, tag]) => {
+					$('#mass-tag-select select[name="' + name + '"]').val(tag.value);
+				});
+			}
+		} catch (e) {
+			console.warn("Could not load saved tags:", e);
+			activeTags = {};
+		}
 	}
 	
 	function updateTagsHover() {
@@ -113,12 +124,6 @@ $(document).ready(function() {
     	}
 	}
 	
-	$("#mass-tag-select select").change(function() {
-		updateActiveTagsFromSelect(this);
-   		updateTagsHover();
-    	saveSelectedTags();
-	});
-
 	function updateActiveTagsFromSelect(selectElement) {
     	const name = $(selectElement).attr("name");
     	const value = $(selectElement).val();
@@ -129,21 +134,24 @@ $(document).ready(function() {
         	delete activeTags[name];
     	}
 	}
+	
+	$("#mass-tag-select select").change(function() {
+		updateActiveTagsFromSelect(this);
+   		updateTagsHover();
+    	saveSelectedTags();
+	});
 
     $("#mass-tag-clear-button").click(function() {
     	 $("#mass-tag-select select").val('');
     	 activeTags = {};
     	 updateTagsHover(); 
-    	 saveSelectedTagsNow();
+    	 saveSelectedTags();
     });
     
 	$("#mass-tag-done-button").click(function() { window.location.reload(); });
 	
-	
-	$("#mass-tag-select select").each(function() {
-        updateActiveTagsFromSelect(this);
-    });
-    updateTagsHover();
+	loadSelectedTags();
+	updateTagsHover();
 	
 	$(document).on("mousemove", function (event) {
 		$(".tag-hover").css({

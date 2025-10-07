@@ -1,8 +1,6 @@
 package fi.laji.imagebank.endpoints.admin;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -18,12 +16,10 @@ import org.joda.time.DateTime;
 
 import fi.laji.imagebank.dao.TaxonomyDAO;
 import fi.laji.imagebank.endpoints.ImageBankBaseServlet;
-import fi.laji.imagebank.models.Preferences;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.Image;
 import fi.luomus.commons.containers.rdf.Qname;
-import fi.luomus.commons.json.JSONObject;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.commons.taxonomy.TaxonSearch;
@@ -130,7 +126,6 @@ public class Admin extends ImageBankBaseServlet {
 		getTaxonImageDAO().reloadImages(t);
 		boolean multiPrimary = t.getMultimedia().stream().filter(i->i.isPrimaryForTaxon()).count() > 1;
 		List<String> newImages = newImages(req);
-		selectedTagsFromPreferences(data, req);
 		return data.setViewName("admin-taxon")
 				.setData("taxon", t)
 				.setData("nextTaxon", next(t, t.isSpecies(), t.isFinnish(), dao))
@@ -138,29 +133,6 @@ public class Admin extends ImageBankBaseServlet {
 				.setData(TAXON_SEARCH, taxonSearch)
 				.setData("multiPrimary", multiPrimary)
 				.setData("newImages", newImages);
-	}
-
-	private void selectedTagsFromPreferences(ResponseData data, HttpServletRequest req) {
-		try {
-			Preferences preferences = getPreferences(getSession(req));
-			if (preferences == null) return;
-
-			String selectedTags = preferences.get("admin_selected_tags");
-			if (!given(selectedTags)) return;
-
-			String decoded = new String(Base64.getDecoder().decode(selectedTags), StandardCharsets.UTF_8);
-			JSONObject json = new JSONObject(decoded);
-
-			// {"type":{"value":"MM.typeEnumLive","label":"Luonnossa otettu"},"sex":{"value":"MY.sexM","label":"koiras"}}
-			if (json.hasKey("type")) data.setData("admin_selected_tag_type", json.getObject("type").getString("value"));
-			if (json.hasKey("sex")) data.setData("admin_selected_tag_sex", json.getObject("sex").getString("value"));
-			if (json.hasKey("lifeStage")) data.setData("admin_selected_tag_lifeStage", json.getObject("lifeStage").getString("value"));
-			if (json.hasKey("plantLifeStage")) data.setData("admin_selected_tag_plantLifeStage", json.getObject("plantLifeStage").getString("value"));
-			if (json.hasKey("side")) data.setData("admin_selected_tag_side", json.getObject("side").getString("value"));
-		} catch (Exception e) {
-			// something wrong with admin_selected_tags data - ignore it
-			e.printStackTrace();
-		}
 	}
 
 	@SuppressWarnings("unchecked")
