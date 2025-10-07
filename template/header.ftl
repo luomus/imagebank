@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="${locale}">
+<html lang="${locale?html}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +40,7 @@
     <header>
         <h1><a href="${baseURL}">${text.finbif_short} ${text.imagebank}</a></h1>
         <p><a href="${baseURL}">${text.tagline}</a></p>
-        <a id="main-logo" href="https://laji.fi/<#if !locale??>in<#elseif locale != "fi">${locale}</#if>">LAJI.FI</a>
+        <a id="main-logo" href="https://laji.fi/<#if !locale??>in<#elseif locale != "fi">${locale?html}</#if>">LAJI.FI</a>
     </header>
 
     <nav class="main-nav" role="navigation" aria-label="Main Navigation">
@@ -59,7 +59,7 @@
             	<#if user??>
             		<div id="login-info">
             			${text.logged_in_as} <span id="username">${user.fullName?html} </span>
-            			<#if user.admin><span id="userrole" class="admin">${user.type}</span></#if>
+            			<#if user.admin><span id="userrole" class="admin">${user.type?html}</span></#if>
             			<a href="${baseURL}/logout" class="ui-button" id="logout">${text.logout}</a>
             		</div>
             	<#else>

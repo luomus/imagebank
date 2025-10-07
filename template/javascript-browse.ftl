@@ -9,7 +9,7 @@ function loadTree() {
 	const order = getPreference("order") || "order_taxonomic";
 	const taxa = getPreference("taxa") || "taxa_finnish";
 	$.ajax({
-        url: "${baseURL}/api/tree/${groupId}?rank=" + rank + "&order=" + order + "&taxa=" + taxa,
+        url: "${baseURL}/api/tree/${groupId?html}?rank=" + rank + "&order=" + order + "&taxa=" + taxa,
         type: "GET",
         success: function(response) {
 			const container = $("#browse-tree-content");
@@ -29,7 +29,7 @@ function loadSpecies(page = 1) {
 	const taxonRanks = getPreference("taxonRanks") || [];
 	const pageSize = getPreference("pageSize") || "100";
 	$.ajax({
-        url: "${baseURL}/api/species/${groupId}?page=" + page + "&order=" + order + "&taxa=" + taxa + "&taxonRanks=" + taxonRanks + "&pageSize=" + pageSize,
+        url: "${baseURL}/api/species/${groupId?html}?page=" + page + "&order=" + order + "&taxa=" + taxa + "&taxonRanks=" + taxonRanks + "&pageSize=" + pageSize,
         type: "GET",
         success: function(response) {
 			const container = $("#browse-taxa");

@@ -18,9 +18,9 @@
             	<#list taxonGroups as group>
             		<#if !group.hasParents()>
             			<#if first><option value=" ">&nbsp;</option><#assign first = false><#else></optgroup></#if>
-            			<optgroup label="${group.name.forLocale(locale)}">
+            			<optgroup label="${group.name.forLocale(locale)?html}">
             		</#if>
-            		<option value="${group.qname}">${group.name.forLocale(locale)}</option>
+            		<option value="${group.qname}">${group.name.forLocale(locale)?html}</option>
 				</#list>
 				</optgroup>
         	</select>

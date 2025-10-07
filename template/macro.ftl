@@ -4,17 +4,17 @@
 		<span class="author">${taxon.scientificNameAuthorship?html}</span>
 	</#if>
 	<#if taxon.taxonRank?has_content>
-		<span class="taxonRank">[${taxonRanks[taxon.taxonRank].forLocale(locale)}]</span>
+		<span class="taxonRank">[${taxonRanks[taxon.taxonRank].forLocale(locale)?html}]</span>
 	</#if>
 	<#if taxon.informalTaxonGroups?has_content>
-		&mdash; ${taxon.informalTaxonGroupNames.forLocale(locale)}
+		&mdash; ${taxon.informalTaxonGroupNames.forLocale(locale)?html}
 	</#if>
 </#macro>
 
 <#macro printNameRank taxon>
 	<@printScientificName taxon />
 	<#if taxon.taxonRank?has_content>
-		<span class="taxonRank">[${taxonRanks[taxon.taxonRank].forLocale(locale)}]</span>
+		<span class="taxonRank">[${taxonRanks[taxon.taxonRank].forLocale(locale)?html}]</span>
 	</#if>
 </#macro>
 
@@ -46,21 +46,21 @@
 </#macro>
 
 <#macro list seq><#list seq as s>${s?html}<#if s_has_next>, </#if></#list></#macro>
-<#macro listEnum seq enum><#list seq as s>${enum[s].forLocale(locale)}<#if s_has_next>, </#if></#list></#macro>
-<#macro enumV val enum><#if val?has_content>${enum[val].forLocale(locale)}</#if></#macro>
-<#macro mapV val map><#if val?has_content>${map[val]!val}</#if></#macro>
+<#macro listEnum seq enum><#list seq as s>${enum[s].forLocale(locale)?html}<#if s_has_next>, </#if></#list></#macro>
+<#macro enumV val enum><#if val?has_content>${enum[val].forLocale(locale)?html}</#if></#macro>
+<#macro mapV val map><#if val?has_content>${(map[val]!val)?html}</#if></#macro>
 
 <#macro label name>
-	<label for="${name}">${text["label_"+name]!name}:</label>
+	<label for="${name?html}">${(text["label_"+name]!name)?html}:</label>
 </#macro>
 		
 <#macro select name enum value="">
 	<div>
 		<@label name />	
-		<select id="${name}" name="${name}">
+		<select id="${name?html}" name="${name?html}">
         	<option value="">&nbsp;</option>
         	<#list enum?keys as key>
-        		<option value="${key}" <#if value==key>selected="selected"</#if>>${enum[key].forLocale(locale)}</option>
+        		<option value="${key?html}" <#if value==key>selected="selected"</#if>>${enum[key].forLocale(locale)?html}</option>
         	</#list>
     	</select>
     </div>
@@ -69,9 +69,9 @@
 <#macro selectMulti name enum values>
 	<div>
 		<@label name />	
-		<select id="${name}" name="${name}" multiple="multiple" data-placeholder=" ">
+		<select id="${name?html}" name="${name?html}" multiple="multiple" data-placeholder=" ">
         	<#list enum?keys as key>
-        		<option value="${key}" <#if values?seq_contains(key)>selected="selected"</#if>>${enum[key].forLocale(locale)}</option>
+        		<option value="${key?html}" <#if values?seq_contains(key)>selected="selected"</#if>>${enum[key].forLocale(locale)?html}</option>
         	</#list>
     	</select>
     </div>
@@ -91,7 +91,7 @@
 <#macro input name size value="">
 	<div>
 		<@label name />
-		<input type="text" name="${name}" size="${size}" value="${value?html}" />
+		<input type="text" name="${name?html}" size="${size?html}" value="${value?html}" />
 	</div>
 </#macro>
 
@@ -111,7 +111,7 @@
 <#macro inputNumber name value="">
 	<div>
 		<@label name />
-		<input type="number" name="${name}" size="8" value="${value?html}" min="0" />
+		<input type="number" name="${name?html}" size="8" value="${value?html}" min="0" />
 	</div>
 </#macro>
 
@@ -155,9 +155,9 @@
             	<#list taxonGroups as group>
             		<#if !group.hasParents()>
             			<#if first><#assign first = false><#else></optgroup></#if>
-            			<optgroup label="${group.name.forLocale(locale)}">
+            			<optgroup label="${group.name.forLocale(locale)?html}">
             		</#if>
-            		<option value="${group.qname}">${group.name.forLocale(locale)}</option>
+            		<option value="${group.qname}">${group.name.forLocale(locale)?html}</option>
 				</#list>
 				</optgroup>
         	</select>
@@ -189,7 +189,7 @@
     		<legend>${text.taxon_ranks_preference}</legend>
 			<select id="taxonRankSelect" name="taxonRanks" multiple data-placeholder=" ">
 				<#list speciesTaxonRanks?keys as rank>
-        	   	<option value="${rank}" <#if defaultTaxonRanks?seq_contains(rank)>selected="selected"</#if>>${(speciesTaxonRanks[rank].forLocale(locale)!rank)?html}</option>
+        	   	<option value="${rank?html}" <#if defaultTaxonRanks?seq_contains(rank)>selected="selected"</#if>>${(speciesTaxonRanks[rank].forLocale(locale)!rank)?html}</option>
         	   	</#list>
         	</select>
         </fieldset>

@@ -22,12 +22,12 @@
 
 <h3>${text.admin_edit_image} ${image.id} <#if taxon??> | <@printScientificName taxon/><#elseif image.meta.documentIds?has_content> | <@list image.meta.documentIds/></#if></h3>
 
-<h4><a href="${(image.urls.original!image.urls.full)?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${(image.urls.original!image.urls.full)?html}</a></h4>
+<h4><a href="${(image.urls.original!image.urls.full)?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" target="_blank">${(image.urls.original!image.urls.full)?html}</a></h4>
 
 <div class="admin-image-edit">
 
 	<div class="admin-image-meta">
-		<form method="POST" action="${baseURL}/admin/${image.id}?${ref}" id="adminMetaForm">
+		<form method="POST" action="${baseURL}/admin/${image.id}?${ref?html}" id="adminMetaForm">
 	
 		<#assign meta = image.meta/>	
 
@@ -125,12 +125,12 @@
 
 <#macro imageLink image type label>
 	<#if image.urls[type]??>
-		<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">${label}</a></label> 
-		<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" target="_blank">
+		<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" target="_blank">${label}</a></label> 
+		<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" target="_blank">
 			<#if type == "original">
-            	<img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+            	<img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" alt="${label}"/>
         	<#else>
-            	<img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey}</#if>" alt="${label}"/>
+            	<img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" alt="${label}"/>
         	</#if>
 		</a>
 	<#else>

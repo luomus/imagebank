@@ -30,10 +30,10 @@
 	</div>
 	<div id="browse-tree" class="box">
 			<select id="browse-tree-select">
-				<option value="MX.family" selected>${taxonRanks["MX.family"].forLocale(locale)}</option>
-				<option value="MX.subfamily">${taxonRanks["MX.subfamily"].forLocale(locale)}</option>
-				<option value="MX.tribe">${taxonRanks["MX.tribe"].forLocale(locale)}</option>
-				<option value="MX.genus">${taxonRanks["MX.genus"].forLocale(locale)}</option>
+				<option value="MX.family" selected>${taxonRanks["MX.family"].forLocale(locale)?html}</option>
+				<option value="MX.subfamily">${taxonRanks["MX.subfamily"].forLocale(locale)?html}</option>
+				<option value="MX.tribe">${taxonRanks["MX.tribe"].forLocale(locale)?html}</option>
+				<option value="MX.genus">${taxonRanks["MX.genus"].forLocale(locale)?html}</option>
 			</select>
 			<div id="browse-tree-content">
 			</div>
