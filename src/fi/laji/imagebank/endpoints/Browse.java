@@ -16,6 +16,8 @@ import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.InformalTaxonGroup;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
+import fi.luomus.commons.json.JSONArray;
+import fi.luomus.commons.json.JSONObject;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.taxonomy.CategorizedTaxonImages;
 import fi.luomus.commons.taxonomy.CategorizedTaxonImages.SingleCategoryDef;
@@ -70,8 +72,24 @@ public class Browse extends ImageBankBaseServlet {
 	}
 
 	private ResponseData selectGroup(HttpServletRequest req) throws Exception {
-		return initResponseData(req).setViewName("browse-groupselect")
-				.setData("taxonGroups", filteredTaxonGroups());
+		ResponseData data = initResponseData(req);
+		String groupsJson = toJson(filteredTaxonGroups(), data.getDefaultLocale());
+		return data
+				.setViewName("browse-groupselect")
+				.setData("taxonGroupsJson", groupsJson);
+	}
+
+	private String toJson(Collection<InformalTaxonGroup> groups, String locale) {
+		JSONArray json = new JSONArray();
+		for (InformalTaxonGroup group : groups) {
+			JSONArray parentQnames = new JSONArray();
+			group.getParents().stream().map(qname->qname.toString()).forEach(parentQnames::appendString);
+			json.appendObject(new JSONObject()
+					.setString("qname", group.getQname().toString())
+					.setString("name", group.getName().forLocale(locale))
+					.setArray("parentQnames", parentQnames));
+		}
+		return json.toString();
 	}
 
 	private List<Qname> getGroupIds(InformalTaxonGroup group, Map<String, InformalTaxonGroup> groups) {
@@ -141,15 +159,32 @@ public class Browse extends ImageBankBaseServlet {
 
 	private Collection<InformalTaxonGroup> filteredTaxonGroups() throws Exception {
 		Map<String, InformalTaxonGroup> allGroups = getTaxonomyDAO().getInformalTaxonGroups();
-		if (groups == null) {
+		if ("a".equals("a") || groups == null) { // XXX
 			Map<String, InformalTaxonGroup> map = new LinkedHashMap<>(allGroups);
-			remove("MVL.1141", map, allGroups); // petolinnut ja pöllöt
+			remove("MVL.1004", map, allGroups); // simmahäntäiset ja toukkasukahäntäiset
 			removeChild("MVL.343", map, allGroups); // putkilokasvit children
 			removeChild("MVL.2", map, allGroups); // nisäkkäät children
 			removeChild("MVL.27", map, allGroups); // kalat children
+			removeChild("MVL.26", map, allGroups); // matelijat ja sammakkoeläimet children
+			removeChild("MVL.39", map, allGroups); // äyriäiset children
+			removeChild("MVL.1", map, allGroups); // linnut children
+			removeChild("MVL.22", map, allGroups); // levät children
+			removeChild("MVL.37", map, allGroups); // tuhatjalkaiset
+			flat("MVL.222", map); // vesihyönteiset
+			flat("MVL.41", map); // muut organismit
+			flat("MVL.241", map); // nilvemadot
+			remove("MVL.441", map, allGroups); // bakteerit
+			remove("MVL.442", map, allGroups); // virukset
 			groups = map.values();
 		}
+		for (InformalTaxonGroup g : allGroups.values()) {
+			System.out.println(g.getName("fi") + ": " + g.getQname());
+		}
 		return groups;
+	}
+
+	private void flat(String id, Map<String, InformalTaxonGroup> map) {
+		map.remove(id);
 	}
 
 	private void remove(String id, Map<String, InformalTaxonGroup> map, Map<String, InformalTaxonGroup> allGroups) {
