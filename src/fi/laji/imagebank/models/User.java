@@ -20,7 +20,7 @@ public class User implements Serializable {
 	}
 
 	public User(String userQname, Type type, String fullName) {
-		this.id = new Qname(userQname);
+		this.id = Qname.of(userQname);
 		this.type = type;
 		this.fullName = fullName;
 		if (!id.isSet()) throw new IllegalArgumentException("No user id");

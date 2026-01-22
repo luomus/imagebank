@@ -32,7 +32,7 @@ public class TaxonomyCaches {
 		public int page;
 		public int pageSize;
 		public SpeciesTerms(HttpServletRequest req) {
-			groupId = new Qname(getId(req));
+			groupId = Qname.of(getId(req));
 			order = req.getParameter("order");
 			onlyFinnish = "taxa_finnish".equals(req.getParameter("taxa"));
 			taxonRanks = taxonRanks(req.getParameter("taxonRanks"));
@@ -53,7 +53,7 @@ public class TaxonomyCaches {
 		}
 		private List<Qname> taxonRanks(String parameter) {
 			if (!given(parameter)) return Collections.emptyList();
-			return Utils.list(parameter.split(",")).stream().map(s->new Qname(s)).collect(Collectors.toList());
+			return Utils.list(parameter.split(",")).stream().map(s->Qname.of(s)).collect(Collectors.toList());
 		}
 		@Override
 		public int hashCode() {
@@ -95,8 +95,8 @@ public class TaxonomyCaches {
 		String order;
 		boolean onlyFinnish;
 		public TreeTerms(HttpServletRequest req) {
-			groupId = new Qname(getId(req));
-			rank = new Qname(req.getParameter("rank"));
+			groupId = Qname.of(getId(req));
+			rank = Qname.of(req.getParameter("rank"));
 			order = req.getParameter("order");
 			onlyFinnish = "taxa_finnish".equals(req.getParameter("taxa"));
 		}
@@ -206,17 +206,17 @@ public class TaxonomyCaches {
 
 			private Set<Qname> acceptedRanks(TreeTerms terms) {
 				List<Qname> rankOrder = Arrays.asList(
-						new Qname("MX.order"),
-						new Qname("MX.suborder"),
-						new Qname("MX.superfamily"),
-						new Qname("MX.family"),
-						new Qname("MX.subfamily"),
-						new Qname("MX.tribe"),
-						new Qname("MX.genus")
+						Qname.of("MX.order"),
+						Qname.of("MX.suborder"),
+						Qname.of("MX.superfamily"),
+						Qname.of("MX.family"),
+						Qname.of("MX.subfamily"),
+						Qname.of("MX.tribe"),
+						Qname.of("MX.genus")
 						);
 				int index = rankOrder.indexOf(terms.rank);
 				Set<Qname> ranks = new HashSet<>(rankOrder.subList(0, index + 1));
-				ranks.remove(new Qname("MX.tribe"));
+				ranks.remove(Qname.of("MX.tribe"));
 				ranks.add(terms.rank);
 				return ranks;
 			}

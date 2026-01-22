@@ -75,7 +75,7 @@ MediaAPI_DBusername =
 MediaAPI_DBpassword = 
 
 #api.laji.fi (person names, taxa details) 
-LajiAPI_URL = https://api.laji.fi/v0/
+LajiAPI_URL = https://api.laji.fi/
 LajiAPI_AccessToken = 
 
 DwURL = https://dw.laji.fi/taxon-obs-count

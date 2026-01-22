@@ -33,12 +33,12 @@ import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
 public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	private static final int MONTH = 60*24*30;
-	private static final Qname MM_TYPE_ENUM = new Qname("MM.typeEnum");
-	private static final Qname MM_SIDE_ENUM = new Qname("MM.sideEnum");
-	private static final Qname MY_SEXES = new Qname("MY.sexes");
-	private static final Qname MY_PLANT_LIFE_STAGES = new Qname("MY.plantLifeStageEnum");
-	private static final Qname MY_LIFE_STAGES = new Qname("MY.lifeStages");
-	private static final Qname MZ_INTELLECTUAL_RIGHTS_ENUM = new Qname("MZ.intellectualRightsEnum");
+	private static final Qname MM_TYPE_ENUM = Qname.of("MM.typeEnum");
+	private static final Qname MM_SIDE_ENUM = Qname.of("MM.sideEnum");
+	private static final Qname MY_SEXES = Qname.of("MY.sexes");
+	private static final Qname MY_PLANT_LIFE_STAGES = Qname.of("MY.plantLifeStageEnum");
+	private static final Qname MY_LIFE_STAGES = Qname.of("MY.lifeStages");
+	private static final Qname MZ_INTELLECTUAL_RIGHTS_ENUM = Qname.of("MZ.intellectualRightsEnum");
 	private static final long serialVersionUID = -8211770238148729310L;
 	public static final String CONFIG_FILE = "imagebank.properties";
 	private static final Object LOCK = new Object();
@@ -60,7 +60,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 	@Override
 	protected void applicationInit() {
 		try {
-			getTaxonomyDAO().getTaxon(new Qname("MX.1"));
+			getTaxonomyDAO().getTaxon(Qname.of("MX.1"));
 		} catch (Exception e) {
 			getErrorReporter().report(e);
 		}
@@ -118,7 +118,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	private static TaxonomyDAOImple taxonomyDAO;
 
-	protected TaxonomyDAO getTaxonomyDAO() {
+	protected TaxonomyDAOImple getTaxonomyDAO() {
 		if (taxonomyDAO == null) {
 			synchronized (LOCK) {
 				if (taxonomyDAO == null) {

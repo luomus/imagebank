@@ -46,6 +46,7 @@ import fi.luomus.commons.taxonomy.Occurrences.Occurrence;
 import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.commons.taxonomy.TaxonContainer;
 import fi.luomus.commons.taxonomy.TaxonSearch;
+import fi.luomus.commons.taxonomy.TaxonSearchDAO;
 import fi.luomus.commons.taxonomy.TaxonSearchDAOSQLQueryImple;
 import fi.luomus.commons.taxonomy.TaxonSearchResponse;
 import fi.luomus.commons.taxonomy.TaxonomyDAOBaseImple;
@@ -55,7 +56,7 @@ import fi.luomus.commons.utils.DateUtils;
 import fi.luomus.commons.utils.FileUtils;
 import fi.luomus.commons.utils.Utils;
 
-public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoCloseable, TaxonomyDAO {
+public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoCloseable, TaxonomyDAO, TaxonSearchDAO {
 
 	private static final List<String> INCLUDED_PREDICATES = Utils.list(
 			"MX.scientificName",
@@ -84,8 +85,8 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 	private static final String SEPARATOR = "\u001F";
 
-	private static final Qname NOT_EVALUATED = new Qname("MX.typeOfOccurrenceNotEvaluated");
-	private static final Qname BASED_ON_OCCURRENCES = new Qname("MX.typeOfOccurrenceOccursBasedOnOccurrences");
+	private static final Qname NOT_EVALUATED = Qname.of("MX.typeOfOccurrenceNotEvaluated");
+	private static final Qname BASED_ON_OCCURRENCES = Qname.of("MX.typeOfOccurrenceOccursBasedOnOccurrences");
 
 	private final Config config;
 	private final ErrorReporter errorReporter;
@@ -556,19 +557,19 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(habitatFile), "UTF-8"), 1024*1024)) {
 				System.out.println("Reading habitats from " + habitatFile.getAbsolutePath() + " ... ");
 				String line = null;
-				HabitatObject habitatObject = new HabitatObject(new Qname(""), null, -1);
+				HabitatObject habitatObject = new HabitatObject(Qname.of(""), null, -1);
 				while ((line = reader.readLine()) != null) {
 					// MX.59808	MKV.383407	MKV.primaryHabitat		MKV.habitatMkk	0	MKV.habitatSpecificTypeP
 					// MX.59808	MKV.383407	MKV.primaryHabitat		MKV.habitatMkk	0	MKV.habitatSpecificTypeH
 					// MX.59808	MKV.383407	MKV.primaryHabitat		MKV.habitatMkk	0	MKV.habitatSpecificTypePAK
 					// MX.59808	MKV.383408	MKV.secondaryHabitat	MKV.habitatIu	0
 					String[] parts = line.split(SEPARATOR, -1);
-					Qname taxonId = new Qname(parts[0]);
-					Qname habitatId = new Qname(parts[1]);
+					Qname taxonId = Qname.of(parts[0]);
+					Qname habitatId = Qname.of(parts[1]);
 					String type = parts[2];
-					Qname habitat = new Qname(parts[3]);
+					Qname habitat = Qname.of(parts[3]);
 					int order = intV(parts[4]);
-					Qname habitatSpecificType = new Qname(parts[5]);
+					Qname habitatSpecificType = Qname.of(parts[5]);
 
 					if (habitatId.equals(habitatObject.getId())) {
 						habitatObject.addHabitatSpecificType(habitatSpecificType);
@@ -670,7 +671,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 		private void addBiogeographicalProvinceCount(String areaQname, int count, Taxon taxon) {
 			if (count < 1) return;
-			Qname areaId = new Qname(areaQname);
+			Qname areaId = Qname.of(areaQname);
 			Occurrences occurrences = taxon.getOccurrences();
 			Occurrence occurrence = occurrences.getOccurrence(areaId);
 			if (occurrence == null) {
@@ -711,9 +712,9 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 		private void addTaxonInformation(String line, InMemoryTaxonContainerImple taxonContainer) {
 			String[] parts = line.split(SEPARATOR, -1);
-			Qname taxonId = new Qname(parts[0]);
-			Qname predicate = new Qname(parts[1]);
-			Qname object = new Qname(parts[2]);
+			Qname taxonId = Qname.of(parts[0]);
+			Qname predicate = Qname.of(parts[1]);
+			Qname object = Qname.of(parts[2]);
 
 			String resourceliteral = parts[3];
 			if (resourceliteral.isEmpty()) resourceliteral = null;
@@ -721,7 +722,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			String locale = parts[4];
 			if (locale.isEmpty()) locale = null;
 
-			Qname context = new Qname(parts[5]);
+			Qname context = Qname.of(parts[5]);
 			if (!context.isSet()) context = null;
 
 			taxonContainer.handle(taxonId, predicate, object, resourceliteral, locale, context);

@@ -157,7 +157,7 @@ public class Browse extends ImageBankBaseServlet {
 
 	private static Collection<InformalTaxonGroup> groups = null;
 
-	private Collection<InformalTaxonGroup> filteredTaxonGroups() throws Exception {
+	private Collection<InformalTaxonGroup> filteredTaxonGroups() {
 		Map<String, InformalTaxonGroup> allGroups = getTaxonomyDAO().getInformalTaxonGroups();
 		if ("a".equals("a") || groups == null) { // XXX
 			Map<String, InformalTaxonGroup> map = new LinkedHashMap<>(allGroups);

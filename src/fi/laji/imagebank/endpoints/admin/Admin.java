@@ -71,20 +71,20 @@ public class Admin extends ImageBankBaseServlet {
 
 		if (given(id)) {
 			if (id.startsWith("MM.")) {
-				return singleImageEdit(new Qname(id), data, imageSearch, req);
+				return singleImageEdit(Qname.of(id), data, imageSearch, req);
 			}
 			if (id.startsWith("MX.")) {
-				return taxonEdit(new Qname(id), data, taxonSearch, req);
+				return taxonEdit(Qname.of(id), data, taxonSearch, req);
 			}
 		}
 
 		if (given(taxonId)) {
-			return taxonEdit(new Qname(taxonId), data, taxonSearch, req);
+			return taxonEdit(Qname.of(taxonId), data, taxonSearch, req);
 		}
 
 		if (given(imageSearch)) {
 			if (imageSearch.startsWith("MM.")) {
-				return singleImageEdit(new Qname(imageSearch), data, null, req);
+				return singleImageEdit(Qname.of(imageSearch), data, null, req);
 			}
 			if (imageSearch.startsWith("http://tun.fi/MM.")) {
 				return singleImageEdit(Qname.fromURI(imageSearch), data, null, req);
@@ -96,7 +96,7 @@ public class Admin extends ImageBankBaseServlet {
 		}
 		if (given(taxonSearch)) {
 			if (taxonSearch.startsWith("MX.")) {
-				return taxonEdit(new Qname(taxonSearch), data, null, req);
+				return taxonEdit(Qname.of(taxonSearch), data, null, req);
 			}
 			return taxonSearch(taxonSearch, data);
 		}
@@ -111,7 +111,7 @@ public class Admin extends ImageBankBaseServlet {
 	private Qname parseImageId(String imageSearch) {
 		Matcher matcher = Pattern.compile(".*/(MM\\.\\d+)/.*").matcher(imageSearch);
 		if (matcher.matches()) {
-			return new Qname(matcher.group(1));
+			return Qname.of(matcher.group(1));
 		}
 		throw new IllegalStateException("Malformed image id?");
 	}
@@ -174,7 +174,7 @@ public class Admin extends ImageBankBaseServlet {
 		String taxonSearch = req.getParameter(TAXON_SEARCH);
 		Taxon taxon = null;
 
-		Qname taxonId = new Qname(req.getParameter(TAXON_ID));
+		Qname taxonId = Qname.of(req.getParameter(TAXON_ID));
 		if (taxonId.isSet()) {
 			if (getTaxonomyDAO().getTaxonContainer().hasTaxon(taxonId)) {
 				taxon = getTaxonomyDAO().getTaxon(taxonId);
@@ -271,7 +271,7 @@ public class Admin extends ImageBankBaseServlet {
 			if (!meta.getIdentifications().getTaxonIds().isEmpty()) throw validationFailure("taxonIds", "Secret media must not be made a taxon image", req);
 		}
 		for (String taxonId : meta.getIdentifications().getTaxonIds()) {
-			if (!getTaxonomyDAO().getTaxonContainer().hasTaxon(new Qname(taxonId))) throw validationFailure("taxonIds", "unknown_taxon", req);
+			if (!getTaxonomyDAO().getTaxonContainer().hasTaxon(Qname.of(taxonId))) throw validationFailure("taxonIds", "unknown_taxon", req);
 		}
 		for (String primaryFoTaxon : meta.getPrimaryForTaxon()) {
 			if (!meta.getIdentifications().getTaxonIds().contains(primaryFoTaxon)) throw validationFailure("primaryForTaxon", "Primary taxon id not found in taxon ids", req);

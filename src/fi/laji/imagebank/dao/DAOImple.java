@@ -90,7 +90,7 @@ public class DAOImple implements DAO {
 		@Override
 		public String load(String personId) {
 			try (HttpClientService client = apiClient()){
-				JSONObject res = client.contentAsJson(new HttpGet(apiURL()+"person/by-id/"+personId));
+				JSONObject res = client.contentAsJson(new HttpGet(apiURL()+"person/"+personId));
 				String fullName = res.getString("fullName");
 				if (fullName == null || fullName.isEmpty()) return null;
 				return fullName;
@@ -110,7 +110,7 @@ public class DAOImple implements DAO {
 	}
 
 	protected HttpClientService apiClient() {
-		return new HttpClientService(config.get("LajiAPI_AccessToken"));
+		return new HttpClientService(config.get("LajiAPI_AccessToken"), "1");
 	}
 
 	protected String apiURL() {

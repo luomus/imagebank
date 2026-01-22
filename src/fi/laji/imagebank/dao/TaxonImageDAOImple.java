@@ -61,13 +61,13 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 			p = con.prepareStatement(IMAGE_SEARCH_SQL);
 			p.setString(1, searchTerm);
 			rs = p.executeQuery();
-			Qname prevImageId = new Qname("");
+			Qname prevImageId = Qname.of("");
 			Image image = null;
 			Boolean isSecret = null;
 			while (rs.next()) {
-				Qname imageId = new Qname(rs.getString(1));
-				Qname predicate = new Qname(rs.getString(2));
-				Qname objectname = new Qname(rs.getString(3));
+				Qname imageId = Qname.of(rs.getString(1));
+				Qname predicate = Qname.of(rs.getString(2));
+				Qname objectname = Qname.of(rs.getString(3));
 				String resourceliteral = rs.getString(4);
 				String locale = rs.getString(5);
 				if (secretImage(predicate, objectname)) {
@@ -121,13 +121,13 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 			p = con.prepareStatement(SINGLE_TAXON_SQL);
 			p.setString(1, taxon.getId().toString());
 			rs = p.executeQuery();
-			Qname prevImageId = new Qname("");
+			Qname prevImageId = Qname.of("");
 			Image image = null;
 			Boolean isSecret = null;
 			while (rs.next()) {
-				Qname imageId = new Qname(rs.getString(1));
-				Qname predicate = new Qname(rs.getString(2));
-				Qname objectname = new Qname(rs.getString(3));
+				Qname imageId = Qname.of(rs.getString(1));
+				Qname predicate = Qname.of(rs.getString(2));
+				Qname objectname = Qname.of(rs.getString(3));
 				String resourceliteral = rs.getString(4);
 				String locale = rs.getString(5);
 				if (secretImage(predicate, objectname)) {
@@ -150,7 +150,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 	}
 
 	private boolean secretImage(Qname predicate, Qname objectname) {
-		return new Qname("MZ.publicityRestrictions").equals(predicate) && !new Qname("MZ.publicityRestrictionsPublic").equals(objectname);
+		return Qname.of("MZ.publicityRestrictions").equals(predicate) && !Qname.of("MZ.publicityRestrictionsPublic").equals(objectname);
 	}
 
 	private static final TripletToImageHandlers TRIPLET_TO_IMAGE_HANDLERS = new TripletToImageHandlers();

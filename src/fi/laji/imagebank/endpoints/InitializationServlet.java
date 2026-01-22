@@ -16,7 +16,7 @@ public class InitializationServlet extends ImageBankBaseServlet {
 			public void run() {
 				System.out.println(" === ImageBank STARTING UP  === ");
 				try {
-					getTaxonomyDAO().getTaxon(new Qname("MX.1"));
+					getTaxonomyDAO().getTaxon(Qname.of("MX.1"));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

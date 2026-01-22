@@ -97,7 +97,7 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 	}
 
 	private Taxon getTaxon(String taxonId) throws Exception {
-		return getTaxonomyDAO().getTaxon(new Qname(taxonId));
+		return getTaxonomyDAO().getTaxon(Qname.of(taxonId));
 	}
 
 	private Meta meta(HttpServletRequest req, String taxonId, String capturer, String rightsOwner, String license, User user) {
