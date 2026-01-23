@@ -544,6 +544,7 @@ p.info {
 	padding: 0;
 	padding-left: 0.5em;
 }
+
 #browse-taxa {
 	grid-column: 2;
 	z-index: 1;
@@ -577,6 +578,7 @@ h3.browse a {
 	max-height: 500px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	padding-right: 1em;
 }
 
 #browse-tree-content .taxonRank {
