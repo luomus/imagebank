@@ -23,10 +23,8 @@
 
 <div id="browse-panel" class="hidden">
 	<div id="browse-tree-header" class="box-header">
-		<h5>${text.taxon_tree}</h5> <span class="openclose">${text.close}</span><span class="openclose hidden">${text.open}</span><span class="ui-icon ui-icon-caret-2-n-s"></span>
-	</div>
-	<div id="browse-taxa-header">
-		Taxa header
+		<i class="fa fa-bars" aria-hidden="true"></i>
+		<h5 class="browse-taxa-headertext">${text.taxon_tree}</h5>
 	</div>
 	<div id="browse-tree" class="box">
 			<select id="browse-tree-select">
@@ -38,9 +36,7 @@
 			<div id="browse-tree-content">
 			</div>
 	</div>
-	<div id="browse-taxa" class="box">
-			
-	</div>
+	<div id="browse-taxa" class="box"></div>
 </div>
 
 <#include "footer.ftl">

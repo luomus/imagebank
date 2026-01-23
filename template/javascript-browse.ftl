@@ -1,7 +1,7 @@
 function toggleTree() {
 	$("#browse-tree").toggle();
 	$("#browse-taxa").toggleClass("expanded");
-	$(".openclose").toggleClass("hidden");
+	$("#browse-tree-header").toggleClass("shrunken");
 }
 
 function loadTree() {
