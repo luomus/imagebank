@@ -39,7 +39,7 @@
 			</div>
 	</div>
 	<div id="browse-taxa" class="box">
-			Taxa Long Taxa Content is Long
+			
 	</div>
 </div>
 
