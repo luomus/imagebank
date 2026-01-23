@@ -522,7 +522,7 @@ p.info {
 
 #browse-panel {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: auto 1fr;
 	grid-template-rows: auto auto;
 	gap: 0px 2px;
 	margin: 0px -30px;
@@ -569,8 +569,8 @@ h3.browse a {
 }
 
 #browse-tree-content .order			{ font-size: 120%; font-weight: bold; font-variant: small-caps; margin-bottom: 1em; margin-top: 1em; border-top: 4px solid grey; padding-top: 0.5em; }
-#browse-tree-content .suborder 		{ font-size: 115%; font-weight: bold; }
-#browse-tree-content .superfamily 	{ font-size: 110%; font-weight: bold; margin-top: 1em; border-top: 1px solid grey; padding-top: 0.5em; }
+#browse-tree-content .suborder 		{ font-size: 115%; font-weight: bold; margin-top: 3em; }
+#browse-tree-content .superfamily 	{ font-size: 110%; font-weight: bold; margin-top: 1.5em; }
 #browse-tree-content .family		{ font-size: 105%; font-weight: bold; text-decoration: underline; 
 	text-decoration-color: #6bbcff; 
 	text-decoration-thickness: 2px; 

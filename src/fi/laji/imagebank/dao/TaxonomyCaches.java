@@ -26,6 +26,7 @@ public class TaxonomyCaches {
 
 	public static class SpeciesTerms {
 		Qname groupId;
+		Qname taxonFilter;
 		String order;
 		boolean onlyFinnish;
 		List<Qname> taxonRanks;
@@ -33,6 +34,7 @@ public class TaxonomyCaches {
 		public int pageSize;
 		public SpeciesTerms(HttpServletRequest req) {
 			groupId = Qname.of(getId(req));
+			taxonFilter = Qname.of(req.getParameter("taxonFilter"));
 			order = req.getParameter("order");
 			onlyFinnish = "taxa_finnish".equals(req.getParameter("taxa"));
 			taxonRanks = taxonRanks(req.getParameter("taxonRanks"));
@@ -60,6 +62,7 @@ public class TaxonomyCaches {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + ((groupId == null) ? 0 : groupId.hashCode());
+			result = prime * result + ((taxonFilter == null) ? 0 : taxonFilter.hashCode());
 			result = prime * result + (onlyFinnish ? 1231 : 1237);
 			result = prime * result + ((taxonRanks == null) ? 0 : taxonRanks.hashCode());
 			return result;
@@ -77,6 +80,11 @@ public class TaxonomyCaches {
 				if (other.groupId != null)
 					return false;
 			} else if (!groupId.equals(other.groupId))
+				return false;
+			if (taxonFilter == null) {
+				if (other.taxonFilter != null)
+					return false;
+			} else if (!taxonFilter.equals(other.taxonFilter))
 				return false;
 			if (onlyFinnish != other.onlyFinnish)
 				return false;
@@ -333,6 +341,9 @@ public class TaxonomyCaches {
 		if (!taxon.getInformalTaxonGroupsNoOrder().contains(terms.groupId)) return false;
 		if (terms.onlyFinnish && !taxon.isFinnish()) return false;
 		if (!terms.taxonRanks.isEmpty() && !terms.taxonRanks.contains(taxon.getTaxonRank())) return false;
+		if (terms.taxonFilter != null && terms.taxonFilter.isSet()) {
+			if (!taxon.getParentChainIncludeSelf().contains(terms.taxonFilter)) return false;
+		}
 		return true;
 	}
 

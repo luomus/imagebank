@@ -23,14 +23,26 @@ function loadTree() {
     });
 }
 
+let taxonFilter = null;
+
+function setTaxonFilter(taxonId) {
+	taxonFilter = taxonId;
+}
+
 function loadSpecies(page = 1) {
-	const order = getPreference("order") || "order_taxonomic";
-	const taxa = getPreference("taxa") || "taxa_finnish";
-	const taxonRanks = getPreference("taxonRanks") || [];
-	const pageSize = getPreference("pageSize") || "100";
+	const params = {
+        taxonFilter: taxonFilter,
+        order: getPreference("order") || "order_taxonomic",
+        taxa: getPreference("taxa") || "taxa_finnish",
+        taxonRanks: getPreference("taxonRanks") || [],
+        page: page,
+        pageSize: getPreference("pageSize") || "100"
+    };
+    
 	$.ajax({
-        url: "${baseURL}/api/species/${groupId?html}?page=" + page + "&order=" + order + "&taxa=" + taxa + "&taxonRanks=" + taxonRanks + "&pageSize=" + pageSize,
+        url: "${baseURL}/api/species/${groupId?html}",
         type: "GET",
+        data: params,
         success: function(response) {
 			const container = $("#browse-taxa");
    			container.html(response);
@@ -80,4 +92,11 @@ $(document).ready(function() {
 	
 	$("#browse-panel").show();
 		
+});
+
+$(document).on("click", ".browse-tree-taxon-selector", function (e) {
+    e.preventDefault();
+    const taxonId = $(this).data("taxonid");
+    setTaxonFilter(taxonId);
+    loadSpecies();
 });

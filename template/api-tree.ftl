@@ -2,7 +2,7 @@
 <#if taxa?has_content>
 <ol>
 	<#list taxa as taxon>
-		<li class="${taxon.taxonRank?replace("MX.","")}"><a href="#"><@printNameRank taxon/></a></li>
+		<li class="${taxon.taxonRank?replace("MX.","")}"><a class="browse-tree-taxon-selector" href="#" data-taxonid="${taxon.id}"><@printNameRank taxon/></a></li>
 	</#list>
 </ol>
 <#else>
