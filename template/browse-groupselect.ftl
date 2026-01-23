@@ -12,58 +12,47 @@
 
 <h3>${text.group_select}</h3>
 
-<div id="groupBrowser" class="group-browser"></div>
+	<ol class="parent-quicklinks">
+	<#list taxonGroups as group>
+    	<#if !group.hasParents()>
+			<li><a href="#${group.qname}">${group.name.forLocale(locale)?html}</a></li>
+		</#if>
+	</#list>
+	<ol>
+	
+	<#assign first = true>
+	<#list taxonGroups as group>
+    	<#if !group.hasParents()>
+			<#if first><#assign first = false><#else></div></#if>
+				<h4 class="group-header" id="${group.qname}">${group.name.forLocale(locale)?html}</h4>
+				<div class="group-browser">
+		</#if>
+		<a class="group-card" href="${baseURL}/browse/${group.qname}" onclick="setPreference('group', '${group.qname}')">
+			<img src="${staticURL}/group-icons/${group.qname}.png" alt="${group.name.forLocale(locale)?html}" />
+   			<div class="group-name">${group.name.forLocale(locale)?html}</div>
+   		</a>
+	</#list>
+	</div>
 
-<script>
-const groups = ${taxonGroupsJson}; // Pre-generate JSON in controller
-const baseURL = '${baseURL}';
-
-function renderGroups(parentQname = null) {
-	const container = $("#groupBrowser");
-    container.empty();
-
-    const children = groups.filter(g => {
-        if (!g.parentQnames || g.parentQnames.length === 0)
-            return parentQname === null;
-        return g.parentQnames.includes(parentQname);
-    });
-
-	// Render group cards
-	groups.forEach(group => {
-		const img = '${staticURL}/group-icons/' + group.qname + '.png';
-		const card = $('' +
-			'<div class="group-card" data-qname="' + group.qname + '">' +
-			'<img src="' + img + '" alt="' + group.name + '" />' +
-    		'<div class="group-name">' + group.name + ': ' + group.qname +'</div>' +
-			'</div>');
-		card.on('click', () => {
-			//const hasChildren = groups.some(g => g.parentQname === group.qname);
-			//if (hasChildren) {
-			//	renderGroups(group.qname);
-			//} else {
-				window.location.href = baseURL + '/browse/' + group.qname;
-			//}
-		});
-		container.append(card);
-	});
-}
-
-$(document).ready(() => {
-	renderGroups(null);
-});
-</script>
+<div style="height: 400px;"></div>
 
 <style>
+.group-header {
+	margin-top: 2em;
+	margin-bottom: 0.5em;
+	width: 100%;
+	border-bottom: 1px solid rgb(18, 65, 107);
+}
+
 .group-browser {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-	gap: 1.2em;
-	margin-top: 1.5em;
+	gap: 1.0em;
 }
 .group-card {
 	border: 1px solid #ddd;
 	border-radius: 0.8em;
-	padding: 1em;
+	padding: 0.5em;
 	text-align: center;
 	cursor: pointer;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -85,14 +74,20 @@ $(document).ready(() => {
 	font-weight: 500;
 	color: #333;
 }
-.back-btn {
-	margin-bottom: 1em;
-	padding: 0.4em 0.8em;
-	background: #eee;
-	border: none;
-	border-radius: 0.5em;
-	cursor: pointer;
+.parent-quicklinks {
+	margin-top: 1em;
 }
+.parent-quicklinks li {
+	display: inline-block;
+	padding: 1em;
+}
+.parent-quicklinks li a {
+	text-decoration: underline;
+    text-decoration-thickness: auto;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
 </style>
 
 <#include "footer.ftl">

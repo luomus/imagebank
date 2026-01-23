@@ -16,8 +16,6 @@ import fi.laji.imagebank.models.User;
 import fi.luomus.commons.containers.InformalTaxonGroup;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
-import fi.luomus.commons.json.JSONArray;
-import fi.luomus.commons.json.JSONObject;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.taxonomy.CategorizedTaxonImages;
 import fi.luomus.commons.taxonomy.CategorizedTaxonImages.SingleCategoryDef;
@@ -73,23 +71,9 @@ public class Browse extends ImageBankBaseServlet {
 
 	private ResponseData selectGroup(HttpServletRequest req) throws Exception {
 		ResponseData data = initResponseData(req);
-		String groupsJson = toJson(filteredTaxonGroups(), data.getDefaultLocale());
 		return data
 				.setViewName("browse-groupselect")
-				.setData("taxonGroupsJson", groupsJson);
-	}
-
-	private String toJson(Collection<InformalTaxonGroup> groups, String locale) {
-		JSONArray json = new JSONArray();
-		for (InformalTaxonGroup group : groups) {
-			JSONArray parentQnames = new JSONArray();
-			group.getParents().stream().map(qname->qname.toString()).forEach(parentQnames::appendString);
-			json.appendObject(new JSONObject()
-					.setString("qname", group.getQname().toString())
-					.setString("name", group.getName().forLocale(locale))
-					.setArray("parentQnames", parentQnames));
-		}
-		return json.toString();
+				.setData("taxonGroups", filteredTaxonGroups());
 	}
 
 	private List<Qname> getGroupIds(InformalTaxonGroup group, Map<String, InformalTaxonGroup> groups) {
