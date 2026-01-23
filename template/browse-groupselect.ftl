@@ -27,7 +27,7 @@
 				<h4 class="group-header" id="${group.qname}">${group.name.forLocale(locale)?html}</h4>
 				<div class="group-browser">
 		</#if>
-		<a class="group-card" href="${baseURL}/browse/${group.qname}" onclick="setPreference('group', '${group.qname}')">
+		<a class="group-card" href="${baseURL}/browse/${group.qname}" data-group="${group.qname}">
 			<img src="${staticURL}/group-icons/${group.qname}.png" alt="${group.name.forLocale(locale)?html}" />
    			<div class="group-name">${group.name.forLocale(locale)?html}</div>
    		</a>
@@ -35,6 +35,24 @@
 	</div>
 
 <div style="height: 400px;"></div>
+
+<script>
+$(document).on("click", ".group-card", function (e) {
+    e.preventDefault();
+
+    const $link = $(this);
+    const group = $link.data("group");
+    const targetUrl = $link.attr("href");
+
+    if ($link.data("busy")) return;
+    $link.data("busy", true).addClass("is-loading");
+
+    setPreference("group", group)
+        .done(function () {
+            window.location.href = targetUrl;
+        });
+});
+</script>
 
 <style>
 .group-header {

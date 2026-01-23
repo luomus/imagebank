@@ -73,6 +73,8 @@ $(document).ready(function() {
 		$("#browse-tree-select").val(getPreference("browse-ranks"));
 	}
 	
+	setPreference("group", "${groupId?html}");
+		
 	loadTree();
 	loadSpecies();
 	

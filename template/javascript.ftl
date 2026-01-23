@@ -104,6 +104,6 @@ function getArrayPreference(preference) {
 }
 
 <#if page == "browse">
-	<#include "javascript-preferences.ftl">
 	<#include "javascript-browse.ftl">
+	<#include "javascript-preferences.ftl">
 </#if>
