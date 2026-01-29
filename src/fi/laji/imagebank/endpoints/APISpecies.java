@@ -24,6 +24,14 @@ public class APISpecies extends APIBaseServlet {
 		}
 
 		List<Taxon> taxa = getTaxonomyDAO().getSpecies(terms);
+		taxa.stream().limit(10).forEach(t->{
+			try {
+				getTaxonImageDAO().reloadImages(t);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 
 		return initResponseData(req).setViewName("api-species")
 				.setData("taxa", taxa)

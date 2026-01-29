@@ -155,7 +155,7 @@ footer {
 	font-size: 90%;
 }
 
-h2, h3, h4, h5 {
+h2, h3, h4, h5, h6 {
 	color: rgb(18, 65, 107);
 	margin-top: 0.4em;
 	margin-bottom: 0.2em;
@@ -444,7 +444,7 @@ p.info {
 	padding: 10px;
 	text-align: center;
 }
-.image-upload-form #dropArea {
+.image-upload-form #dropArea, .dropArea {
   padding: 20px;
   text-align: center;
   cursor: pointer;
@@ -631,4 +631,46 @@ h3.browse a {
 .pager-btn:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+}
+
+.taxon-image-container {
+  margin-top: 1em;
+  display: grid;
+  gap: 16px;
+}
+
+.taxon-image-card {
+   border-radius: 5px;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   border: 1px solid #ddd;
+   /* box-sizing: border-box;
+   display: flex;
+   flex-direction: column; */
+}
+
+.taxon-image-card-header {
+	border: 1px solid #003eff;
+	text-align: center;
+	padding: 0.2em 1em 0.2em 1em;
+	background-color: #007fff;
+	opacity: 0.8;
+	text-align: left;
+	margin: 0;
+}
+.taxon-image-card-header * {
+	color: white;
+}
+
+.taxon-image-category {
+	vertical-align: top;
+	display: inline-block;
+	padding: 0 5px 0 5px;
+}
+
+.taxon-image-card img {
+   max-width: 200px;  
+   max-height: 200px;
+   width: auto;
+   height: auto;
+   display: block;
 }
