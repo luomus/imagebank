@@ -26,6 +26,13 @@
 	<@printScientificName taxon /> <#if taxon.vernacularName.forLocale(locale)?has_content> &mdash; </#if>${(taxon.vernacularName.forLocale(locale)!"")?html}
 </#macro>
 
+<#macro printNamesRank taxon>
+	<@printScientificName taxon /> <#if taxon.vernacularName.forLocale(locale)?has_content> &mdash; </#if>${(taxon.vernacularName.forLocale(locale)!"")?html} 
+	<#if taxon.taxonRank?has_content>
+		<span class="taxonRank">[${taxonRanks[taxon.taxonRank].forLocale(locale)?html}]</span>
+	</#if>
+</#macro>
+
 <#macro imageData image>
 	alt=""
 	data-id="${image.id}"

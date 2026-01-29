@@ -14,7 +14,7 @@
 
 <#macro printTaxonImages taxon> 
 	<div class="taxon-image-card">
-		<h4 class="taxon-image-card-header"><@printNameRank taxon/></h4>
+		<h4 class="taxon-image-card-header"><@printNamesRank taxon/></h4>
 		<#list taxon.categorizedMultimedia.categories as category>
 			<div class="taxon-image-category taxon-image-category-type-${category.id}">
 				<h4>${category.title.forLocale(locale)?html}</h4>

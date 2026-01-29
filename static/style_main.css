@@ -647,16 +647,14 @@ h3.browse a {
 }
 
 .taxon-image-card-header {
-	border: 1px solid #003eff;
-	text-align: center;
 	padding: 0.2em 1em 0.2em 1em;
 	background-color: #007fff;
-	opacity: 0.8;
+	background-color: #fff;
+	font-size: 120%;
 	text-align: left;
+	color: black;
 	margin: 0;
-}
-.taxon-image-card-header * {
-	color: white;
+	border-bottom: 1px solid #ddd;
 }
 
 .taxon-image-category {
