@@ -161,9 +161,6 @@ public class Browse extends ImageBankBaseServlet {
 			remove("MVL.442", map, allGroups); // virukset
 			groups = map.values();
 		}
-		for (InformalTaxonGroup g : allGroups.values()) {
-			System.out.println(g.getName("fi") + ": " + g.getQname());
-		}
 		return groups;
 	}
 
