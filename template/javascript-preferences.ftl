@@ -28,7 +28,9 @@ $(document).ready(function() {
 	$("#preferences input[type='checkbox']").on('change', function() {
 		const preference = $(this).attr('name');
 		const value = $(this).prop('checked');
-		setPreference(preference, value);
+		setPreference(preference, value).done(function() {
+			preferenceChangeHook(preference, value);
+		});
 	});
 	
 	if (!getBooleanPreference("showPreferences")) {

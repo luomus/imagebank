@@ -46,6 +46,7 @@ function loadSpecies(page = 1) {
         success: function(response) {
 			const container = $("#browse-taxa");
    			container.html(response);
+   			filterImageCategories();
         },
         error: function() {
             // Refresh the page to display the failure reason via flash message
@@ -53,6 +54,18 @@ function loadSpecies(page = 1) {
         	window.location.reload();
         }
     });
+}
+
+function filterImageCategories() {
+	const categories = [<#list defs as def>'${def.id}'<#if def_has_next>,</#if></#list>];
+	for (const category of categories) {
+		let show = getBooleanPreference('category_filter_'+category);
+		if (!show) {
+			$(".taxon-image-category-type-"+category).hide();
+		} else {
+			$(".taxon-image-category-type-"+category).show(); 
+		}
+	} 
 }
 
 preferenceChangeHook = function(preference, value) {
@@ -63,6 +76,9 @@ preferenceChangeHook = function(preference, value) {
     if (preference === "taxonRanks" || preference === "pageSize") {
     	loadSpecies();
     }
+    if (preference.startsWith("category_filter_")) {
+    	filterImageCategories();
+    };
 };
 
 $(document).ready(function() {
