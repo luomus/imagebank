@@ -199,18 +199,6 @@
     <div class="preferences-group">
     	<fieldset>
     		<legend>${text.category_filter}</legend>
-    		<#-- <#list defs as def>
-    			<#if def.defs?has_content>
-    				<#list def.defs as subDef>
-    					<label for="category_filter_${subDef.id}">${def.title.forLocale(locale)}: ${subDef.title.forLocale(locale)}</label>
-    					<input type="checkbox" name="category_filter_${subDef.id}" id="category_filter_${subDef.id}" checked>
-    				</#list>
-    			<#else>
-    				<label for="category_filter_${def.id}">${def.title.forLocale(locale)}</label>
-    				<input type="checkbox" name="category_filter_${def.id}" id="category_filter_${def.id}" checked>
-    			</#if>
-    		</#list>
-    		-->
     		<#list defs as def>
     			<label for="category_filter_${def.id}">${def.title.forLocale(locale)}</label>
     			<input type="checkbox" name="category_filter_${def.id}" id="category_filter_${def.id}" checked>
