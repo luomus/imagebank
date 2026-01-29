@@ -63,7 +63,12 @@ function filterImageCategories() {
 		if (!show) {
 			$(".taxon-image-category-type-"+category).hide();
 		} else {
-			$(".taxon-image-category-type-"+category).show(); 
+			$(".taxon-image-category-type-"+category+ " .taxon-image-lazy").each(function() {
+				const $img = $(this);
+       			$img.attr('src', $img.data('src'));
+       			$img.removeClass('taxon-image-lazy');
+			});
+			$(".taxon-image-category-type-"+category).show();
 		}
 	} 
 }

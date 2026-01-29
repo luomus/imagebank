@@ -17,13 +17,13 @@
 		<h4 class="taxon-image-card-header"><@printNameRank taxon/></h4>
 		<#list taxon.categorizedMultimedia.categories as category>
 			<div class="taxon-image-category taxon-image-category-type-${category.id}">
-				<h4>${category.title.forLocale(locale)?html} ${category.id}</h4>
+				<h4>${category.title.forLocale(locale)?html}</h4>
 				
 				<#if category.subcategories?has_content>
 					<#list category.subcategories as subcategory>
-						<h4>${subcategory.title.forLocale(locale)?html} ${subcategory.id}</h4>
+						<h4>${subcategory.title.forLocale(locale)?html}</h4>
 						<#list subcategory.images as image>
-							<img class="taxon-image" src="${image.largeURL?html}" />
+							<img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" />
 							<#break>
 						</#list>
 						<#if !subcategory.images?has_content>
@@ -36,7 +36,7 @@
 					</#list>
 				<#else>
 					<#list category.images as image>
-						<img class="taxon-image" src="${image.largeURL?html}" />
+						<img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" />
 						<#break>
 					</#list>
 					<#if !category.images?has_content>
