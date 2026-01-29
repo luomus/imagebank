@@ -52,6 +52,23 @@ $(document).on("click", ".group-card", function (e) {
             window.location.href = targetUrl;
         });
 });
+
+$(document).ready(function() {
+	$(".group-card img").each(function(index) {
+        var bgColor = color(index, 20, 99);
+        var shadowColor = color(index, 20, 30);
+        $(this).parent().css("--card-bg", bgColor);
+		$(this).parent().css("--card-shadow", shadowColor);
+    });
+});
+
+function color(index, totalColors = 20, lightness = 50) {
+	const hueStep = 360 / totalColors;
+    const hue = (index % totalColors) * hueStep;
+    const saturation = 60 + ((index * 7) % 40); // 60-99%
+	return "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+}
+
 </script>
 
 <style>
@@ -65,21 +82,23 @@ $(document).on("click", ".group-card", function (e) {
 .group-browser {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-	gap: 1.0em;
+	gap: 1.5em;
 }
 .group-card {
-	border: 1px solid #ddd;
+	border: 1px solid white;
 	border-radius: 0.8em;
-	padding: 0.5em;
+	padding: 1em;
 	text-align: center;
 	cursor: pointer;
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-	transition: transform 0.15s ease, box-shadow 0.15s ease;
-	background-color: #fff;
+	box-shadow: 1px 1px 5px 1px var(--card-shadow);
+	background-color: var(--card-bg);
+	transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.3s, background-color 0.3s;
 }
 .group-card:hover {
 	transform: translateY(-3px);
-	box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+	box-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+	background-color: white;
+	border: 1px solid #ddd;
 }
 .group-card img {
 	width: 64px;
@@ -97,13 +116,18 @@ $(document).on("click", ".group-card", function (e) {
 }
 .parent-quicklinks li {
 	display: inline-block;
-	padding: 1em;
+	padding: 0.3em;
+	margin: 0.5em;
+}
+.parent-quicklinks li a:hover {
+	text-underline-offset: 5px;
+	text-decoration-thickness: 3px;
 }
 .parent-quicklinks li a {
 	text-decoration: underline;
-    text-decoration-thickness: auto;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
+	text-decoration-thickness: auto;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
 }
 
 </style>
