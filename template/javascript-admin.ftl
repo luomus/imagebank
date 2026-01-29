@@ -8,7 +8,7 @@ $(document).ready(function() {
     	return false; 
     });
     
-	$(".admin-image").each(function () {
+	$(".admin-image").each(function() {
 		const image = $(this);
 		const wrapper = $("<div class='image-wrapper'></div>");
 		image.wrap(wrapper);
@@ -47,8 +47,8 @@ $(document).ready(function() {
 		infoBox.html(infoHtml);
 		image.after(infoBox);
         image.hover(
-			function () { infoBox.stop(true, true).fadeIn(100); },
-			function () { infoBox.stop(true, true).fadeOut(100); }
+			function() { infoBox.stop(true, true).fadeIn(100); },
+			function() { infoBox.stop(true, true).fadeOut(100); }
         );
 	});
     

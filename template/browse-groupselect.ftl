@@ -48,7 +48,7 @@ $(document).on("click", ".group-card", function (e) {
     $link.data("busy", true).addClass("is-loading");
 
     setPreference("group", group)
-        .done(function () {
+        .done(function() {
             window.location.href = targetUrl;
         });
 });
