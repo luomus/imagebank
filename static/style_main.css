@@ -635,17 +635,15 @@ h3.browse a {
 
 .taxon-image-container {
   margin-top: 1em;
-  display: grid;
-  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
 }
 
 .taxon-image-card {
    border-radius: 5px;
    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
    border: 1px solid #ddd;
-   /* box-sizing: border-box;
-   display: flex;
-   flex-direction: column; */
 }
 
 .taxon-image-card-header {
@@ -663,8 +661,9 @@ h3.browse a {
 
 .taxon-image-category {
 	vertical-align: top;
+	text-align: center;
 	display: inline-block;
-	padding: 0 5px 0 5px;
+	padding: 0 5px 5px 5px;
 }
 
 .taxon-image-card img {
