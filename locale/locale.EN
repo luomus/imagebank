@@ -40,6 +40,7 @@ taxa_finnish = Only Finnish
 taxa_all = All
 taxon_ranks_preference = Taxonomic ranks
 category_filter = Categories
+uncategorized = Uncategorized
 page_size = Page size
 image_size = Image size
 image_size_small = Small

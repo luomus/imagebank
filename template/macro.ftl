@@ -210,6 +210,8 @@
     			<label for="category_filter_${def.id}">${def.title.forLocale(locale)}</label>
     			<input type="checkbox" name="category_filter_${def.id}" id="category_filter_${def.id}" checked>
     		</#list>
+    		<label for="category_filter_uncategorized">${text.uncategorized}</label>
+    		<input type="checkbox" name="category_filter_uncategorized" id="category_filter_uncategorized" checked>
         </fieldset>
     </div>
 

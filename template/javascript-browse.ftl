@@ -58,7 +58,7 @@ function loadSpecies(page = 1) {
 }
 
 function filterImageCategories() {
-	const categories = [<#list defs as def>'${def.id}'<#if def_has_next>,</#if></#list>];
+	const categories = [<#list defs as def>'${def.id}',</#list>'uncategorized'];
 	for (const category of categories) {
 		let show = getBooleanPreference('category_filter_'+category);
 		if (!show) {

@@ -18,38 +18,45 @@
 		<#list taxon.categorizedMultimedia.categories as category>
 			<div class="taxon-image-category taxon-image-category-type-${category.id}">
 				<h4>${category.title.forLocale(locale)?html}</h4>
-				
 				<#if category.subcategories?has_content>
 					<#list category.subcategories as subcategory>
 						<h4>${subcategory.title.forLocale(locale)?html}</h4>
-						<#list subcategory.images as image>
-							<img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" />
-							<#break>
-						</#list>
-						<#if !subcategory.images?has_content>
-							<div class="dropArea">
-      							<div class="dropText">
-	        						<i class="fa fa-camera" aria-hidden="true"></i>
-	      						</div>
-    						</div>
-						</#if>
+						<@printImages subcategory.images />
 					</#list>
 				<#else>
-					<#list category.images as image>
-						<img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" />
-						<#break>
-					</#list>
-					<#if !category.images?has_content>
-						<div class="dropArea">
-      						<div class="dropText">
-	        					<i class="fa fa-camera" aria-hidden="true"></i>
-	      					</div>
-    					</div>
-					</#if>	
+					<h4>&nbsp;</h4>
+					<@printImages category.images />
 				</#if>
 			</div>
-		</#list> 
+		</#list>
+		<#if taxon.categorizedMultimedia.uncategorizedImages?has_content>
+			<div class="taxon-image-category taxon-image-category-type-uncategorized">
+				<h4>${text.uncategorized}</h4>
+				<h4>&nbsp;</h4>
+				<@printImages taxon.categorizedMultimedia.uncategorizedImages />
+			</div>
+		</#if>		
 	</div>
+</#macro>
+
+<#macro printImages images>
+	<#list images as image>
+		<a href="#" class="taxon-image-gallery" data-images="[<#list images as image>'${image.largeURL?json_string}',</#list>]">
+			<img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" />
+		</a>
+		<div class="taxon-image-tools">
+			<i class="fa fa-camera add-image-icon" aria-hidden="true"></i> &nbsp;
+			<a href="#" class="taxon-image-gallery"><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
+		</div>
+		<#break>
+	</#list>
+	<#if !images?has_content>
+		<div class="dropArea">
+      		<div class="dropText">
+	    		<i class="fa fa-camera" aria-hidden="true"></i>
+	    	</div>
+    	</div>
+	</#if>
 </#macro>
 
 <#macro pager>

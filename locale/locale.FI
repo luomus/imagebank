@@ -40,6 +40,7 @@ taxa_finnish = Vain suomalaiset
 taxa_all = Kaikki
 taxon_ranks_preference = Taksonomiset tasot
 category_filter = Kategoriat
+uncategorized = Luokittelemattomat
 page_size = Sivukoko
 image_size = Kuvakoko
 image_size_small = Pieni

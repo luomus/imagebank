@@ -40,6 +40,7 @@ taxa_finnish = Endast finska
 taxa_all = Alla
 taxon_ranks_preference = Taxonomiska nivåer
 category_filter = Kategorier
+uncategorized = Okategoriserad
 page_size = Sidstorlek
 image_size = Bildstorlek
 image_size_small = Liten
