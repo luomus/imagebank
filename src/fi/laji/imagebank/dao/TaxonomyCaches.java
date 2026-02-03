@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.commons.utils.Cached;
@@ -43,7 +44,7 @@ public class TaxonomyCaches {
 		}
 		public boolean valid() {
 			if (!given(groupId, order, page, pageSize)) return false;
-			if (pageSize > 1000) return false;
+			if (pageSize > Constant.MAX_PAGE_SIZE) return false;
 			return true;
 		}
 		private int iVal(String parameter) {

@@ -665,9 +665,16 @@ h3.browse a {
 }
 
 .taxon-image-card img {
-   max-width: 200px;  
-   max-height: 200px;
+   max-width: 150px;
    width: auto;
    height: auto;
    display: block;
+}
+
+.taxon-image-card img.large_image {
+   max-width: 350px;
+}
+
+.taxon-image-card .dropArea {
+  background-color: #fff;
 }

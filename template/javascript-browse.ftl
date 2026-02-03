@@ -47,6 +47,7 @@ function loadSpecies(page = 1) {
 			const container = $("#browse-taxa");
    			container.html(response);
    			filterImageCategories();
+   			defineImageSize();
         },
         error: function() {
             // Refresh the page to display the failure reason via flash message
@@ -73,6 +74,13 @@ function filterImageCategories() {
 	} 
 }
 
+function defineImageSize() {
+	let size = getPreference('imageSize');
+	$(".taxon-image").removeClass('large_image');
+	$(".taxon-image").removeClass('small_image');
+	$(".taxon-image").addClass(size);
+}
+
 preferenceChangeHook = function(preference, value) {
     if (preference === "taxa" || preference === "order") {
         loadTree();
@@ -83,6 +91,9 @@ preferenceChangeHook = function(preference, value) {
     }
     if (preference.startsWith("category_filter_")) {
     	filterImageCategories();
+    };
+    if (preference === "imageSize") {
+    	defineImageSize();
     };
 };
 

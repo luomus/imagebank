@@ -2,10 +2,11 @@ package fi.laji.imagebank.util;
 
 public class Constant {
 
-	public static String LOCALE = "locale";
-	public static String USER = "user";
-	public static String PREFERENCES = "preferences";
-	public static String NEW_IMAGES = "newImages";
-	public static String USER_DEFAULT_LICENSE = "defaultLicense";
+	public static final String LOCALE = "locale";
+	public static final String USER = "user";
+	public static final String PREFERENCES = "preferences";
+	public static final String NEW_IMAGES = "newImages";
+	public static final String USER_DEFAULT_LICENSE = "defaultLicense";
 
+	public static final int MAX_PAGE_SIZE = 300;
 }

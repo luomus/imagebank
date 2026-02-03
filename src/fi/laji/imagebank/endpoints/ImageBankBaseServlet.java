@@ -198,6 +198,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		responseData.setData("sides", dao.getAlt(MM_SIDE_ENUM));
 		responseData.setData("types", dao.getAlt(MM_TYPE_ENUM));
 		responseData.setData("sourceSystems", SOURCE_SYSTEMS);
+		responseData.setData("maxPageSize", Constant.MAX_PAGE_SIZE);
 		if (!responseData.getDatamodel().containsKey(Constant.USER_DEFAULT_LICENSE)) {
 			responseData.setData(Constant.USER_DEFAULT_LICENSE, "MZ.intellectualRightsCC-BY-4.0");
 		}
