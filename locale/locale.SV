@@ -104,6 +104,7 @@ yes = Ja
 no = Nej
 
 loading = Belastning
+esc_closes = stänger galleriet
 
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!

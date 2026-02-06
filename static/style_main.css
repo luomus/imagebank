@@ -691,11 +691,6 @@ h3.browse a {
 	font-weight: bold;
 }
 
-#taxon-image-gallery .taxon-image {
-	max-height: 400px;
-	max-width: 400px;
-}
-
 .ui-widget-overlay {
 	opacity: 0.97 !important;
 	background-color: rgb(40,15,40) !important;
@@ -704,4 +699,32 @@ h3.browse a {
 
 body.ui-dialog-open {
     overflow: hidden;
+}
+
+.keycap {
+    display: inline-block;
+    padding: 0.2em 0.6em;
+    border: 1px solid currentColor;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: bold;
+    background: #f0f0f0;
+}
+
+#taxon-image-gallery {
+	margin-top: 1em;
+	margin-bottom: 3em;
+	grid-template-columns: repeat(auto-fill, 600px);
+}
+
+#taxon-image-gallery img {
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    width: 100%;
+    height: auto;
+}
+
+#taxon-image-gallery img:hover {
+    
 }

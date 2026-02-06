@@ -139,8 +139,8 @@ $(document).on("click", ".taxon-image-gallery", function (e) {
     const category = $(this).data("category");
     const header = $(this).data("header");
     
-    const h = Math.floor($(window).height() * 0.95);
-    const w = Math.floor($(window).width() * 0.95);
+    const h = Math.floor($(window).height() * 0.93);
+    const w = Math.floor($(window).width());
     
     const modal = $("#gallery-modal");
     const content = $("#gallery-modal-content");
