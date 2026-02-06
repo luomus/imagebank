@@ -551,7 +551,6 @@ p.info {
 }
 #browse-taxa.expanded {
 	grid-column: 1 / span 2;
-	border-left: 5px solid #007fff;
 }
 #browse-tree-header h5.browse-taxa-headertext {
 	display: inline;
@@ -642,19 +641,18 @@ h3.browse a {
 
 .taxon-image-card {
    border-radius: 5px;
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-   border: 1px solid #ddd;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+   border: 0.8em solid rgba(0,127,255,0.5);
+   background-color: white;
 }
 
 .taxon-image-card-header {
-	padding: 0.2em 1em 0.2em 1em;
-	background-color: #007fff;
-	background-color: #fff;
+	background-color: rgba(0,127,255,0.5);
 	font-size: 120%;
 	text-align: left;
 	color: black;
 	margin: 0;
-	border-bottom: 1px solid #ddd;
+	padding-bottom: 0.8em;
 }
 
 .taxon-image-category {
@@ -676,7 +674,7 @@ h3.browse a {
 }
 
 .taxon-image-card .dropArea {
-  background-color: #fff;
+  background-color: #eee;
 }
 
 .taxon-image-tools {
@@ -688,6 +686,7 @@ h3.browse a {
 	background-color: rgba(255,255,255,0.90);
 	display: inline-block;
 	padding: 0.2em;
+	padding-left: 0.5em;
 	border-top-left-radius: 6px;
 	font-weight: bold;
 }
