@@ -132,3 +132,53 @@ $(document).on("click", ".browse-tree-taxon-selector", function (e) {
     setTaxonFilter(taxonId);
     loadSpecies();
 });
+
+$(document).on("click", ".taxon-image-gallery", function (e) {
+    e.preventDefault();
+    const taxonId = $(this).data("taxonid");
+    const category = $(this).data("category");
+    const header = $(this).data("header");
+    
+    const h = Math.floor($(window).height() * 0.95);
+    const w = Math.floor($(window).width() * 0.95);
+    
+    const modal = $("#gallery-modal");
+    const content = $("#gallery-modal-content");
+    content.html("<p>${text.loading}...</p>");
+    modal.dialog("option", {
+        height: h,
+        width: w,
+        title: header
+    }).dialog("open");
+
+    $.get("${baseURL}/api/gallery", { taxonId: taxonId, category: category })
+    .done(function (html) {
+        content.html(html);
+    }).fail(function () {
+        content.html("<p>Error loading images.</p>");
+    });
+});
+
+$(document).on("click", ".ui-widget-overlay", function () {
+    $("#gallery-modal").dialog("close");
+});
+
+$(document).ready(function() {
+
+$("#gallery-modal").dialog({
+    autoOpen: false,
+    modal: true,
+    draggable: false,
+    resizable: false,
+    closeOnEscape: true,
+    closeText: "${text.close}",
+    open: function () {
+        $("body").addClass("ui-dialog-open");
+    },
+    close: function () {
+        $("#gallery-modal-content").empty();
+        $("body").removeClass("ui-dialog-open");
+    }
+});
+
+});

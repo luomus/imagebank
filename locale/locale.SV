@@ -103,6 +103,8 @@ clear_all = Rensa alla
 yes = Ja
 no = Nej
 
+loading = Belastning
+
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!
 unknown_image = Okänd media-ID!

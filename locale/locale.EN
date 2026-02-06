@@ -102,7 +102,9 @@ clear_all = Clear all
 
 yes = Yes
 no = No
- 
+
+loading = Loading
+
 must_be_admin = You are not logged in or lack permissions for this section!
 unknown_taxon = Unknown taxon ID provided!
 unknown_image = Unknown image ID provided!

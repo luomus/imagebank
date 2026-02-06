@@ -690,3 +690,18 @@ h3.browse a {
 	border-top-left-radius: 6px;
 	font-weight: bold;
 }
+
+#taxon-image-gallery .taxon-image {
+	max-height: 400px;
+	max-width: 400px;
+}
+
+.ui-widget-overlay {
+	opacity: 0.97 !important;
+	background-color: rgb(40,15,40) !important;
+	cursor: pointer;
+}
+
+body.ui-dialog-open {
+    overflow: hidden;
+}

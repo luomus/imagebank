@@ -103,6 +103,8 @@ clear_all = Tyhjennä kaikki
 yes = Kyllä
 no = Ei
 
+loading = Ladataan
+
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
 unknown_taxon = Tuntematon taksonin tunniste!
 unknown_image = Tuntematon kuvan tunniste!

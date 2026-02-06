@@ -39,4 +39,8 @@
 	<div id="browse-taxa" class="box"></div>
 </div>
 
+<div id="gallery-modal" style="display:none;">
+    <div id="gallery-modal-content"></div>
+</div>
+
 <#include "footer.ftl">

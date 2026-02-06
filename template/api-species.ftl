@@ -21,11 +21,11 @@
 				<#if category.subcategories?has_content>
 					<#list category.subcategories as subcategory>
 						<h4>${subcategory.title.forLocale(locale)?html}</h4>
-						<@printImages subcategory.images />
+						<@printImages subcategory.images subcategory taxon/>
 					</#list>
 				<#else>
 					<h4>&nbsp;</h4>
-					<@printImages category.images />
+					<@printImages category.images category taxon/>
 				</#if>
 			</div>
 		</#list>
@@ -33,20 +33,18 @@
 			<div class="taxon-image-category taxon-image-category-type-uncategorized">
 				<h4>${text.uncategorized}</h4>
 				<h4>&nbsp;</h4>
-				<@printImages taxon.categorizedMultimedia.uncategorizedImages />
+				<@printImages taxon.categorizedMultimedia.uncategorizedImages "" taxon/>
 			</div>
 		</#if>		
 	</div>
 </#macro>
 
-<#macro printImages images>
+<#macro printImages images category taxon>
 	<#list images as image>
-		<a href="#" class="taxon-image-gallery" data-images="[<#list images as image>'${image.largeURL?json_string}',</#list>]">
-			<img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" />
-		</a>
+		<@galleryLink category taxon/><img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" /></a>
 		<div class="taxon-image-tools">
 			<i class="fa fa-camera add-image-icon" aria-hidden="true"></i> &nbsp;
-			<a href="#" class="taxon-image-gallery"><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
+			<@galleryLink category taxon/><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
 		</div>
 		<#break>
 	</#list>
@@ -57,6 +55,13 @@
 	    	</div>
     	</div>
 	</#if>
+</#macro>
+
+<#macro galleryLink category taxon>
+	<a href="#" class="taxon-image-gallery" 
+			data-taxonid="${taxon.id?html}" 
+			data-category="<#if category?has_content>${category.id}<#else>uncategorized</#if>" 
+			data-header="<@printNamesRankPlain taxon/> - <#if category?has_content>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if>">
 </#macro>
 
 <#macro pager>

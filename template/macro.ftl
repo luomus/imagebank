@@ -33,6 +33,8 @@
 	</#if>
 </#macro>
 
+<#macro printNamesRankPlain taxon>${(taxon.scientificName!"")?html}<#if taxon.vernacularName.forLocale(locale)?has_content> - </#if>${(taxon.vernacularName.forLocale(locale)!"")?html}<#if taxon.taxonRank?has_content> [${taxonRanks[taxon.taxonRank].forLocale(locale)?html}]</#if></#macro>
+
 <#macro imageData image>
 	alt=""
 	data-id="${image.id}"
