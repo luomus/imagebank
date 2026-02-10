@@ -58,7 +58,7 @@
 </#macro>
 
 <#macro galleryLink category taxon>
-	<a href="#" class="taxon-image-gallery" 
+	<a href="#" class="taxon-image-gallery-link" 
 			data-taxonid="${taxon.id?html}" 
 			data-category="<#if category?has_content>${category.id}<#else>uncategorized</#if>" 
 			data-header="<@printNamesRankPlain taxon/> - <#if category?has_content>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if>">

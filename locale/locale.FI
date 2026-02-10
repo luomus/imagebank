@@ -105,6 +105,8 @@ no = Ei
 
 loading = Ladataan
 esc_closes = sulkee gallerian
+arrows_browse = edellinen/seuraava kuva
+download_image = Lataa kuva
 
 must_be_admin = Et ole kirjautunut sisään tai oikeudet tähän osioon puuttuvat!
 unknown_taxon = Tuntematon taksonin tunniste!

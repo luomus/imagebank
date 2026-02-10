@@ -28,6 +28,10 @@
     
     <script src="${staticURL}/chosen/chosen.jquery.min.js?${staticContentTimestamp}"></script>
 	<link href="${staticURL}/chosen/chosen.min.css?${staticContentTimestamp}" rel="stylesheet" />
+	
+	<script src="${staticURL}/viewer/viewer.min.js?${staticContentTimestamp}"></script>
+	<link href="${staticURL}/viewer/viewer.min.css?${staticContentTimestamp}" rel="stylesheet" />
+    <script src="${staticURL}/viewer/jquery-viewer.min.js?${staticContentTimestamp}"></script>
 
     <script>
     	<#include "javascript.ftl">

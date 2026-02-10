@@ -105,6 +105,8 @@ no = No
 
 loading = Loading
 esc_closes = closes the gallery
+arrows_browse = previous/next image
+download_image = Download full
 
 must_be_admin = You are not logged in or lack permissions for this section!
 unknown_taxon = Unknown taxon ID provided!

@@ -133,7 +133,10 @@ $(document).on("click", ".browse-tree-taxon-selector", function (e) {
     loadSpecies();
 });
 
-$(document).on("click", ".taxon-image-gallery", function (e) {
+let galleryViewer = null;
+let lastOpenedImageIndex = null;
+
+$(document).on("click", ".taxon-image-gallery-link", function (e) {
     e.preventDefault();
     const taxonId = $(this).data("taxonid");
     const category = $(this).data("category");
@@ -154,6 +157,27 @@ $(document).on("click", ".taxon-image-gallery", function (e) {
     $.get("${baseURL}/api/gallery", { taxonId: taxonId, category: category })
     .done(function (html) {
         content.html(html);
+        const gallery = $("#taxon-image-gallery");
+        if (galleryViewer) {
+      		galleryViewer.destroy();
+      		galleryViewer = null;
+    	}
+    	gallery.viewer({
+      		navbar: false,
+      		title: false,
+      		toolbar: true,
+      		movable: true,
+      		zoomable: true,
+      		keyboard: true,
+      		transition: true,
+      		zoomRatio: 2,
+      		interval: 100
+    	});
+    	galleryViewer = gallery.data("viewer");
+    	galleryViewer.options.viewed = function () {
+  	  		lastOpenedImageIndex = galleryViewer.index;
+  	  		galleryViewer.zoomTo(1, false);
+		};
     }).fail(function () {
         content.html("<p>Error loading images.</p>");
     });
@@ -163,22 +187,39 @@ $(document).on("click", ".ui-widget-overlay", function () {
     $("#gallery-modal").dialog("close");
 });
 
-$(document).ready(function() {
+$(document).on("keydown", function (e) {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
 
-$("#gallery-modal").dialog({
-    autoOpen: false,
-    modal: true,
-    draggable: false,
-    resizable: false,
-    closeOnEscape: true,
-    closeText: "${text.close}",
-    open: function () {
-        $("body").addClass("ui-dialog-open");
-    },
-    close: function () {
-        $("#gallery-modal-content").empty();
-        $("body").removeClass("ui-dialog-open");
+        // if viewer is already open, do nothing (Viewer handles arrows)
+        if (galleryViewer && galleryViewer.isShown) return;
+
+        const indexToOpen = lastOpenedImageIndex !== null ? lastOpenedImageIndex : 0;
+        galleryViewer.show();
+        galleryViewer.view(indexToOpen);
     }
 });
+
+$(document).ready(function() {
+
+	$("#gallery-modal").dialog({
+    	autoOpen: false,
+    	modal: true,
+    	draggable: false,
+    	resizable: false,
+    	closeOnEscape: true,
+    	closeText: "${text.close}",
+    	open: function () {
+        	$("body").addClass("ui-dialog-open");
+    	},
+    	close: function () {
+        	if (galleryViewer) {
+      			galleryViewer.destroy();
+      			galleryViewer = null;
+      			lastOpenedImageIndex = null;
+    		}
+        	$("#gallery-modal-content").empty();
+        	$("body").removeClass("ui-dialog-open");
+    	}
+	});
 
 });

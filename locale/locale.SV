@@ -105,6 +105,8 @@ no = Nej
 
 loading = Belastning
 esc_closes = stänger galleriet
+arrows_browse = föregående/nästa bild
+download_image = Ladda ner fullständig bildversion
 
 must_be_admin = Du är inte inloggad eller saknar behörighet!
 unknown_taxon = Okänd taxon-ID!
