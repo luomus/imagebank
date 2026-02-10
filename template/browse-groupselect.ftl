@@ -55,7 +55,7 @@ $(document).on("click", ".group-card", function (e) {
 
 $(document).ready(function() {
 	$(".group-card img").each(function(index) {
-        var bgColor = color(index, 20, 99);
+        var bgColor = color(index, 20, 90);
         var shadowColor = color(index, 20, 30);
         $(this).parent().css("--card-bg", bgColor);
 		$(this).parent().css("--card-shadow", shadowColor);
@@ -90,8 +90,10 @@ function color(index, totalColors = 20, lightness = 50) {
 	padding: 1em;
 	text-align: center;
 	cursor: pointer;
-	box-shadow: 1px 1px 5px 1px var(--card-shadow);
-	background-color: var(--card-bg);
+	box-shadow: 0px 3px 8px 5px var(--card-shadow);
+	/*background-color: var(--card-bg);*/
+	background: var(--card-bg);
+	background: linear-gradient(180deg, rgba(255, 255, 255, 1) 60%, var(--card-bg) 90%);
 	transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.3s, background-color 0.3s;
 }
 .group-card:hover {
