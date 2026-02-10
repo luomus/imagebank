@@ -55,10 +55,14 @@ $(document).on("click", ".group-card", function (e) {
 
 $(document).ready(function() {
 	$(".group-card img").each(function(index) {
-        var bgColor = color(index, 20, 90);
-        var shadowColor = color(index, 20, 30);
-        $(this).parent().css("--card-bg", bgColor);
-		$(this).parent().css("--card-shadow", shadowColor);
+        const bg = colorParts(index, 20, 80);
+        const shadow = color(index, 20, 30);
+        $(this).parent().css({
+      		"--card-h": bg.h,
+      		"--card-s": bg.s + "%",
+      		"--card-l": bg.l + "%",
+      		"--card-shadow": shadow
+    	});
     });
 });
 
@@ -67,6 +71,13 @@ function color(index, totalColors = 20, lightness = 50) {
     const hue = (index % totalColors) * hueStep;
     const saturation = 60 + ((index * 7) % 40); // 60-99%
 	return "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+}
+
+function colorParts(index, totalColors = 20, lightness = 50) {
+  const hueStep = 360 / totalColors;
+  const h = (index % totalColors) * hueStep;
+  const s = 60 + ((index * 7) % 40); // 60–99%
+  return { h, s, l: lightness };
 }
 
 </script>
@@ -91,9 +102,11 @@ function color(index, totalColors = 20, lightness = 50) {
 	text-align: center;
 	cursor: pointer;
 	box-shadow: 0px 3px 8px 5px var(--card-shadow);
-	/*background-color: var(--card-bg);*/
-	background: var(--card-bg);
-	background: linear-gradient(180deg, rgba(255, 255, 255, 1) 60%, var(--card-bg) 90%);
+	background: linear-gradient(
+    	180deg,
+    	hsl(var(--card-h) var(--card-s) var(--card-l) / 0.0) 70%,
+    	hsl(var(--card-h) var(--card-s) var(--card-l)) 100%
+  	);
 	transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.3s, background-color 0.3s;
 }
 .group-card:hover {
