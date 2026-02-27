@@ -79,4 +79,7 @@ LajiAPI_URL = https://api.laji.fi/
 LajiAPI_AccessToken = 
 
 DwURL = https://dw.laji.fi/taxon-obs-count
+
+# Secret needed to execute certain endpoints (manual nightly reload etc)
+Secret = changethis
 ~~~ 

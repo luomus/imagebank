@@ -347,4 +347,8 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		return o != null && !o.toString().isEmpty();
 	}
 
+	protected boolean hasSecretParam(HttpServletRequest req) {
+		return getConfig().get("Secret").equals(req.getParameter("secret"));
+	}
+
 }

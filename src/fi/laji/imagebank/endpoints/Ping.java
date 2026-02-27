@@ -14,7 +14,11 @@ public class Ping extends ImageBankBaseServlet {
 
 	@Override
 	protected ResponseData processGet(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		if ("true".equals(req.getParameter("test-exception"))) throw new ServletException("Testing exception");
+		if ("true".equals(req.getParameter("test-exception"))) {
+			if (hasSecretParam(req)) {
+				throw new ServletException("Testing exception");
+			}
+		}
 		return new ResponseData("ok", "text/plain");
 	}
 
