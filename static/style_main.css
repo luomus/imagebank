@@ -651,6 +651,16 @@ h3.browse a {
 	margin: 0;
 	padding-bottom: 0.8em;
 }
+.taxon-image-card-header a {
+	font-size: 80%;
+}
+
+.obs-count {
+	font-size: 90%;
+	font-weight: normal;
+	margin-left: 2em;
+	display: inline-block;
+}
 
 .taxon-image-category {
 	vertical-align: top;
@@ -686,6 +696,15 @@ h3.browse a {
 	padding-left: 0.5em;
 	border-top-left-radius: 6px;
 	font-weight: bold;
+}
+
+.taxon-info-grid {
+	margin: 1em;
+}
+.taxon-info-grid > div {
+	display: inline-block;
+	margin-right: 4em;
+	vertical-align: top;
 }
 
 .ui-widget-overlay {

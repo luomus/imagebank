@@ -1,12 +1,16 @@
 package fi.laji.imagebank.endpoints;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fi.laji.imagebank.dao.TaxonomyCaches.SpeciesTerms;
+import fi.laji.imagebank.util.HabitatTextFormatter;
+import fi.luomus.commons.containers.LocalizedText;
+import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.taxonomy.Taxon;
 
@@ -25,12 +29,19 @@ public class APISpecies extends APIBaseServlet {
 
 		List<Taxon> taxa = getTaxonomyDAO().getSpecies(terms);
 
+		Map<String, LocalizedText> habitats = getTaxonomyDAO().getAlt(Qname.of("MKV.habitatEnum"));
+		Map<String, LocalizedText> habitatTypes = getTaxonomyDAO().getAlt(Qname.of("MKV.habitatSpecificTypeEnum"));
+		HabitatTextFormatter habitatTextFormatter = new HabitatTextFormatter(habitats, habitatTypes);
+
 		return initResponseData(req).setViewName("api-species")
 				.setData("taxa", taxa)
 				.setData("prevPage", prevPage(terms))
 				.setData("nextPage", nextPage(terms))
 				.setData("currentPage", terms.page)
-				.setData("lastPage", lastPage(terms));
+				.setData("lastPage", lastPage(terms))
+				.setData("occurrenceTypes", getTaxonomyDAO().getAlt(Qname.of("MX.typeOfOccurrenceEnum")))
+				.setData("habitatFormatter", habitatTextFormatter);
+
 	}
 
 	private int lastPage(SpeciesTerms terms) {

@@ -58,6 +58,7 @@ edit = Redigera
 
 taxon_tree = Taxonomiska nivåer
 taxon_tree_no_taxa = Inga taxon att visa på denna nivå
+obs_count = observationer
 
 admin_main = Admin | Bildhantering
 admin_single_title = Redigera en bild

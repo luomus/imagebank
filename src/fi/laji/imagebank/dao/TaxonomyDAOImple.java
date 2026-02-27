@@ -83,7 +83,8 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			"MX.redListStatus2000Finland",
 			"MX.redListStatus2010Finland",
 			"MX.redListStatus2015Finland",
-			"MX.redListStatus2019Finland"
+			"MX.redListStatus2019Finland",
+			"MX.typeOfOccurrenceInFinlandNotes"
 			);
 
 	private static final String SEPARATOR = "\u001F";

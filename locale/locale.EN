@@ -58,6 +58,7 @@ edit = Edit
 
 taxon_tree = Taxonomic Levels
 taxon_tree_no_taxa = No taxa to display at this level
+obs_count = occurrences
 
 admin_main = Admin | Image Management
 admin_single_title = Edit a single image
