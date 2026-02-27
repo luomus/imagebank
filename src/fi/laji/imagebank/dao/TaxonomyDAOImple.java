@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -28,6 +29,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import fi.laji.imagebank.dao.TaxonomyCaches.SpeciesTerms;
 import fi.laji.imagebank.dao.TaxonomyCaches.TreeTerms;
 import fi.luomus.commons.config.Config;
+import fi.luomus.commons.containers.Image;
 import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.db.connectivity.SimpleTransactionConnection;
@@ -50,6 +52,7 @@ import fi.luomus.commons.taxonomy.TaxonSearchDAO;
 import fi.luomus.commons.taxonomy.TaxonSearchDAOSQLQueryImple;
 import fi.luomus.commons.taxonomy.TaxonSearchResponse;
 import fi.luomus.commons.taxonomy.TaxonomyDAOBaseImple;
+import fi.luomus.commons.taxonomy.TripletToImageHandlers;
 import fi.luomus.commons.taxonomy.iucn.HabitatObject;
 import fi.luomus.commons.utils.Cached;
 import fi.luomus.commons.utils.DateUtils;
@@ -107,7 +110,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		this.taxonContainer = null;
 		this.cachedTaxonSearches = new Cached<>(
 				new TaxonSearchLoader(), 12, TimeUnit.HOURS, taxonSearchCacheSize());
-		startNightlyTasks();
+		scheduleNightlyTasks();
 		this.caches = new TaxonomyCaches(this);
 		System.out.println(this.getClass().getSimpleName() + " created!");
 	}
@@ -121,12 +124,19 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		} catch (Exception e) {}
 	}
 
-	private void startNightlyTasks() {
+	private void scheduleNightlyTasks() {
 		long repeatPeriod = TimeUnit.DAYS.toSeconds(1);
 		long initialDelay = calculateInitialDelayTill(5);
 		scheduler.scheduleAtFixedRate(
 				nightyTasks(),
 				initialDelay, repeatPeriod, TimeUnit.SECONDS);
+	}
+
+	public void startNightlyTasks() {
+		Thread t = new Thread(nightyTasks());
+		t.setName("Nightly tasks");
+		t.setDaemon(true);
+		t.run();
 	}
 
 	private Runnable nightyTasks() {
@@ -137,6 +147,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 					reloadTriplets();
 					reloadHabitats();
 					reloadObsCounts();
+					reloadMedia();
 					caches.clearCaches();
 					cachedTaxonSearches.invalidateAll();
 					taxonContainer = null;
@@ -185,7 +196,8 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 						File tripletFile = getTripletFile();
 						File habitatFile = getHabitatFile();
 						File obsCountFile = getObsCountFile();
-						taxonContainer = new TaxonContainerLoader(this, errorReporter, tripletFile, habitatFile, obsCountFile).load();
+						File mediaTripletFile = getMediaTripletFile();
+						taxonContainer = new TaxonContainerLoader(this, errorReporter, tripletFile, mediaTripletFile, habitatFile, obsCountFile).load();
 					} catch (Exception e) {
 						throw new RuntimeException("Loading taxa failed", e);
 					}
@@ -246,6 +258,23 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		}
 	}
 
+	public File reloadMedia() throws Exception {
+		synchronized (LOCK) {
+			File finalFile = mediaFile();
+			File backupFile = new File(storageFolder(), "media_triplets_BACKUP.txt");
+			File tempFile = new MediaLoader(dataSource).load();
+			if (finalFile.exists()) {
+				if (backupFile.exists()) {
+					backupFile.delete();
+				}
+				finalFile.renameTo(backupFile);
+			}
+			tempFile.renameTo(finalFile);
+			System.out.println("Taxon media saved to " + finalFile.getAbsolutePath());
+			return finalFile;
+		}
+	}
+
 	private class TaxonSearchLoader implements Cached.CacheLoader<TaxonSearch, TaxonSearchResponse> {
 		@Override
 		public TaxonSearchResponse load(TaxonSearch key) {
@@ -281,6 +310,16 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		}
 	}
 
+	private File getMediaTripletFile() throws Exception {
+		File mediaFile = mediaFile();
+		if (mediaFile.exists()) return mediaFile;
+		synchronized (LOCK) {
+			if (mediaFile.exists()) return mediaFile;
+			mediaFile = reloadMedia();
+			return mediaFile;
+		}
+	}
+
 	private File getHabitatFile() throws Exception {
 		File habitatFile = habitatFile();
 		if (habitatFile.exists()) return habitatFile;
@@ -311,6 +350,10 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 
 	private File obsCountFile() {
 		return new File(storageFolder(), "obs_counts.json");
+	}
+
+	private File mediaFile() {
+		return new File(storageFolder(), "media_triplets.txt");
 	}
 
 	private File storageFolder() {
@@ -408,6 +451,89 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			w(writer, habitatSpecificType);
 			writer.write('\n');
 		}
+	}
+
+	private class MediaLoader {
+
+		private final HikariDataSource dataSource;
+
+		public MediaLoader(HikariDataSource dataSource) {
+			this.dataSource = dataSource;
+			System.out.println(this.getClass().getSimpleName() + " created!");
+		}
+
+		public File load() throws Exception {
+			TransactionConnection con = null;
+			try {
+				System.out.println("Starting to load media...");
+				con = new SimpleTransactionConnection(dataSource.getConnection());
+				File f = loadUsing(con);
+				System.out.println("Media loading done");
+				return f;
+			} finally {
+				if (con != null) con.release();
+			}
+		}
+
+		private File loadUsing(TransactionConnection con) throws Exception {
+			PreparedStatement p = null;
+			ResultSet rs = null;
+			File tempFile = new File(storageFolder(), "media-triplets-"+DateUtils.getFilenameDatetime()+".txt");
+			tempFile.getParentFile().mkdirs();
+			try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempFile), "UTF-8"), 1024*1024)) {
+				String sql = getMediaLoadSQL();
+				p = con.prepareStatement(sql);
+				System.out.println("Executing media triplet query...");
+				rs = p.executeQuery();
+				rs.setFetchSize(4001);
+				System.out.println("Received first media triplet query response, going through result set...");
+				int i = 0;
+				while (rs.next()) {
+					write(rs, writer);
+					i++;
+					if (i % 100000 == 0 || i == 1) {
+						System.out.println(" ... media triplet row " + i);
+					}
+				}
+				return tempFile;
+			} catch (Exception e) {
+				if (tempFile.exists()) {
+					try { tempFile.delete(); } catch (Exception e2) {}
+				}
+				throw e;
+			} finally {
+				Utils.close(p, rs);
+			}
+		}
+
+		private void write(ResultSet rs, BufferedWriter writer) throws SQLException, IOException {
+			String taxonId = s(rs, 1);
+			String predicate = s(rs, 2);
+			String object = s(rs, 3);
+			String resourceliteral = s(rs, 4);
+			String locale = s(rs, 5);
+			w(writer, taxonId);
+			w(writer, predicate);
+			w(writer, object);
+			w(writer, resourceliteral);
+			w(writer, locale);
+			writer.write('\n');
+		}
+
+		private String getMediaLoadSQL() {
+			StringBuilder sql = new StringBuilder();
+			sql.append(" SELECT	subjectname, predicatename, objectname, resourceliteral, langcodefk ");
+			sql.append(" FROM rdf_statementview WHERE subjectname IN ( ");
+			sql.append("     SELECT DISTINCT s.subjectname ");
+			sql.append("     FROM 	rdf_statementview s ");
+			sql.append("     JOIN	rdf_statementview s2 on (s.subjectname = s2.subjectname and s2.predicatename = 'MM.taxonURI') ");
+			sql.append("     JOIN	rdf_statementview s3 on (s.subjectname = s3.subjectname and s3.predicatename = 'MM.fullURL') ");
+			sql.append("     WHERE	s.predicatename = 'rdf:type' AND s.objectname = 'MM.image' ");
+			sql.append(" ) ");
+			sql.append(" ORDER BY subjectname, predicatename ");
+			return sql.toString();
+		}
+
 	}
 
 	private static void w(BufferedWriter writer, String s) throws IOException {
@@ -512,15 +638,18 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 	private class TaxonContainerLoader {
 
 		private final File tripletFile;
+		private final File mediaTripletFile;
 		private final File habitatFile;
 		private final File obsCountFile;
 		private final TaxonomyDAO dao;
 		private final ErrorReporter errorReporter;
+		private final TripletToImageHandlers TRIPLET_TO_IMAGE_HANDLERS = new TripletToImageHandlers();
 
-		public TaxonContainerLoader(TaxonomyDAO dao, ErrorReporter errorReporter, File tripletFile, File habitatFile, File obsCountFile) {
+		public TaxonContainerLoader(TaxonomyDAO dao, ErrorReporter errorReporter, File tripletFile, File mediaTripletFile, File habitatFile, File obsCountFile) {
 			this.dao = dao;
 			this.errorReporter = errorReporter;
 			this.tripletFile = tripletFile;
+			this.mediaTripletFile = mediaTripletFile;
 			this.habitatFile = habitatFile;
 			this.obsCountFile = obsCountFile;
 			System.out.println(this.getClass().getSimpleName() + " created!");
@@ -529,6 +658,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		public TaxonContainer load() throws Exception {
 			System.out.println("Starting to create taxon container...");
 			InMemoryTaxonContainerImple taxonContainer = load(tripletFile);
+			addMedia(taxonContainer, mediaTripletFile);
 			addHabitats(taxonContainer, habitatFile);
 			// TODO addBiogeographicalProvinceOccurrences(taxonContainer, con, possiblyLimitedIds);
 			addObservationCounts(taxonContainer, obsCountFile);
@@ -544,6 +674,83 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			return taxonContainer;
 		}
 
+		private void addMedia(InMemoryTaxonContainerImple taxonContainer, File mediaTripletFile) throws NoSuchTaxonException, IOException {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(mediaTripletFile), "UTF-8"), 1024*1024)) {
+				System.out.println("Reading media triplets from " + tripletFile.getAbsolutePath() + " ... ");
+				int i = 0;
+				String line = null;
+
+				Qname prevImageId = Qname.of("");
+				Image image = null;
+				Boolean isSecret = null;
+				List<Qname> taxonIdsToAddTheImage = new ArrayList<>();
+
+				while ((line = reader.readLine()) != null) {
+					String[] parts = line.split(SEPARATOR, -1);
+					Qname imageId = Qname.of(parts[0]);
+					Qname predicate = Qname.of(parts[1]);
+					Qname objectname = Qname.of(parts[2]);
+					String resourceliteral = parts[3];
+					String locale = parts[4];
+					if (secretImage(predicate, objectname)) {
+						isSecret = true;
+					}
+					if (imageChanges(prevImageId, imageId)) {
+						addToTaxa(taxonContainer, image, taxonIdsToAddTheImage, isSecret);
+						prevImageId = imageId;
+						image = new Image(imageId);
+						isSecret = null;
+						taxonIdsToAddTheImage.clear();
+
+					}
+					addStatementToImage(image, taxonIdsToAddTheImage, predicate, objectname, resourceliteral, locale);
+					i++;
+					if (i % 100000 == 0 || i == 1) {
+						System.out.println(" ... media triplet row " + i);
+					}
+				}
+				addToTaxa(taxonContainer, image, taxonIdsToAddTheImage, isSecret);
+			}
+		}
+
+		private void addToTaxa(InMemoryTaxonContainerImple taxonContainer, Image image, List<Qname> taxonIdsToAddTheImage, Boolean isSecret) {
+			if (image == null) return;
+			if (Boolean.TRUE.equals(isSecret)) return;
+			addLicenseName(image);
+			for (Qname taxonId : taxonIdsToAddTheImage) {
+				if (taxonContainer.hasTaxon(taxonId)) {
+					Taxon taxon = taxonContainer.getTaxon(taxonId);
+					if (taxonIdsToAddTheImage.size() == 1) {
+						image.setTaxon(taxon);
+						taxon.addMultimedia(image);
+					} else {
+						taxon.addCopyForSelf(image);
+					}
+				}
+			}
+		}
+
+		private void addLicenseName(Image image) {
+			if (image.getLicenseId() == null) return;
+			LocalizedText localized = getLicenseFullnames().get(image.getLicenseId().toString());
+			if (localized != null) {
+				image.setLicenseFullname(localized);
+			}
+		}
+
+		private void addStatementToImage(Image image, List<Qname> taxonIdsToAddTheImage, Qname predicate, Qname objectname, String resourceliteral, String locale) {
+			TRIPLET_TO_IMAGE_HANDLERS
+			.getHandler(predicate)
+			.setToImage(objectname, resourceliteral, locale, image, taxonIdsToAddTheImage);
+		}
+
+		private boolean secretImage(Qname predicate, Qname objectname) {
+			return TaxonImageDAOImple.secretImage(predicate, objectname);
+		}
+
+		private boolean imageChanges(Qname prevImageId, Qname imageId) {
+			return !prevImageId.equals(imageId);
+		}
 
 		private void limitHabitatCountsToTop(int top, InMemoryTaxonContainerImple taxonContainer) {
 			for (Taxon t : taxonContainer.getAll()) {

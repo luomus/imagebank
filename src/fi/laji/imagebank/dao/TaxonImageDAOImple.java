@@ -149,7 +149,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 		return images;
 	}
 
-	private boolean secretImage(Qname predicate, Qname objectname) {
+	public static boolean secretImage(Qname predicate, Qname objectname) {
 		return Qname.of("MZ.publicityRestrictions").equals(predicate) && !Qname.of("MZ.publicityRestrictionsPublic").equals(objectname);
 	}
 
