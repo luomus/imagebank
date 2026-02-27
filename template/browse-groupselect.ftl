@@ -55,13 +55,11 @@ $(document).on("click", ".group-card", function (e) {
 
 $(document).ready(function() {
 	$(".group-card img").each(function(index) {
-        const bg = colorParts(index, 20, 80);
-        const shadow = color(index, 20, 30);
-        $(this).parent().css({
-      		"--card-h": bg.h,
+        const bg = colorParts(index, 6, 1);
+        $(this).css({
+      		"--card-h": bg.h + "deg",
       		"--card-s": bg.s + "%",
-      		"--card-l": bg.l + "%",
-      		"--card-shadow": shadow
+      		"--card-l": bg.l + "%"
     	});
     });
 });
@@ -101,12 +99,7 @@ function colorParts(index, totalColors = 20, lightness = 50) {
 	padding: 1em;
 	text-align: center;
 	cursor: pointer;
-	box-shadow: 0px 3px 8px 5px var(--card-shadow);
-	background: linear-gradient(
-    	180deg,
-    	hsl(var(--card-h) var(--card-s) var(--card-l) / 0.0) 70%,
-    	hsl(var(--card-h) var(--card-s) var(--card-l)) 100%
-  	);
+	background: white;
 	transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.3s, background-color 0.3s;
 }
 .group-card:hover {
@@ -120,6 +113,7 @@ function colorParts(index, totalColors = 20, lightness = 50) {
 	height: 64px;
 	object-fit: contain;
 	margin-bottom: 0.5em;
+	filter: drop-shadow(16px 16px 12px) saturate(var(--card-s)) hue-rotate(var(--card-h)) sepia(50%);
 }
 .group-name {
 	font-size: 1.1em;
