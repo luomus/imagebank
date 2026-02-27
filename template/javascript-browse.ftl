@@ -131,6 +131,12 @@ $(document).on("click", ".browse-tree-taxon-selector", function (e) {
     const taxonId = $(this).data("taxonid");
     setTaxonFilter(taxonId);
     loadSpecies();
+    const container = $("#browse-taxa");
+    if (container.length) {
+        $("html, body").animate({
+            scrollTop: container.offset().top
+        }, 500);
+    }
 });
 
 let galleryViewer = null;

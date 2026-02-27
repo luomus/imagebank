@@ -561,6 +561,10 @@ p.info {
 #browse-tree-content {
 	margin-top: 1em;
 	font-size: 0.9em;
+	max-height: 200vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 1em;
 }
 
 h3.browse a {
@@ -578,13 +582,6 @@ h3.browse a {
 #browse-tree-content .subfamily 	{ font-size: 100%; font-weight: bold; }
 
 #browse-tree-content .order:first-of-type { border-top: none; padding-top: 0; }
-
-#browse-tree-content {
-	max-height: 500px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding-right: 1em;
-}
 
 #browse-tree-content .taxonRank {
 	font-weight: normal;
