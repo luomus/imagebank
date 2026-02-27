@@ -177,7 +177,7 @@ $(document).on("click", ".taxon-image-gallery-link", function (e) {
       		keyboard: true,
       		transition: true,
       		zoomRatio: 2,
-      		interval: 100
+      		interval: 1000
     	});
     	galleryViewer = gallery.data("viewer");
     	galleryViewer.options.viewed = function () {
