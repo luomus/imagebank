@@ -141,6 +141,7 @@ $(document).on("click", ".browse-tree-taxon-selector", function (e) {
 
 let galleryViewer = null;
 let lastOpenedImageIndex = null;
+let galleryImageMeta = {};
 
 $(document).on("click", ".taxon-image-gallery-link", function (e) {
     e.preventDefault();
@@ -148,7 +149,7 @@ $(document).on("click", ".taxon-image-gallery-link", function (e) {
     const category = $(this).data("category");
     const header = $(this).data("header");
     
-    const h = Math.floor($(window).height() * 0.93);
+    const h = Math.floor($(window).height() * 0.97);
     const w = Math.floor($(window).width());
     
     const modal = $("#gallery-modal");
@@ -164,13 +165,16 @@ $(document).on("click", ".taxon-image-gallery-link", function (e) {
     .done(function (html) {
         content.html(html);
         const gallery = $("#taxon-image-gallery");
+        
+        buildGalleryImageMeta(gallery);
+        
         if (galleryViewer) {
       		galleryViewer.destroy();
       		galleryViewer = null;
     	}
     	gallery.viewer({
       		navbar: false,
-      		title: false,
+      		title: [true, buildViewerTitle],
       		toolbar: true,
       		movable: true,
       		zoomable: true,
@@ -188,6 +192,40 @@ $(document).on("click", ".taxon-image-gallery-link", function (e) {
         content.html("<p>Error loading images.</p>");
     });
 });
+
+function buildGalleryImageMeta(gallery) {
+    galleryImageMeta = {}; // reset
+    gallery.find("img").each(function() {
+        const img = $(this);
+        const src = img.attr("src");
+        const meta = {};
+        $.each(this.dataset, function(key, value) {
+            meta[key.toLowerCase()] = value || "";
+        });
+        galleryImageMeta[src] = meta;
+    });
+}
+
+const fields = [
+    { key: "authors", label: "Authors" },
+    { key: "copyrightowner", label: "Copyright Owner" },
+    { key: "licenseabbreviation", label: "License" },
+    { key: "type", label: "Type" },
+    { key: "taxondescriptioncaption", label: "Caption" },
+    { key: "capturedatetime", label: "Capture Date" },
+    { key: "uploaddatetime", label: "Upload Date" },
+    { key: "keywords", label: "Keywords" }
+];
+
+function buildViewerTitle(image) {
+    const src = image.src;
+    const meta = galleryImageMeta[src] || {};
+    const infoHtml = fields
+        .filter(f => meta[f.key] && String(meta[f.key]).trim() !== "")
+        .map(f => f.label + ": " + meta[f.key])
+        .join(" | ");
+    return infoHtml;
+}
 
 $(document).on("click", ".ui-widget-overlay", function () {
     $("#gallery-modal").dialog("close");
@@ -229,3 +267,4 @@ $(document).ready(function() {
 	});
 
 });
+

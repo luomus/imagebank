@@ -58,7 +58,7 @@
 
 <#macro printImages images category taxon>
 	<#list images as image>
-		<@galleryLink category taxon/><img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" /></a>
+		<@galleryLink category taxon/><img class="taxon-image taxon-image-lazy" data-src="${image.largeURL?html}" src="${staticURL}/pixel.gif" <@imageData image/> /></a>
 		<div class="taxon-image-tools">
 			<i class="fa fa-camera add-image-icon" aria-hidden="true"></i> &nbsp;
 			<@galleryLink category taxon/><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>

@@ -50,9 +50,22 @@
 	data-sex="<@listEnum image.sex sexes/>"
 	data-lifestage="<@listEnum image.lifeStage lifeStages/>"
 	data-plantlifestage="<@listEnum image.plantLifeStage plantLifeStages/>"
-	data-uploaddatetime="${(image.uploadDateTime!"")?html}"
-	data-capturedatetime="${(image.captureDateTime!"")?html}"
+	data-uploaddatetime="${dateOnly(image.uploadDateTime)!""?html}"
+	data-capturedatetime="${dateOnly(image.captureDateTime)!""?html}"
 </#macro>
+
+<#function dateOnly datetime="">
+  <#if datetime??>
+    <#assign tPos = datetime?index_of("T")>
+    <#if tPos != -1>
+      <#return datetime?substring(0, tPos)>
+    <#else>
+      <#return datetime>
+    </#if>
+  <#else>
+    <#return "">
+  </#if>
+</#function>
 
 <#macro list seq><#list seq as s>${s?html}<#if s_has_next>, </#if></#list></#macro>
 <#macro listEnum seq enum><#list seq as s>${enum[s].forLocale(locale)?html}<#if s_has_next>, </#if></#list></#macro>

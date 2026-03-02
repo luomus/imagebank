@@ -749,3 +749,14 @@ body.ui-dialog-open {
 	display: inline-block;
 	margin-right: 1em;
 }
+
+.viewer-footer .viewer-title {
+	background: white;
+	border-radius: 5px;
+	opacity: 0.93;
+	color: black;
+	padding: 1em;
+	white-space: normal;
+	display: inline-block;
+	max-width: 50em;
+}
