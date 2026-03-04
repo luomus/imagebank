@@ -138,6 +138,7 @@ label_side = Sida
 
 group_captions = Bildtexter
 label_caption = Bildtext
+label_taxonDescriptionCaption = Taxonbeskrivningstext
 label_taxonDescriptionCaptionFI = Taxonbeskrivningstext - FI
 label_taxonDescriptionCaptionSV = Taxonbeskrivningstext - SV
 label_taxonDescriptionCaptionEN = Taxonbeskrivningstext - EN

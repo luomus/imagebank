@@ -36,13 +36,13 @@
 <#macro printNamesRankPlain taxon>${(taxon.scientificName!"")?html}<#if taxon.vernacularName.forLocale(locale)?has_content> - </#if>${(taxon.vernacularName.forLocale(locale)!"")?html}<#if taxon.taxonRank?has_content> [${taxonRanks[taxon.taxonRank].forLocale(locale)?html}]</#if></#macro>
 
 <#macro imageData image>
-	alt=""
+	alt="${(image.copyrightOwner!"")?html} ${(image.licenseAbbreviation!"")?html}"
 	data-id="${image.id}"
 	data-authors="${(image.author!"")?html}"
 	data-licenseabbreviation="${(image.licenseAbbreviation!"")?html}"
 	data-copyrightowner="${(image.copyrightOwner!"")?html}"
 	data-caption="${(image.caption!"")?html}"
-	data-taxondescriptioncaption="${(image.taxonDescriptionCaption.forLocale("fi")!"")?html}"
+	data-taxondescriptioncaption="${(image.taxonDescriptionCaption.forLocale(locale)!image.caption!"")?html}"
 	data-primary="${((image.isPrimaryForTaxon()?string("true", "false"))!"false")?html}"
 	data-keywords="<@list image.keywords/>"
 	data-type="<@enumV image.type!"" types/>"
@@ -66,6 +66,15 @@
     <#return "">
   </#if>
 </#function>
+
+<#macro imageCopyright image>
+	<#if (image.licenseAbbreviation!"")?starts_with("CC")>
+    	<i class="fa fa-creative-commons" aria-hidden="true"></i>
+  	<#else>
+    	<i class="fa fa-copyright" aria-hidden="true"></i>
+  	</#if>
+	${(image.copyrightOwner!"")?html} ${(image.licenseAbbreviation!"")?html}
+</#macro>
 
 <#macro list seq><#list seq as s>${s?html}<#if s_has_next>, </#if></#list></#macro>
 <#macro listEnum seq enum><#list seq as s>${enum[s].forLocale(locale)?html}<#if s_has_next>, </#if></#list></#macro>

@@ -30,14 +30,14 @@ $(document).ready(function() {
 
 		const infoBox = $("<div class='image-info-box'></div>");
 		const fields = [
-			{ key: "authors", label: "Authors" },
-    		{ key: "copyrightowner", label: "Copyright Owner" },
-    		{ key: "licenseabbreviation", label: "License" },
-			{ key: "caption", label: "Caption" },
-			{ key: "taxondescriptioncaption", label: "Taxon Description" },
-			{ key: "capturedatetime", label: "Capture Date" },
-			{ key: "uploaddatetime", label: "Upload Date" },
-			{ key: "keywords", label: "Keywords" }
+			{ key: "authors", label: "${text.label_capturers}" },
+    		{ key: "copyrightowner", label: "${text.label_rightsOwner}" },
+    		{ key: "licenseabbreviation", label: "${text.label_license}" },
+			{ key: "caption", label: "${text.label_caption}" },
+			{ key: "taxondescriptioncaption", label: "${text.label_taxonDescriptionCaption}" },
+			{ key: "capturedatetime", label: "${text.label_captureDateTime}" },
+			{ key: "uploaddatetime", label: "${text.label_uploadDateTime}" },
+			{ key: "keywords", label: "${text.label_tags}" }
 		];
 		let infoHtml = fields.map(field => {
         	const value = image.data(field.key);

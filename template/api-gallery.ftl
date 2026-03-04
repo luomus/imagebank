@@ -11,13 +11,7 @@
 	<div>
 		<img class="taxon-image" src="${image.fullURL?html}" <@imageData image/> />
 		<a href="${image.fullURL?html}" target="full"><i class="fa fa-download" aria-hidden="true"></i> ${text.download_image}</a>
-		&nbsp; 
-			<#if (image.licenseAbbreviation!"")?starts_with("CC")>
-    			<i class="fa fa-creative-commons" aria-hidden="true"></i>
-  			<#else>
-    			<i class="fa fa-copyright" aria-hidden="true"></i>
-  			</#if>
-		${(image.copyrightOwner!"")?html} ${(image.licenseAbbreviation!"")?html}
+		&nbsp; <@imageCopyright image/>
 	</div>
 </#list>
 

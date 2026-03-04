@@ -138,6 +138,7 @@ label_side = Puoli
 
 group_captions = Kuvatekstit
 label_caption = Kuvateksti
+label_taxonDescriptionCaption = Lajikuvaus
 label_taxonDescriptionCaptionFI = Lajikuvaus - FI
 label_taxonDescriptionCaptionSV = Lajikuvaus - SV
 label_taxonDescriptionCaptionEN = Lajikuvaus - EN

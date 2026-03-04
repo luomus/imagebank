@@ -138,6 +138,7 @@ label_side = Side
 
 group_captions = Captions
 label_caption = Caption
+label_taxonDescriptionCaption = Taxon Description Caption
 label_taxonDescriptionCaptionFI = Taxon Description Caption - FI
 label_taxonDescriptionCaptionSV = Taxon Description Caption - SV
 label_taxonDescriptionCaptionEN = Taxon Description Caption - EN

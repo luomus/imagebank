@@ -47,7 +47,7 @@ function loadSpecies(page = 1) {
 			const container = $("#browse-taxa");
    			container.html(response);
    			filterImageCategories();
-   			defineImageSize();
+   			initTaxonImages();
         },
         error: function() {
             // Refresh the page to display the failure reason via flash message
@@ -74,11 +74,15 @@ function filterImageCategories() {
 	} 
 }
 
-function defineImageSize() {
+function initTaxonImages() {
 	let size = getPreference('imageSize');
-	$(".taxon-image").removeClass('large_image');
-	$(".taxon-image").removeClass('small_image');
-	$(".taxon-image").addClass(size);
+	$(".taxon-image-card").removeClass('large_image');
+	$(".taxon-image-card").removeClass('small_image');
+	$(".taxon-image-card").addClass(size);
+	$(".taxon-image").hover(
+			function() { $(this).closest(".image-wrapper").find(".image-info-box").stop(true, true).fadeIn(100); },
+			function() { $(this).closest(".image-wrapper").find(".image-info-box").stop(true, true).fadeOut(100); }
+        );
 }
 
 preferenceChangeHook = function(preference, value) {
@@ -93,7 +97,7 @@ preferenceChangeHook = function(preference, value) {
     	filterImageCategories();
     };
     if (preference === "imageSize") {
-    	defineImageSize();
+    	initTaxonImages();
     };
 };
 
@@ -207,14 +211,13 @@ function buildGalleryImageMeta(gallery) {
 }
 
 const fields = [
-    { key: "authors", label: "Authors" },
-    { key: "copyrightowner", label: "Copyright Owner" },
-    { key: "licenseabbreviation", label: "License" },
-    { key: "type", label: "Type" },
-    { key: "taxondescriptioncaption", label: "Caption" },
-    { key: "capturedatetime", label: "Capture Date" },
-    { key: "uploaddatetime", label: "Upload Date" },
-    { key: "keywords", label: "Keywords" }
+    { key: "authors", label: "${text.label_capturer}" },
+    { key: "copyrightowner", label: "${text.label_rightsOwner}" },
+    { key: "licenseabbreviation", label: "${text.label_license}" },
+    { key: "type", label: "${text.label_type}" },
+    { key: "taxondescriptioncaption", label: "${text.label_caption}" },
+    { key: "capturedatetime", label: "${text.label_captureDateTime}" },
+    { key: "uploaddatetime", label: "${text.label_uploadDateTime}" }
 ];
 
 function buildViewerTitle(image) {
