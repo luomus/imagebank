@@ -574,10 +574,14 @@ p.info {
 #browse-tree-content {
 	margin-top: 1em;
 	font-size: 0.9em;
-	max-height: 200vh;
-	overflow-y: auto;
-	overflow-x: hidden;
 	padding-right: 1em;
+	position: sticky;
+    top: 0;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+	overflow-x: hidden;
+    overscroll-behavior: contain;
+    padding-bottom: 10em;	
 }
 
 h3.browse a {
