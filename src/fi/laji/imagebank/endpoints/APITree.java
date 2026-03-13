@@ -25,7 +25,7 @@ public class APITree extends APIBaseServlet {
 
 		List<Taxon> taxa = getTaxonomyDAO().getTree(terms);
 
-		return initResponseData(req).setViewName("api-tree").setData("taxa", taxa);
+		return initResponseData(req).setViewName("api-tree").setData("taxa", taxa).setData("finnish", terms.isOnlyFinnish());
 	}
 
 }

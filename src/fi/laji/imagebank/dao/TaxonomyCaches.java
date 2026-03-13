@@ -112,6 +112,18 @@ public class TaxonomyCaches {
 		public boolean valid() {
 			return given(groupId, rank, order);
 		}
+		public Qname getGroupId() {
+			return groupId;
+		}
+		public Qname getRank() {
+			return rank;
+		}
+		public String getOrder() {
+			return order;
+		}
+		public boolean isOnlyFinnish() {
+			return onlyFinnish;
+		}
 		@Override
 		public int hashCode() {
 			final int prime = 31;
