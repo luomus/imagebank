@@ -21,12 +21,12 @@ import fi.luomus.commons.utils.Utils;
 public class TaxonImageDAOImple implements TaxonImageDAO {
 
 	private final HikariDataSource dataSource;
-	private final TaxonomyDAO taxonomyDAO;
+	private final LicenseNameProvider licenseNameProvider;
 	private final ErrorReporter errorReporter;
 
-	public TaxonImageDAOImple(HikariDataSource dataSource, TaxonomyDAO taxonomyDAO, ErrorReporter errorReporter) {
+	public TaxonImageDAOImple(HikariDataSource dataSource, LicenseNameProvider licenseNameProvider, ErrorReporter errorReporter) {
 		this.dataSource = dataSource;
-		this.taxonomyDAO = taxonomyDAO;
+		this.licenseNameProvider = licenseNameProvider;
 		this.errorReporter = errorReporter;
 	}
 
@@ -176,7 +176,7 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 	private void addLicenseName(Image image) {
 		if (image.getLicenseId() == null) return;
 		try {
-			LocalizedText localized = taxonomyDAO.getLicenseFullnames().get(image.getLicenseId().toString());
+			LocalizedText localized = licenseNameProvider.getLicenseFullnames().get(image.getLicenseId().toString());
 			if (localized != null) {
 				image.setLicenseFullname(localized);
 			}

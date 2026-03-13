@@ -2,6 +2,8 @@ package fi.laji.imagebank.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.client.methods.HttpGet;
@@ -115,6 +117,47 @@ public class DAOImple implements DAO {
 
 	protected String apiURL() {
 		return config.get("LajiAPI_URL");
+	}
+
+	@Override
+	public void markTaxonModified(String taxonId) throws Exception {
+		String sql =
+				"MERGE INTO modified_taxa t " +
+						"USING (SELECT ? AS taxon_id FROM dual) src " +
+						"ON (t.taxon_id = src.taxon_id) " +
+						"WHEN MATCHED THEN UPDATE SET modified = CURRENT_TIMESTAMP " +
+						"WHEN NOT MATCHED THEN INSERT (taxon_id) VALUES (src.taxon_id)";
+		try (TransactionConnection con = new SimpleTransactionConnection(dataSource.getConnection()); PreparedStatement p = con.prepareStatement(sql)) {
+			con.startTransaction();
+			p.setString(1, taxonId);
+			p.executeUpdate();
+			con.commitTransaction();
+		}
+	}
+
+	@Override
+	public List<String> getModifiedTaxa() throws Exception {
+		List<String> list = new ArrayList<>();
+		try (TransactionConnection con = new SimpleTransactionConnection(dataSource.getConnection());
+				PreparedStatement p = con.prepareStatement("SELECT taxon_id FROM modified_taxa");
+				ResultSet rs = p.executeQuery()) {
+			while (rs.next()) {
+				list.add(rs.getString(1));
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public void clearModifiedTaxa(int hoursToKeep) throws Exception {
+		try (TransactionConnection con = new SimpleTransactionConnection(dataSource.getConnection());
+				PreparedStatement p = con.prepareStatement("DELETE FROM modified_taxa WHERE modified < (CURRENT_TIMESTAMP - NUMTODSINTERVAL(?, 'HOUR'))")) {
+			con.startTransaction();
+			p.setInt(1, hoursToKeep);
+			int c = p.executeUpdate();
+			System.out.println("Removed " + c + " modified taxon ids");
+			con.commitTransaction();
+		}
 	}
 
 }

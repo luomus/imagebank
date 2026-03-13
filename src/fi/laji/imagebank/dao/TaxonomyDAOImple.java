@@ -97,13 +97,14 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 	private final Cached<TaxonSearch, TaxonSearchResponse> cachedTaxonSearches;
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	private final HikariDataSource dataSource;
-
+	private final DAO dao;
+	private final TaxonImageDAO imageDAO;
 	private TaxonContainer taxonContainer = null;
 	private TaxonomyCaches caches = null;
 
 	private static final Object LOCK = new Object();
 
-	public TaxonomyDAOImple(Config config, ErrorReporter errorReporter, HikariDataSource dataSource) {
+	public TaxonomyDAOImple(Config config, ErrorReporter errorReporter, HikariDataSource dataSource, DAO dao, TaxonImageDAO imageDAO) {
 		super(config);
 		this.config = config;
 		this.errorReporter = errorReporter;
@@ -113,6 +114,8 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 				new TaxonSearchLoader(), 12, TimeUnit.HOURS, taxonSearchCacheSize());
 		scheduleNightlyTasks();
 		this.caches = new TaxonomyCaches(this);
+		this.dao = dao;
+		this.imageDAO = imageDAO;
 		System.out.println(this.getClass().getSimpleName() + " created!");
 	}
 
@@ -153,6 +156,7 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 					cachedTaxonSearches.invalidateAll();
 					taxonContainer = null;
 					getTaxonContainer();
+					dao.clearModifiedTaxa(1);
 				} catch (Exception e) {
 					errorReporter.report("Nightly scheduler", e);
 				}
@@ -642,12 +646,12 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 		private final File mediaTripletFile;
 		private final File habitatFile;
 		private final File obsCountFile;
-		private final TaxonomyDAO dao;
+		private final TaxonomyDAO taxonomyDAO;
 		private final ErrorReporter errorReporter;
 		private final TripletToImageHandlers TRIPLET_TO_IMAGE_HANDLERS = new TripletToImageHandlers();
 
-		public TaxonContainerLoader(TaxonomyDAO dao, ErrorReporter errorReporter, File tripletFile, File mediaTripletFile, File habitatFile, File obsCountFile) {
-			this.dao = dao;
+		public TaxonContainerLoader(TaxonomyDAO taxonomyDAO, ErrorReporter errorReporter, File tripletFile, File mediaTripletFile, File habitatFile, File obsCountFile) {
+			this.taxonomyDAO = taxonomyDAO;
 			this.errorReporter = errorReporter;
 			this.tripletFile = tripletFile;
 			this.mediaTripletFile = mediaTripletFile;
@@ -670,6 +674,18 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			for (InfiniteTaxonLoopException e : ex) {
 				errorReporter.report(e);
 				e.printStackTrace();
+			}
+			try {
+				for (String taxonId : dao.getModifiedTaxa()) {
+					Qname qname = Qname.of(taxonId);
+					if (taxonContainer.hasTaxon(qname)) {
+						Taxon t = taxonContainer.getTaxon(qname);
+						System.out.println("Making sure images for " + taxonId + " are up to date");
+						imageDAO.reloadImages(t);
+					}
+				}
+			} catch  (Exception e) {
+				errorReporter.report(e);
 			}
 			System.out.println("Taxon container creation done");
 			return taxonContainer;
@@ -897,9 +913,9 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(tripletFile), "UTF-8"), 1024*1024)) {
 				System.out.println("Reading triplets from " + tripletFile.getAbsolutePath() + " ... ");
 				InMemoryTaxonContainerImple taxonContainer = new InMemoryTaxonContainerImple(
-						new InformalTaxonGroupContainer(dao.getInformalTaxonGroups()),
-						new InformalTaxonGroupContainer(dao.getRedListEvaluationGroups()),
-						new AdministrativeStatusContainer(dao.getAdministrativeStatuses()));
+						new InformalTaxonGroupContainer(taxonomyDAO.getInformalTaxonGroups()),
+						new InformalTaxonGroupContainer(taxonomyDAO.getRedListEvaluationGroups()),
+						new AdministrativeStatusContainer(taxonomyDAO.getAdministrativeStatuses()));
 				int i = 0;
 				String line = null;
 				while ((line = reader.readLine()) != null) {

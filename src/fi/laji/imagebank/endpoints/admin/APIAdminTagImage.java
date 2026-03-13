@@ -31,18 +31,19 @@ public class APIAdminTagImage extends APIAdminBaseServlet {
 			getSession(req).setFlashError(getText("unknown_image", req));
 			return status(400, res);
 		}
-		Meta existingMeta = media.get().getMeta();
+		Meta meta = media.get().getMeta();
 
 		// {"type":{"value":"MM.typeEnumLive","label":"Luonnossa otettu"},"sex":{"value":"MY.sexM","label":"koiras"}}
 		JSONObject json = new JSONObject(readBody(req));
 
-		if (json.hasKey("type")) existingMeta.setType(json.getObject("type").getString("value"));
-		if (json.hasKey("sex")) existingMeta.addSex(json.getObject("sex").getString("value"));
-		if (json.hasKey("lifeStage")) existingMeta.addLifeStage(json.getObject("lifeStage").getString("value"));
-		if (json.hasKey("plantLifeStage")) existingMeta.addPlantLifeStage(json.getObject("plantLifeStage").getString("value"));
-		if (json.hasKey("side")) existingMeta.setSide(json.getObject("side").getString("value"));
+		if (json.hasKey("type")) meta.setType(json.getObject("type").getString("value"));
+		if (json.hasKey("sex")) meta.addSex(json.getObject("sex").getString("value"));
+		if (json.hasKey("lifeStage")) meta.addLifeStage(json.getObject("lifeStage").getString("value"));
+		if (json.hasKey("plantLifeStage")) meta.addPlantLifeStage(json.getObject("plantLifeStage").getString("value"));
+		if (json.hasKey("side")) meta.setSide(json.getObject("side").getString("value"));
 
-		getMediaApiClient().update(MediaClass.IMAGE,id, existingMeta);
+		getMediaApiClient().update(MediaClass.IMAGE, id, meta);
+		markTaxonModified(meta);
 
 		return new ResponseData("ok", "text/plain");
 	}

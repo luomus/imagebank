@@ -11,6 +11,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import fi.laji.imagebank.dao.DAO;
 import fi.laji.imagebank.dao.DAOImple;
 import fi.laji.imagebank.dao.DataSourceDefinition;
+import fi.laji.imagebank.dao.LicenseNameProvider;
 import fi.laji.imagebank.dao.TaxonImageDAO;
 import fi.laji.imagebank.dao.TaxonImageDAOImple;
 import fi.laji.imagebank.dao.TaxonomyDAO;
@@ -19,6 +20,7 @@ import fi.laji.imagebank.models.Preferences;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.KeyValuePair;
+import fi.luomus.commons.containers.LocalizedText;
 import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.db.connectivity.ConnectionDescription;
 import fi.luomus.commons.reporting.FunnyOwlExceptionViewer;
@@ -30,7 +32,7 @@ import fi.luomus.commons.utils.Utils;
 import fi.luomus.kuvapalvelu.client.MediaApiClient;
 import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
 
-public abstract class ImageBankBaseServlet extends BaseServlet {
+public abstract class ImageBankBaseServlet extends BaseServlet implements LicenseNameProvider {
 
 	private static final int MONTH = 60*24*30;
 	private static final Qname MM_TYPE_ENUM = Qname.of("MM.typeEnum");
@@ -122,7 +124,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		if (taxonomyDAO == null) {
 			synchronized (LOCK) {
 				if (taxonomyDAO == null) {
-					taxonomyDAO = new TaxonomyDAOImple(getConfig(), getErrorReporter(), getTriplestoreDataSource());
+					taxonomyDAO = new TaxonomyDAOImple(getConfig(), getErrorReporter(), getTriplestoreDataSource(), getDAO(), getTaxonImageDAO());
 				}
 			}
 		}
@@ -135,7 +137,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 		if (taxonImageDAO == null) {
 			synchronized (LOCK) {
 				if (taxonImageDAO == null) {
-					taxonImageDAO = new TaxonImageDAOImple(getTriplestoreDataSource(), getTaxonomyDAO(), getErrorReporter());
+					taxonImageDAO = new TaxonImageDAOImple(getTriplestoreDataSource(), this, getErrorReporter());
 				}
 			}
 		}
@@ -349,6 +351,11 @@ public abstract class ImageBankBaseServlet extends BaseServlet {
 
 	protected boolean hasSecretParam(HttpServletRequest req) {
 		return getConfig().get("Secret").equals(req.getParameter("secret"));
+	}
+
+	@Override
+	public Map<String, LocalizedText> getLicenseFullnames() {
+		return getTaxonomyDAO().getLicenseFullnames();
 	}
 
 }

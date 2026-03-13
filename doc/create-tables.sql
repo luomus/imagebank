@@ -5,3 +5,8 @@ CREATE TABLE preferences (
   CONSTRAINT preferences_pk PRIMARY KEY (userid, preference)
 );
 
+
+CREATE TABLE modified_taxa (
+    taxon_id VARCHAR(100) PRIMARY KEY,
+    modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

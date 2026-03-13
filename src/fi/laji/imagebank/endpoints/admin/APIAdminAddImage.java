@@ -68,7 +68,8 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		}
 
 		if (taxonId != null) {
-			reloadImages(taxonId);
+			getTaxonImageDAO().reloadImages(getTaxon(taxonId));
+			getDAO().markTaxonModified(taxonId);
 		}
 
 		SessionHandler ses = getSession(req);
@@ -90,10 +91,6 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		if (taxonId == null) throw new IllegalStateException("Impossible state");
 
 		return new ResponseData(taxonId, "text/plain");
-	}
-
-	private void reloadImages(String taxonId) throws Exception {
-		getTaxonImageDAO().reloadImages(getTaxon(taxonId));
 	}
 
 	private Taxon getTaxon(String taxonId) throws Exception {

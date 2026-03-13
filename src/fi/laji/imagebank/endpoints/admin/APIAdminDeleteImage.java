@@ -1,10 +1,13 @@
 package fi.laji.imagebank.endpoints.admin;
 
+import java.util.Optional;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fi.luomus.commons.services.ResponseData;
+import fi.luomus.kuvapalvelu.model.Media;
 import fi.luomus.kuvapalvelu.model.MediaClass;
 import fi.luomus.utils.exceptions.NotFoundException;
 
@@ -23,7 +26,11 @@ public class APIAdminDeleteImage extends APIAdminBaseServlet {
 		}
 
 		try {
+			Optional<Media> m = getMediaApiClient().get(MediaClass.IMAGE, id);
 			getMediaApiClient().delete(MediaClass.IMAGE, id);
+			if (m.isPresent()) {
+				markTaxonModified(m.get().getMeta());
+			}
 		} catch (NotFoundException e) {
 			getSession(req).setFlashError(getText("unknown_image", req));
 			return status(400, res);

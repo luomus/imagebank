@@ -2,8 +2,10 @@ package fi.laji.imagebank.endpoints.admin;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -252,7 +254,8 @@ public class Admin extends ImageBankBaseServlet {
 			return redirectTo(getConfig().baseURL()+"/admin");
 		}
 
-		saveMeta(id, meta);
+		getMediaApiClient().update(MediaClass.IMAGE, id, meta);
+		markTaxonModified(meta);
 
 		getSession(req).setFlashSuccess(getText("save_success", req));
 		URIBuilder redirectURI = new URIBuilder(getConfig().baseURL()+"/admin/"+id);
@@ -276,10 +279,6 @@ public class Admin extends ImageBankBaseServlet {
 		for (String primaryFoTaxon : meta.getPrimaryForTaxon()) {
 			if (!meta.getIdentifications().getTaxonIds().contains(primaryFoTaxon)) throw validationFailure("primaryForTaxon", "Primary taxon id not found in taxon ids", req);
 		}
-	}
-
-	private void saveMeta(String id, Meta meta) throws ApiException, NotFoundException {
-		getMediaApiClient().update(MediaClass.IMAGE, id, meta);
 	}
 
 	private Meta parseMeta(HttpServletRequest req) {
@@ -373,6 +372,15 @@ public class Admin extends ImageBankBaseServlet {
 		String label = getText("label_"+param, req);
 		String errorText = getLocalizedTexts().hasText(error) ? getText(error, req) : error;
 		return new IllegalArgumentException(label + ": " + errorText);
+	}
+
+	protected void markTaxonModified(Meta meta) throws Exception {
+		Set<String> taxonIds = new HashSet<>();
+		meta.getIdentifications().getTaxonIds().forEach(taxonIds::add);
+		meta.getPrimaryForTaxon().forEach(taxonIds::add);
+		for (String taxonId: taxonIds) {
+			getDAO().markTaxonModified(taxonId);
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package fi.laji.imagebank;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -46,6 +47,17 @@ public class DAOTests {
 	public void personFullName() {
 		assertEquals("Esko Piirainen", dao.getPersonFulName("MA.5"));
 		assertEquals(null, dao.getPersonFulName("MA.xxx"));
+	}
+
+	@Test
+	public void addAndGetModifiedTaxonId() throws Exception {
+		dao.markTaxonModified("MX.1");
+		assertTrue(dao.getModifiedTaxa().contains("MX.1"));
+	}
+
+	@Test
+	public void clearModifiedTaxonIds() throws Exception {
+		dao.clearModifiedTaxa(1);
 	}
 
 }
