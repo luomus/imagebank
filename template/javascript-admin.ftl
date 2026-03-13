@@ -120,7 +120,7 @@ $(document).ready(function() {
         	Object.entries(activeTags).forEach(([name, tag]) => {
             	hoverElement.append('<span class="tag" data-type="' + name + '">' + tag.label + '</span> ');
         	});
-        	$("body").append(hoverElement);
+        	$("body").append(hoverElement.hide());
     	}
 	}
 	
@@ -150,14 +150,16 @@ $(document).ready(function() {
     
 	$("#mass-tag-done-button").click(function() { window.location.reload(); });
 	
+	<#if taxon??>
 	loadSelectedTags();
 	updateTagsHover();
+	</#if>
 	
 	$(document).on("mousemove", function (event) {
 		$(".tag-hover").css({
 			top: event.pageY + 10 + "px",
 			left: event.pageX + 10 + "px"
-		});
+		}).show();
 	});
 	
 	$(".taxon-image").click(function() {
