@@ -48,6 +48,7 @@ function loadSpecies(page = 1) {
    			container.html(response);
    			filterImageCategories();
    			initTaxonImages();
+   			updateBiogeoMaps();
         },
         error: function() {
             // Refresh the page to display the failure reason via flash message
@@ -83,6 +84,23 @@ function initTaxonImages() {
 			function() { $(this).closest(".image-wrapper").find(".image-info-box").stop(true, true).fadeIn(100); },
 			function() { $(this).closest(".image-wrapper").find(".image-info-box").stop(true, true).fadeOut(100); }
         );
+}
+
+function updateBiogeoMaps() {
+	$(".biogeo-map").each(function() {
+		var $img = $(this);
+    	var imgURL = $img.attr('src');
+    	var activeAreas = $img.data('active-areas'); // "ML_257,ML_301"
+    	if (!activeAreas) return;
+    	var activeIds = activeAreas.split(',');
+    	$.get(imgURL, function(data) {
+      		var $svg = $(data).find('svg');
+      		$svg.attr('class', $img.attr('class'));
+     		$svg.attr('id', $img.attr('id'));
+      		activeIds.forEach(function(id) { $svg.find('#' + id).addClass('active-region'); });
+      		$img.replaceWith($svg);
+    	}, 'xml');
+	});
 }
 
 preferenceChangeHook = function(preference, value) {

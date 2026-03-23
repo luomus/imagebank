@@ -665,7 +665,6 @@ public class TaxonomyDAOImple extends TaxonomyDAOBaseImple implements AutoClosea
 			InMemoryTaxonContainerImple taxonContainer = load(tripletFile);
 			addMedia(taxonContainer, mediaTripletFile);
 			addHabitats(taxonContainer, habitatFile);
-			// TODO addBiogeographicalProvinceOccurrences(taxonContainer, con, possiblyLimitedIds);
 			addObservationCounts(taxonContainer, obsCountFile);
 			taxonContainer.generateInheritedOccurrencesAndHabitats();
 			limitHabitatCountsToTop(10, taxonContainer);

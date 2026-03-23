@@ -789,3 +789,9 @@ body.ui-dialog-open {
 .viewer-canvas {
 	background-color: rgba(0,0,0, 0.9);
 }
+
+
+.biogeo-map {
+	height: 100px;
+	width: auto;
+}

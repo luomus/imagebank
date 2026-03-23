@@ -52,6 +52,9 @@
 				</div>
 			</#if>
 			<div>${(taxon.TypeOfOccurrenceInFinlandNotes!"")?html}</div>
+			<div>
+				<img class="biogeo-map" src="${staticURL}/biogeo.svg" alt="Biogeographical distribution as a map"  data-active-areas="<#list taxon.occurrences.occurrences as occ>${occ.area?replace(".","_")}<#if occ_has_next>,</#if></#list>" />
+			</div>
 		</div>		
 	</div>
 </#macro>
