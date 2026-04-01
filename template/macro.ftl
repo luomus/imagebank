@@ -169,7 +169,6 @@
 					<@input "rightsOwner" 30 "Luomus" />
         			<@select "license" licenses defaultLicense />
         		</#if>
-        		${defaultLicense!"NOLICEN"}
 			<button type="submit" id="saveButton" disabled>${text.save}</button>
 		</fieldset>
 	</form>
