@@ -1,13 +1,13 @@
 <#include "macro.ftl">
 
 <#if taxa?has_content>
-	<@pager/>
+	<@pager "false" />
 	<div class="taxon-image-container">
 		<#list taxa as taxon>
 			<@printTaxonImages taxon/>
 		</#list>
 	</div>
-	<@pager/>
+	<@pager "true" />
 <#else>
 <p>${text.taxon_tree_no_taxa}</p>
 </#if>
@@ -52,7 +52,9 @@
 			</#if>
 			<div>${(taxon.TypeOfOccurrenceInFinlandNotes!"")?html}</div>
 			<div>
+				<#if taxon.occurrences.hasOccurrences()>
 				<img class="biogeo-map" src="${staticURL}/biogeo.svg" alt="Biogeographical distribution as a map"  data-active-areas="<#list taxon.occurrences.occurrences as occ>${occ.area?replace(".","_")}<#if occ_has_next>,</#if></#list>" />
+				</#if>
 				<span class="obs-count"><b>${taxon.observationCountFinland}</b> ${text.obs_count}</span> 
 			</div>
 		</div>		
@@ -93,20 +95,20 @@
 			data-header="<@printNamesRankPlain taxon/> - <#if category?has_content><#if parentCategory?has_content>${(parentCategory.title.forLocale(locale)?html)} </#if>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if>">
 </#macro>
 
-<#macro pager>
+<#macro pager scrollTop>
 <#if lastPage != 1>
 <nav class="pager">
     <#if currentPage != 1>
-        <button onclick="loadSpecies(1)" class="pager-btn">« First</button>
+        <button data-page="1" data-scrolltop="${scrollTop}" class="pager-btn">« First</button>
     </#if>
     
     <#if prevPage??>
-        <button onclick="loadSpecies(${prevPage})" class="pager-btn">‹ Prev</button>
+        <button data-page="${prevPage}" data-scrolltop="${scrollTop}" class="pager-btn">‹ Prev</button>
     </#if>
 
     <#list (currentPage - 3)..(currentPage + 3) as page>
         <#if page gt 0 && page lte lastPage>
-            <button onclick="loadSpecies(${page})"
+            <button data-page="${page}"  data-scrolltop="${scrollTop}"
                 class="pager-btn <#if page == currentPage>active</#if>">
                 ${page}
             </button>
@@ -114,11 +116,11 @@
     </#list>
 
     <#if nextPage??>
-        <button onclick="loadSpecies(${nextPage})" class="pager-btn">Next ›</button>
+        <button data-page="${nextPage}" data-scrolltop="${scrollTop}" class="pager-btn">Next ›</button>
     </#if>
 
     <#if currentPage != lastPage>
-        <button onclick="loadSpecies(${lastPage})" class="pager-btn">Last »</button>
+        <button data-page="${lastPage}" data-scrolltop="${scrollTop}" class="pager-btn">Last »</button>
     </#if>
 </nav>
 </#if>

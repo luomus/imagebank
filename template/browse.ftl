@@ -13,13 +13,11 @@
 <p>Rakenteilla. Tässä osiossa selataan kuvia ja luodaan sisältöä.</p>
 <br />
 
-
 <h3 style="display:inline-block;">${group.name.forLocale(locale)?html}</h3> <a class="change" href="${baseURL}/browse?change=true">${text.change}</a>
-
 
 <@preferences/>
 
-<div style="clear:both;" />
+<div style="clear:both;" id="top-anchor" />
 
 <div id="browse-panel" class="hidden">
 	<div id="browse-tree-header" class="box-header">

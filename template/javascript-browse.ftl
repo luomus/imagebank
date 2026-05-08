@@ -38,7 +38,6 @@ function loadSpecies(page = 1) {
         page: page,
         pageSize: getPreference("pageSize") || "100"
     };
-    
 	$.ajax({
         url: "${baseURL}/api/species/${groupId?html}",
         type: "GET",
@@ -153,12 +152,10 @@ $(document).on("click", ".browse-tree-taxon-selector", function (e) {
     const taxonId = $(this).data("taxonid");
     setTaxonFilter(taxonId);
     loadSpecies();
-    const container = $("#browse-taxa");
-    if (container.length) {
-        $("html, body").animate({
-            scrollTop: container.offset().top
-        }, 500);
-    }
+    const anchor = $("#top-anchor");
+    $("html, body").animate({
+        scrollTop: anchor.offset().top
+    }, 500);
 });
 
 let galleryViewer = null;
@@ -287,5 +284,20 @@ $(document).ready(function() {
     	}
 	});
 
+});
+
+$(document).on("click", ".pager-btn", function (e) {
+    const page = $(this).data("page");
+	const scrollTop = $(this).data("scrolltop");
+	if (!scrollTop) {
+		loadSpecies(page);
+	} else {
+        const anchor = $("#top-anchor");
+		$("html, body").animate({
+        	scrollTop: anchor.offset().top
+    	}, function() {
+    		loadSpecies(page);
+    	});	
+	}
 });
 
