@@ -242,8 +242,8 @@
     	<fieldset>
         	<legend>${text.page_size}</legend>
         	<select id="pageSizeSelect" name="pageSize">
-            	<option value="20">20</option>
-            	<option value="100" selected>100</option>
+            	<option value="20" selected>20</option>
+            	<option value="100">100</option>
             	<option value="${maxPageSize}">${maxPageSize}</option>
         	</select>
         </fieldset>
