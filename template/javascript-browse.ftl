@@ -293,11 +293,10 @@ $(document).on("click", ".pager-btn", function (e) {
 		loadSpecies(page);
 	} else {
         const anchor = $("#top-anchor");
-		$("html, body").animate({
-        	scrollTop: anchor.offset().top
-    	}, function() {
-    		loadSpecies(page);
-    	});	
+        $("html, body").stop(true).scrollTop(anchor.offset().top);
+        requestAnimationFrame(() => {
+        	loadSpecies(page);
+    	});
 	}
 });
 
