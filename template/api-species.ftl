@@ -24,11 +24,11 @@
 				<#if category.subcategories?has_content>
 					<#list category.subcategories as subcategory>
 						<h4>${subcategory.title.forLocale(locale)?html}</h4>
-						<@printImages subcategory.images subcategory taxon/>
+						<@printImages subcategory.images subcategory category taxon/>
 					</#list>
 				<#else>
 					<h4>&nbsp;</h4>
-					<@printImages category.images category taxon/>
+					<@printImages category.images category "" taxon/>
 				</#if>
 			</div>
 		</#list>
@@ -36,7 +36,7 @@
 			<div class="taxon-image-category taxon-image-category-type-uncategorized">
 				<h4>${text.uncategorized}</h4>
 				<h4>&nbsp;</h4>
-				<@printImages taxon.categorizedMultimedia.uncategorizedImages "" taxon/>
+				<@printImages taxon.categorizedMultimedia.uncategorizedImages "" "" taxon/>
 			</div>
 		</#if>
 		<div class="taxon-info-grid">
@@ -59,10 +59,10 @@
 	</div>
 </#macro>
 
-<#macro printImages images category taxon>
+<#macro printImages images category parentCategory taxon>
 	<#list images as image>
 		<div class="image-wrapper">
-			<@galleryLink category taxon/>
+			<@galleryLink category parentCategory taxon/>
 				<img class="taxon-image taxon-image-lazy" 
 					data-src="${image.largeURL?html}" 
 					src="${staticURL}/pixel.gif" 
@@ -73,7 +73,7 @@
 		</div>
 		<div class="taxon-image-tools">
 			<i class="fa fa-camera add-image-icon" aria-hidden="true"></i> &nbsp;
-			<@galleryLink category taxon/><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
+			<@galleryLink category parentCategory taxon/><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
 		</div>
 		<#break>
 	</#list>
@@ -86,11 +86,11 @@
 	</#if>
 </#macro>
 
-<#macro galleryLink category taxon>
+<#macro galleryLink category parentCategory taxon>
 	<a href="#" class="taxon-image-gallery-link" 
 			data-taxonid="${taxon.id?html}" 
 			data-category="<#if category?has_content>${category.id}<#else>uncategorized</#if>" 
-			data-header="<@printNamesRankPlain taxon/> - <#if category?has_content>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if>">
+			data-header="<@printNamesRankPlain taxon/> - <#if category?has_content><#if parentCategory?has_content>${(parentCategory.title.forLocale(locale)?html)} </#if>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if>">
 </#macro>
 
 <#macro pager>
