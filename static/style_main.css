@@ -588,10 +588,6 @@ h3.browse a {
 	font-size: inherit;
 }
 
-#browse-tree-content .speciesCount {
-	text-decoration: none;
-	font-size: 90%;
-}
 #browse-tree-content .order			{ font-size: 120%; font-weight: bold; font-variant: small-caps; margin-bottom: 1em; margin-top: 1em; border-top: 4px solid grey; padding-top: 0.5em; }
 #browse-tree-content .suborder 		{ font-size: 115%; font-weight: bold; margin-top: 3em; }
 #browse-tree-content .superfamily 	{ font-size: 110%; font-weight: bold; margin-top: 1.5em; }
@@ -677,10 +673,6 @@ h3.browse a {
 }
 
 .obs-count {
-	font-size: 90%;
-	font-weight: normal;
-	margin-left: 2em;
-	display: inline-block;
 }
 
 .taxon-image-category {
@@ -724,11 +716,11 @@ h3.browse a {
 }
 
 .taxon-info-grid {
-	margin: 1em;
+	margin-left: 1em;
 }
 .taxon-info-grid > div {
 	display: inline-block;
-	margin-right: 4em;
+	margin-right: 2em;
 	vertical-align: top;
 }
 
