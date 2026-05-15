@@ -107,3 +107,16 @@ function getArrayPreference(preference) {
 	<#include "javascript-browse.ftl">
 	<#include "javascript-preferences.ftl">
 </#if>
+
+<#if page == "browse" || page == "curate">
+function updateGroupHistory(group) {
+    var recent = getArrayPreference("groupHistory");
+    recent = recent.filter(function (g) {
+        return g !== group;
+    });
+    recent.unshift(group);
+    recent = recent.slice(0, 5);
+    setPreference("groupHistory", recent.join(","));
+}
+</#if>
+

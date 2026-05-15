@@ -31,7 +31,9 @@ curate_title = Kvalitetskontroll | Bildkuratering
 
 preferences = Inställningar
 group = Organismgrupp
-group_select = Välj en organismgrupp  
+group_select = Välj en organismgrupp
+group_filter = Skriv gruppnamn för att filtrera
+group_history = Dina favoritgrupper
 order = Ordning
 taxonomic = Taxonomisk
 alphabetic = Alfabetisk

@@ -186,7 +186,8 @@ $(document).ready(function() {
 	}
 	
 	setPreference("group", "${groupId?html}");
-		
+	updateGroupHistory("${groupId?html}");
+	
 	loadTree();
 	loadSpecies();
 	

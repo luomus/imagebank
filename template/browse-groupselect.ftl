@@ -10,22 +10,23 @@
 		
 <h2>${text.browse_title}</h2>
 
+  
 <h3>${text.group_select}</h3>
 
-	<ol class="parent-quicklinks">
-	<#list taxonGroups as group>
-    	<#if !group.hasParents()>
-			<li><a href="#${group.qname}">${group.name.forLocale(locale)?html}</a></li>
-		</#if>
-	</#list>
-	<ol>
+<div id="recent-groups" class="hidden">
+	<h4>${text.group_history}</h4>
+	<div id="recent-groups-section" class="group-browser">
+	</div>
+</div>
+
+	<input type="text" id="group-filter" placeholder="${text.group_filter}" />
 	
 	<#assign first = true>
 	<#list taxonGroups as group>
     	<#if !group.hasParents()>
 			<#if first><#assign first = false><#else></div></#if>
 				<h4 class="group-header" id="${group.qname}">${group.name.forLocale(locale)?html}</h4>
-				<div class="group-browser">
+				<div class="group-browser" id="group-browser-main">
 		</#if>
 		<a class="group-card" href="${baseURL}/browse/${group.qname}" data-group="${group.qname}">
 			<img src="${staticURL}/group-icons/${group.qname}.png" alt="${group.name.forLocale(locale)?html}" />
@@ -37,6 +38,7 @@
 <div style="height: 400px;"></div>
 
 <script>
+
 $(document).on("click", ".group-card", function (e) {
     e.preventDefault();
 
@@ -78,9 +80,70 @@ function colorParts(index, totalColors = 20, lightness = 50) {
   return { h, s, l: lightness };
 }
 
+$(document).on("input", "#group-filter", function () {
+    var query = $(this).val().toLowerCase().trim();
+    $("#group-browser-main").each(function () {
+        var $browser = $(this);
+        var $cards = $browser.find(".group-card");
+
+        var visibleCount = 0;
+
+        $cards.each(function () {
+            var $card = $(this);
+            var name = $card.find(".group-name").text().toLowerCase();
+            var match = name.indexOf(query) !== -1;
+            $card.toggle(match);
+            if (match) visibleCount++;
+        });
+
+        // hide empty sections
+        var $header = $browser.prev(".group-header");
+        if (visibleCount === 0) {
+            $browser.hide();
+            $header.hide();
+        } else {
+            $browser.show();
+            $header.show();
+        }
+    });
+});
+
+function renderRecentGroups() {
+    var recent = getArrayPreference("groupHistory");
+    if (!recent || recent.length === 0) return;
+
+    var $container = $("#recent-groups");
+    var $section = $("#recent-groups-section");
+    
+    for (var i = 0; i < recent.length; i++) {
+        var groupId = recent[i];
+        var $card = $(".group-card[data-group='" + groupId + "']").first();
+        if ($card.length) {
+            $section.append($card.clone(true));
+        }
+    }
+    if ($section.children().length > 0) {
+        $container.show();
+    }
+}
+
+$(document).ready(function () {
+    renderRecentGroups();
+});
+
 </script>
 
 <style>
+
+#group-filter {
+	padding: 3px;
+	margin-top: 1em;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	width: 30em;
+	font-size: 120%;
+}
+
 .group-header {
 	margin-top: 2em;
 	margin-bottom: 0.5em;
@@ -119,24 +182,6 @@ function colorParts(index, totalColors = 20, lightness = 50) {
 	font-size: 1.1em;
 	font-weight: 500;
 	color: #333;
-}
-.parent-quicklinks {
-	margin-top: 1em;
-}
-.parent-quicklinks li {
-	display: inline-block;
-	padding: 0.3em;
-	margin: 0.5em;
-}
-.parent-quicklinks li a:hover {
-	text-underline-offset: 5px;
-	text-decoration-thickness: 3px;
-}
-.parent-quicklinks li a {
-	text-decoration: underline;
-	text-decoration-thickness: auto;
-	text-underline-offset: 3px;
-	text-decoration-thickness: 1px;
 }
 
 </style>
