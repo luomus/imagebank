@@ -1,3 +1,38 @@
+var imageObserver = null;
+
+function initImageObserver() {
+    if (imageObserver) return; // prevent double init
+
+    imageObserver = new IntersectionObserver(function(entries, observer) {
+        $.each(entries, function(_, entry) {
+            if (!entry.isIntersecting) return;
+
+            var img = entry.target;
+            var $img = $(img);
+
+            var src = $img.attr("data-src");
+            if (src) {
+                $img.attr("src", src);
+                $img.removeAttr("data-src");
+                $img.removeClass("taxon-image-lazy");
+            }
+
+            observer.unobserve(img);
+        });
+    }, {
+        root: null,
+        rootMargin: "200px 0px",
+        threshold: 0.01
+    });
+}
+
+function observeLazyImages(context) {
+    initImageObserver();
+    $(context).find("img.taxon-image-lazy").each(function() {
+        imageObserver.observe(this);
+    });
+}
+
 function toggleTree() {
 	$("#browse-tree").toggle();
 	$("#browse-taxa").toggleClass("expanded");
@@ -47,6 +82,7 @@ function loadSpecies(page = 1) {
    			container.html(response);
    			filterImageCategories();
    			initTaxonImages();
+   			observeLazyImages(container);
    			updateBiogeoMaps();
         },
         error: function() {
@@ -64,11 +100,6 @@ function filterImageCategories() {
 		if (!show) {
 			$(".taxon-image-category-type-"+category).hide();
 		} else {
-			$(".taxon-image-category-type-"+category+ " .taxon-image-lazy").each(function() {
-				const $img = $(this);
-       			$img.attr('src', $img.data('src'));
-       			$img.removeClass('taxon-image-lazy');
-			});
 			$(".taxon-image-category-type-"+category).show();
 		}
 	} 
