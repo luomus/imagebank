@@ -20,23 +20,20 @@ function initImageObserver() {
     imageObserver = new IntersectionObserver(function(entries, observer) {
         $.each(entries, function(_, entry) {
             if (!entry.isIntersecting) return;
-
             var img = entry.target;
             var $img = $(img);
-
             var src = $img.attr("data-src");
             if (src) {
                 $img.attr("src", src);
                 $img.removeAttr("data-src");
                 $img.removeClass("taxon-image-lazy");
             }
-
             observer.unobserve(img);
         });
     }, {
         root: null,
-        rootMargin: "200px 0px",
-        threshold: 0.01
+        rootMargin: "600px 0px",
+        threshold: 0
     });
 }
 
