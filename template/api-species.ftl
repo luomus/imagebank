@@ -53,7 +53,7 @@
 				<#if taxon.occurrences.hasOccurrences()>
 					<div class="biogeo-map" data-active-areas="<#list taxon.occurrences.occurrences as occ>${occ.area?replace(".","_")}<#if occ_has_next>,</#if></#list>"></div>
 				</#if>
-				<span class="obs-count"><b>${taxon.observationCountFinland}</b> ${text.obs_count}</span> 
+				<span class="obs-count"><b>${taxon.observationCountFinland?string["#,##0"]?replace(",", "&nbsp;")}</b> ${text.obs_count}</span> 
 			</div>
 		</div>		
 	</div>
