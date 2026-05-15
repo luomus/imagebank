@@ -1,3 +1,18 @@
+var biogeoSvgTemplate = null;
+
+function loadBiogeoTemplate(callback) {
+    if (biogeoSvgTemplate) {
+        callback(biogeoSvgTemplate.clone());
+        return;
+    }
+
+    $.get("${staticURL}/biogeo.svg", function(data) {
+        biogeoSvgTemplate = $(data).find("svg");
+        callback(biogeoSvgTemplate.clone());
+    }, "xml");
+}
+
+
 var imageObserver = null;
 
 function initImageObserver() {
@@ -118,18 +133,19 @@ function initTaxonImages() {
 
 function updateBiogeoMaps() {
 	$(".biogeo-map").each(function() {
-		var $img = $(this);
-    	var imgURL = $img.attr('src');
-    	var activeAreas = $img.data('active-areas'); // "ML_257,ML_301"
-    	if (!activeAreas) return;
+		var container = $(this);
+    	var activeAreas = container.data('active-areas'); // "ML_257,ML_301"
+    	if (!activeAreas) {
+    		container.remove();
+    		return;
+    	}
     	var activeIds = activeAreas.split(',');
-    	$.get(imgURL, function(data) {
-      		var $svg = $(data).find('svg');
-      		$svg.attr('class', $img.attr('class'));
-     		$svg.attr('id', $img.attr('id'));
-      		activeIds.forEach(function(id) { $svg.find('#' + id).addClass('active-region'); });
-      		$img.replaceWith($svg);
-    	}, 'xml');
+    	loadBiogeoTemplate(function($svg) {
+            var map = $svg.clone();
+            map.addClass("biogeo-map-svg");
+            activeIds.forEach(function(id) { map.find("#" + id).addClass("active-region"); });
+            container.replaceWith(map);
+        });
 	});
 }
 
