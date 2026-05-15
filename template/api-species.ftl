@@ -92,8 +92,10 @@
 	<a href="#" class="taxon-image-gallery-link" 
 			data-taxonid="${taxon.id?html}" 
 			data-category="<#if category?has_content>${category.id}<#else>uncategorized</#if>" 
-			data-header="<@printNamesRankPlain taxon/> - <#if category?has_content><#if parentCategory?has_content>${(parentCategory.title.forLocale(locale)?html)} </#if>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if>">
+			data-header="<@categoryHeader category parentCategory taxon/>">
 </#macro>
+
+<#macro categoryHeader category parentCategory taxon><@printNamesRankPlain taxon/> - <#if category?has_content><#if parentCategory?has_content>${(parentCategory.title.forLocale(locale)?html)} </#if>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if></#macro>
 
 <#macro pager scrollTop>
 <#if lastPage != 1>
