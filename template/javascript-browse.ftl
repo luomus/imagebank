@@ -12,7 +12,6 @@ function loadBiogeoTemplate(callback) {
     }, "xml");
 }
 
-
 var imageObserver = null;
 
 function initImageObserver() {
