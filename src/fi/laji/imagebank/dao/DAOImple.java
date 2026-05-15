@@ -2,12 +2,15 @@ package fi.laji.imagebank.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.client.methods.HttpGet;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.zaxxer.hikari.HikariDataSource;
 
 import fi.laji.imagebank.models.Preferences;
@@ -119,8 +122,16 @@ public class DAOImple implements DAO {
 		return config.get("LajiAPI_URL");
 	}
 
+	Cache<String, Boolean> recent = Caffeine.newBuilder()
+			.expireAfterWrite(Duration.ofSeconds(60))
+			.build();
+
 	@Override
 	public void markTaxonModified(String taxonId) throws Exception {
+		// Don't bother calling for same taxon in quick succession
+		if (recent.asMap().putIfAbsent(taxonId, Boolean.TRUE) != null) {
+			return;
+		}
 		String sql =
 				"MERGE INTO modified_taxa t " +
 						"USING (SELECT ? AS taxon_id FROM dual) src " +
