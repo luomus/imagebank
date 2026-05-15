@@ -23,11 +23,10 @@
 				<h4>${category.title.forLocale(locale)?html}</h4>
 				<#if category.subcategories?has_content>
 					<#list category.subcategories as subcategory>
-						<h4>${subcategory.title.forLocale(locale)?html}</h4>
 						<@printImages subcategory.images subcategory category taxon/>
+						<h5>${subcategory.title.forLocale(locale)?html}</h5>
 					</#list>
 				<#else>
-					<h4>&nbsp;</h4>
 					<@printImages category.images category "" taxon/>
 				</#if>
 			</div>
@@ -35,7 +34,6 @@
 		<#if taxon.categorizedMultimedia.uncategorizedImages?has_content>
 			<div class="taxon-image-category taxon-image-category-type-uncategorized">
 				<h4>${text.uncategorized}</h4>
-				<h4>&nbsp;</h4>
 				<@printImages taxon.categorizedMultimedia.uncategorizedImages "" "" taxon/>
 			</div>
 		</#if>
@@ -72,10 +70,10 @@
 				/>
 			</a>
 			<div class="image-info-box"><@imageCopyright image/></div>
-		</div>
-		<div class="taxon-image-tools">
-			<i class="fa fa-camera add-image-icon" aria-hidden="true"></i> &nbsp;
-			<@galleryLink category parentCategory taxon/><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
+			<div class="taxon-image-tools">
+				<i class="fa fa-camera add-image-icon" aria-hidden="true"></i> &nbsp;
+				<@galleryLink category parentCategory taxon/><i class="fa fa-clone" aria-hidden="true"></i> ${images?size}</a>
+			</div>
 		</div>
 		<#break>
 	</#list>
