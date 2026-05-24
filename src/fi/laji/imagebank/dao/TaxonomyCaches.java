@@ -265,7 +265,10 @@ public class TaxonomyCaches {
 	}
 
 	private static boolean given(Object o) {
-		return o != null && !o.toString().isEmpty();
+		if (o == null) return false;
+		String s = o.toString();
+		if (s == null) return false;
+		return !s.isEmpty();
 	}
 
 	private static boolean given(int i) {
