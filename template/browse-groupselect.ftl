@@ -176,7 +176,8 @@ $(document).ready(function () {
 	height: 64px;
 	object-fit: contain;
 	margin-bottom: 0.5em;
-	filter: drop-shadow(16px 16px 12px) saturate(var(--card-s)) hue-rotate(var(--card-h)) sepia(50%);
+	//filter: drop-shadow(16px 16px 12px) saturate(var(--card-s)) hue-rotate(var(--card-h)) sepia(50%);
+	//filter: drop-shadow(16px 16px 12px);
 }
 .group-name {
 	font-size: 1.1em;
