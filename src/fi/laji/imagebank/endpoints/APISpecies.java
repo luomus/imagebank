@@ -40,7 +40,8 @@ public class APISpecies extends APIBaseServlet {
 				.setData("currentPage", terms.page)
 				.setData("lastPage", lastPage(terms))
 				.setData("occurrenceTypes", getTaxonomyDAO().getAlt(Qname.of("MX.typeOfOccurrenceEnum")))
-				.setData("habitatFormatter", habitatTextFormatter);
+				.setData("habitatFormatter", habitatTextFormatter)
+				.setData("redListStatuses", getTaxonomyDAO().getAlt(Qname.of("MX.iucnStatuses")));
 
 	}
 

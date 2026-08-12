@@ -16,7 +16,7 @@
 	<div class="taxon-image-card">
 		<h4 class="taxon-image-card-header">
 			<@printNamesRank taxon/> 
-			<a href="${taxon.id.toURI()}" target="_laji">${taxon.id}</a>
+			<a href="${taxon.id.toURI()}" target="_laji">${taxon.id} [laji.fi]</a>
 		</h4>
 		<#list taxon.categorizedMultimedia.categories as category>
 			<div class="taxon-image-category taxon-image-category-type-${category.id}">
@@ -41,19 +41,23 @@
 			<div>
 				${habitatFormatter.format(taxon, locale)}
 			</div>
-			<#if taxon.typesOfOccurrenceInFinland?has_content>
-				<div>
-					<ul>
-						<#list taxon.typesOfOccurrenceInFinland as o><li>${occurrenceTypes[o].forLocale(locale)}</li></#list>
-					</ul>
-				</div>
-			</#if>
+			<div>
+				<ul>
+					<#list taxon.typesOfOccurrenceInFinland as o><li>${occurrenceTypes[o].forLocale(locale)}</li></#list>
+					<li><b>${taxon.observationCountFinland?string["#,##0"]?replace(",", "&nbsp;")}</b> ${text.obs_count}</li>
+					<#if taxon.latestRedListStatusFinland?has_content>
+						<li>${redListStatuses[taxon.latestRedListStatusFinland.status].forLocale(locale)} (${taxon.latestRedListStatusFinland.year})</li>
+					</#if>
+				</ul>
+			</div>
 			<div>${(taxon.TypeOfOccurrenceInFinlandNotes!"")?html}</div>
 			<div>
 				<#if taxon.occurrences.hasOccurrences()>
 					<div class="biogeo-map" data-active-areas="<#list taxon.occurrences.occurrences as occ>${occ.area?replace(".","_")}<#if occ_has_next>,</#if></#list>"></div>
 				</#if>
-				<span class="obs-count"><b>${taxon.observationCountFinland?string["#,##0"]?replace(",", "&nbsp;")}</b> ${text.obs_count}</span> 
+			</div>
+			<div>
+				<span class="obs-count"></span>
 			</div>
 		</div>		
 	</div>

@@ -670,9 +670,11 @@ h3.browse a {
 }
 .taxon-image-card-header a {
 	font-size: 80%;
+	text-decoration: underline;
 }
 
 .obs-count {
+	
 }
 
 .taxon-image-category {
