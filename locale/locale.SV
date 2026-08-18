@@ -137,6 +137,7 @@ label_sex = Kön
 label_lifeStage = Livsfas
 label_plantLifeStage = Växtens livsfas
 label_side = Sida
+label_primary = Primär
 
 group_captions = Bildtexter
 label_caption = Bildtext

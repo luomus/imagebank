@@ -255,6 +255,12 @@ public class Admin extends ImageBankBaseServlet {
 		}
 
 		getMediaApiClient().update(MediaClass.IMAGE, id, meta);
+
+		if (given(taxonId) && meta.getPrimaryForTaxon().contains(taxonId)) {
+			Taxon primaryOfTaxon = getTaxonomyDAO().getTaxon(Qname.of(taxonId));
+			removePrimaryFromOtherMediaForTaxon(id, primaryOfTaxon);
+		}
+
 		markTaxonModified(meta);
 
 		getSession(req).setFlashSuccess(getText("save_success", req));
@@ -381,6 +387,22 @@ public class Admin extends ImageBankBaseServlet {
 		for (String taxonId: taxonIds) {
 			getDAO().markTaxonModified(taxonId);
 		}
+	}
+
+	protected void removePrimaryFromOtherMediaForTaxon(String id, Taxon primaryOfTaxon) throws ApiException, NotFoundException, Exception {
+		if (primaryOfTaxon == null) return;
+		for (Image taxonImage : primaryOfTaxon.getMultimedia()) {
+			if (!taxonImage.isPrimaryForTaxon()) continue;
+			if (taxonImage.getId().toString().equals(id)) continue;
+			Optional<Media> otherPrimaryImage = getMediaApiClient().get(MediaClass.IMAGE, taxonImage.getId().toString());
+			if (otherPrimaryImage.isPresent()) {
+				Meta otherPrimaryImageMeta = otherPrimaryImage.get().getMeta();
+				otherPrimaryImageMeta.getPrimaryForTaxon().remove(primaryOfTaxon.getId().toString());
+				otherPrimaryImageMeta.getTags().remove("primary");
+				getMediaApiClient().update(MediaClass.IMAGE, otherPrimaryImage.get().getId(), otherPrimaryImageMeta);
+			}
+		}
+		getTaxonImageDAO().reloadImages(primaryOfTaxon);
 	}
 
 }

@@ -137,6 +137,7 @@ label_sex = Sex
 label_lifeStage = Life Stage
 label_plantLifeStage = Plant Life Stage
 label_side = Side
+label_primary = Primary
 
 group_captions = Captions
 label_caption = Caption

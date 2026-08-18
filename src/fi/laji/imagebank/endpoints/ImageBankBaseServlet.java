@@ -1,5 +1,6 @@
 package fi.laji.imagebank.endpoints;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -54,10 +55,20 @@ public abstract class ImageBankBaseServlet extends BaseServlet implements Licens
 			new KeyValuePair("KE.341", "Satellite Data"),
 			new KeyValuePair("KE.1841", "Image Bank"));
 
+	private static final Map<String, LocalizedText> PRIMARY_ALT = initPriAlt();
+
+	private static Map<String, LocalizedText> initPriAlt() {
+		Map<String, LocalizedText> map = new HashMap<>();
+		map.put("primary", new LocalizedText().set("fi", "Pääkuva").set("en", "Primary").set("sv", "Primär"));
+		return map;
+	}
+
 	@Override
 	protected String configFileName() {
 		return CONFIG_FILE;
 	}
+
+
 
 	@Override
 	protected void applicationInit() {
@@ -199,6 +210,7 @@ public abstract class ImageBankBaseServlet extends BaseServlet implements Licens
 		responseData.setData("sexes", dao.getAlt(MY_SEXES));
 		responseData.setData("sides", dao.getAlt(MM_SIDE_ENUM));
 		responseData.setData("types", dao.getAlt(MM_TYPE_ENUM));
+		responseData.setData("primary", PRIMARY_ALT);
 		responseData.setData("sourceSystems", SOURCE_SYSTEMS);
 		responseData.setData("maxPageSize", Constant.MAX_PAGE_SIZE);
 		if (!responseData.getDatamodel().containsKey(Constant.USER_DEFAULT_LICENSE)) {

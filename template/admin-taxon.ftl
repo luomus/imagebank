@@ -21,6 +21,7 @@
         <@select "lifeStage" lifeStages admin_selected_tag_lifeStage />
         <@select "plantLifeStage" plantLifeStages  admin_selected_tag_plantLifeStage />
         <@select "side" sides admin_selected_tag_side />
+        <@select "primary" primary admin_selected_tag_primary />
         <div>
         	<button id="mass-tag-clear-button" type="button">${text.clear_all}</button>
         	<button id="mass-tag-done-button" style="display:none" type="button">${text.admin_tag_done}</button>

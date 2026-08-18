@@ -6,8 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fi.luomus.commons.containers.rdf.Qname;
 import fi.luomus.commons.json.JSONObject;
 import fi.luomus.commons.services.ResponseData;
+import fi.luomus.commons.taxonomy.Taxon;
 import fi.luomus.kuvapalvelu.model.Media;
 import fi.luomus.kuvapalvelu.model.MediaClass;
 import fi.luomus.kuvapalvelu.model.Meta;
@@ -36,13 +38,25 @@ public class APIAdminTagImage extends APIAdminBaseServlet {
 		// {"type":{"value":"MM.typeEnumLive","label":"Luonnossa otettu"},"sex":{"value":"MY.sexM","label":"koiras"}}
 		JSONObject json = new JSONObject(readBody(req));
 
+		Taxon primaryOfTaxon = null;
+
 		if (json.hasKey("type")) meta.setType(json.getObject("type").getString("value"));
 		if (json.hasKey("sex")) meta.addSex(json.getObject("sex").getString("value"));
 		if (json.hasKey("lifeStage")) meta.addLifeStage(json.getObject("lifeStage").getString("value"));
 		if (json.hasKey("plantLifeStage")) meta.addPlantLifeStage(json.getObject("plantLifeStage").getString("value"));
 		if (json.hasKey("side")) meta.setSide(json.getObject("side").getString("value"));
+		if (json.hasKey("primary") && "primary".equals(json.getObject("primary").getString("value"))) {
+			Qname primaryTaxonId = Qname.of(req.getParameter("taxonId"));
+			if (primaryTaxonId.isSet() && getTaxonomyDAO().getTaxonContainer().hasTaxon(primaryTaxonId)) {
+				primaryOfTaxon = getTaxonomyDAO().getTaxon(primaryTaxonId);
+				meta.addPrimaryForTaxon(primaryTaxonId.toString());
+			}
+		}
 
 		getMediaApiClient().update(MediaClass.IMAGE, id, meta);
+
+		removePrimaryFromOtherMediaForTaxon(id, primaryOfTaxon);
+
 		markTaxonModified(meta);
 
 		return new ResponseData("ok", "text/plain");

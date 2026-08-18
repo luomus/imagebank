@@ -137,6 +137,7 @@ label_sex = Sukupuoli
 label_lifeStage = Elinvaihe
 label_plantLifeStage = Kasvin elinvaihe
 label_side = Puoli
+label_primary = Pääkuva
 
 group_captions = Kuvatekstit
 label_caption = Kuvateksti

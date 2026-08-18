@@ -167,7 +167,7 @@ $(document).ready(function() {
 		const image = $(this);
 	    const imageId = image.find('img').first().data("id");
 	    $.ajax({
-        	url: "${baseURL}/admin/tag/"+imageId,
+        	url: "${baseURL}/admin/tag/"+imageId+"<#if taxon??>?taxonId=${taxon.id}</#if>",
         	method: "POST",
         	contentType: "application/json",
         	data: JSON.stringify(activeTags),
