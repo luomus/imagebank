@@ -26,7 +26,7 @@
     	<#if !group.hasParents()>
 			<#if first><#assign first = false><#else></div></#if>
 				<h4 class="group-header" id="${group.qname}">${group.name.forLocale(locale)?html}</h4>
-				<div class="group-browser" id="group-browser-main">
+				<div class="group-browser group-browser-section">
 		</#if>
 		<a class="group-card" href="${baseURL}/browse/${group.qname}" data-group="${group.qname}">
 			<img src="${staticURL}/group-icons/${group.qname}.png" alt="${group.name.forLocale(locale)?html}" />
@@ -82,7 +82,7 @@ function colorParts(index, totalColors = 20, lightness = 50) {
 
 $(document).on("input", "#group-filter", function () {
     var query = $(this).val().toLowerCase().trim();
-    $("#group-browser-main").each(function () {
+    $(".group-browser-section").each(function () {
         var $browser = $(this);
         var $cards = $browser.find(".group-card");
 
