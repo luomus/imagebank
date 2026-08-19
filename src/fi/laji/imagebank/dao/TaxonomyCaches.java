@@ -38,7 +38,7 @@ public class TaxonomyCaches {
 			taxonFilter = Qname.of(req.getParameter("taxonFilter"));
 			order = req.getParameter("order");
 			onlyFinnish = "taxa_finnish".equals(req.getParameter("taxa"));
-			taxonRanks = taxonRanks(req.getParameter("taxonRanks[]"));
+			taxonRanks = taxonRanks(req.getParameterValues("taxonRanks[]"));
 			page = iVal(req.getParameter("page"));
 			pageSize = iVal(req.getParameter("pageSize"));
 		}
@@ -54,9 +54,13 @@ public class TaxonomyCaches {
 				return -1;
 			}
 		}
-		private List<Qname> taxonRanks(String parameter) {
-			if (!given(parameter)) return Collections.emptyList();
-			return Utils.list(parameter.split(",")).stream().map(s->Qname.of(s)).collect(Collectors.toList());
+		private List<Qname> taxonRanks(String[] parameters) {
+			if (parameters == null || parameters.length == 0) return Collections.emptyList();
+			List<Qname> ranks = new ArrayList<>(parameters.length);
+			for (String param : parameters) {
+				Utils.list(param.split(",")).stream().map(s->Qname.of(s)).forEach(ranks::add);
+			}
+			return ranks;
 		}
 		@Override
 		public int hashCode() {
