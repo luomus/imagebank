@@ -38,7 +38,7 @@ public class TaxonomyCaches {
 			taxonFilter = Qname.of(req.getParameter("taxonFilter"));
 			order = req.getParameter("order");
 			onlyFinnish = "taxa_finnish".equals(req.getParameter("taxa"));
-			taxonRanks = taxonRanks(req.getParameter("taxonRanks"));
+			taxonRanks = taxonRanks(req.getParameter("taxonRanks[]"));
 			page = iVal(req.getParameter("page"));
 			pageSize = iVal(req.getParameter("pageSize"));
 		}

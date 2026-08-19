@@ -80,7 +80,7 @@ function loadSpecies(page = 1) {
         taxonFilter: taxonFilter,
         order: getPreference("order") || "order_taxonomic",
         taxa: getPreference("taxa") || "taxa_finnish",
-        taxonRanks: getPreference("taxonRanks") || [],
+        taxonRanks: getArrayPreference("taxonRanks") || [],
         page: page,
         pageSize: getPreference("pageSize") || "100"
     };
