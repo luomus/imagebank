@@ -31,6 +31,7 @@ public class TaxonomyCaches {
 		String order;
 		boolean onlyFinnish;
 		List<Qname> taxonRanks;
+		List<Qname> bioGeoProvinces;
 		public int page;
 		public int pageSize;
 		public SpeciesTerms(HttpServletRequest req) {
@@ -38,7 +39,8 @@ public class TaxonomyCaches {
 			taxonFilter = Qname.of(req.getParameter("taxonFilter"));
 			order = req.getParameter("order");
 			onlyFinnish = "taxa_finnish".equals(req.getParameter("taxa"));
-			taxonRanks = taxonRanks(req.getParameterValues("taxonRanks[]"));
+			taxonRanks = qnameArray(req.getParameterValues("taxonRanks[]"));
+			bioGeoProvinces = qnameArray(req.getParameterValues("biogeoFilter[]"));
 			page = iVal(req.getParameter("page"));
 			pageSize = iVal(req.getParameter("pageSize"));
 		}
@@ -54,13 +56,14 @@ public class TaxonomyCaches {
 				return -1;
 			}
 		}
-		private List<Qname> taxonRanks(String[] parameters) {
+		private List<Qname> qnameArray(String[] parameters) {
 			if (parameters == null || parameters.length == 0) return Collections.emptyList();
-			List<Qname> ranks = new ArrayList<>(parameters.length);
+			List<Qname> values = new ArrayList<>(parameters.length);
 			for (String param : parameters) {
-				Utils.list(param.split(",")).stream().map(s->Qname.of(s)).forEach(ranks::add);
+				Utils.list(param.split(",")).stream().map(s->Qname.of(s)).forEach(values::add);
 			}
-			return ranks;
+			Collections.sort(values);
+			return values;
 		}
 		@Override
 		public int hashCode() {
@@ -70,6 +73,7 @@ public class TaxonomyCaches {
 			result = prime * result + ((taxonFilter == null) ? 0 : taxonFilter.hashCode());
 			result = prime * result + (onlyFinnish ? 1231 : 1237);
 			result = prime * result + ((taxonRanks == null) ? 0 : taxonRanks.hashCode());
+			result = prime * result + ((bioGeoProvinces == null) ? 0 : bioGeoProvinces.hashCode());
 			return result;
 		}
 		@Override
@@ -97,6 +101,11 @@ public class TaxonomyCaches {
 				if (other.taxonRanks != null)
 					return false;
 			} else if (!taxonRanks.equals(other.taxonRanks))
+				return false;
+			if (bioGeoProvinces == null) {
+				if (other.bioGeoProvinces != null)
+					return false;
+			} else if (!bioGeoProvinces.equals(other.bioGeoProvinces))
 				return false;
 			return true;
 		}
@@ -361,10 +370,18 @@ public class TaxonomyCaches {
 		if (!taxon.getInformalTaxonGroupsNoOrder().contains(terms.groupId)) return false;
 		if (terms.onlyFinnish && !taxon.isFinnish()) return false;
 		if (!terms.taxonRanks.isEmpty() && !terms.taxonRanks.contains(taxon.getTaxonRank())) return false;
+		if (!terms.bioGeoProvinces.isEmpty() && !hasOccurrences(terms.bioGeoProvinces, taxon)) return false;
 		if (terms.taxonFilter != null && terms.taxonFilter.isSet()) {
 			if (!taxon.getParentChainIncludeSelf().contains(terms.taxonFilter)) return false;
 		}
 		return true;
+	}
+
+	private boolean hasOccurrences(List<Qname> bioGeoProvinces, Taxon taxon) {
+		for (Qname provinceId : bioGeoProvinces) {
+			if (taxon.getOccurrences().getOccurrence(provinceId) != null) return true;
+		}
+		return false;
 	}
 
 	private Cached<SpeciesTerms, Integer> totalSpeciesCache = new Cached<>(speciesCountLoader(), 24, TimeUnit.HOURS, 500);

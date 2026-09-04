@@ -57,6 +57,10 @@ show_more = Visa mer
 change = Ändra
 select = Välj
 edit = Redigera
+filters = Filter
+biogeo_filter = Filtrera efter område
+taxon_count_single = taxon
+taxon_count = taxa
 
 taxon_tree = Taxonomiska nivåer
 taxon_tree_no_taxa = Inga taxon att visa på denna nivå

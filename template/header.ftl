@@ -40,7 +40,7 @@
     	</#if>
     </script>
 </head>
-<body>
+<body id="imagebank">
     <header>
         <h1><a href="${baseURL}">${text.finbif_short} ${text.imagebank}</a></h1>
         <p><a href="${baseURL}">${text.tagline}</a></p>

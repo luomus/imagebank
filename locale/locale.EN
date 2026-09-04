@@ -57,6 +57,10 @@ show_more = Show more
 change = Change
 select = Select
 edit = Edit
+filters = Filters
+biogeo_filter = Filter by region
+taxon_count_single = taxon
+taxon_count = taxa
 
 taxon_tree = Taxonomic Levels
 taxon_tree_no_taxa = No taxa to display at this level

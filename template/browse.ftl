@@ -24,6 +24,14 @@
 		<i class="fa fa-bars" aria-hidden="true"></i>
 		<h5 class="browse-taxa-headertext">${text.taxon_tree}</h5>
 	</div>
+	<div id="browse-taxa-header" class="box-header">
+		<h5 style="display:inline-block">${text.filters}</h5> 
+		<select id="biogeo-filter" multiple data-placeholder="${text.biogeo_filter}">
+			<#list bioGeoProvinces as province>
+				<option value="${province.qname}">${province.abbreviation} &mdash; ${province.name.forLocale(locale)?html}</option>
+			</#list>
+		</select>
+	</div>
 	<div id="browse-tree" class="box">
 			<select id="browse-tree-select">
 				<option value="MX.family" selected>${taxonRanks["MX.family"].forLocale(locale)?html}</option>

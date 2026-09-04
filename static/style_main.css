@@ -529,8 +529,8 @@ p.info {
 	font-size: 110%;
 }
 
-.preferences .chosen-container .chosen-results {
-	max-height: 35em;
+#imagebank .chosen-container .chosen-results {
+	max-height: 50em;
 }
 
 #browse-panel {
@@ -558,6 +558,12 @@ p.info {
 	padding-left: 0.5em;
 }
 
+#browse-taxa-header {
+	grid-column: 2;
+	z-index: 3;
+	margin-left: 1em;
+}
+
 #browse-taxa {
 	grid-column: 2;
 	z-index: 1;
@@ -580,8 +586,7 @@ p.info {
     max-height: calc(100vh - 140px);
     overflow-y: auto;
 	overflow-x: hidden;
-    overscroll-behavior: contain;
-    padding-bottom: 10em;	
+    padding-bottom: 3em;	
 }
 
 h3.browse a {
@@ -618,6 +623,9 @@ h3.browse a {
     justify-content: center;
     align-items: center;
     margin-top: 10px;
+}
+.pager.only-page {
+	justify-content: flex-start;
 }
 
 .pager-btn {

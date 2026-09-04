@@ -81,6 +81,7 @@ function loadSpecies(page = 1) {
         order: getPreference("order") || "order_taxonomic",
         taxa: getPreference("taxa") || "taxa_finnish",
         taxonRanks: getArrayPreference("taxonRanks") || [],
+        biogeoFilter: getArrayPreference("biogeo-filter") || [], 
         page: page,
         pageSize: getPreference("pageSize") || "100"
     };
@@ -163,6 +164,15 @@ preferenceChangeHook = function(preference, value) {
 
 $(document).ready(function() {
 
+	$("#biogeo-filter").chosen({width: "15em", no_results_text: "${text.no_matches}"});
+	
+	$("#biogeo-filter").on('change', function() {
+		const preference = $(this).attr('name');
+		setPreference("biogeo-filter", $(this).val()).done(function() {
+			loadSpecies();
+		});
+	});
+	
 	$("#browse-tree-header").click(function() {
 		toggleTree();
 		setPreference("showTree", $("#browse-tree").is(":visible"));

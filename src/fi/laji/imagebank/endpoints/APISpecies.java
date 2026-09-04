@@ -28,6 +28,7 @@ public class APISpecies extends APIBaseServlet {
 		}
 
 		List<Taxon> taxa = getTaxonomyDAO().getSpecies(terms);
+		int total = getTaxonomyDAO().getSpeciesCount(terms);
 
 		Map<String, LocalizedText> habitats = getTaxonomyDAO().getAlt(Qname.of("MKV.habitatEnum"));
 		Map<String, LocalizedText> habitatTypes = getTaxonomyDAO().getAlt(Qname.of("MKV.habitatSpecificTypeEnum"));
@@ -36,23 +37,23 @@ public class APISpecies extends APIBaseServlet {
 		return initResponseData(req).setViewName("api-species")
 				.setData("taxa", taxa)
 				.setData("prevPage", prevPage(terms))
-				.setData("nextPage", nextPage(terms))
+				.setData("nextPage", nextPage(terms, total))
 				.setData("currentPage", terms.page)
-				.setData("lastPage", lastPage(terms))
+				.setData("lastPage", lastPage(terms, total))
+				.setData("total", total)
 				.setData("occurrenceTypes", getTaxonomyDAO().getAlt(Qname.of("MX.typeOfOccurrenceEnum")))
 				.setData("habitatFormatter", habitatTextFormatter)
 				.setData("redListStatuses", getTaxonomyDAO().getAlt(Qname.of("MX.iucnStatuses")));
 
 	}
 
-	private int lastPage(SpeciesTerms terms) {
-		int count = getTaxonomyDAO().getSpeciesCount(terms);
-		int lastPage = (count + terms.pageSize - 1) / terms.pageSize;
+	private int lastPage(SpeciesTerms terms, int total) {
+		int lastPage = (total + terms.pageSize - 1) / terms.pageSize;
 		return lastPage;
 	}
 
-	private Integer nextPage(SpeciesTerms terms) {
-		int lastPage = lastPage(terms);
+	private Integer nextPage(SpeciesTerms terms, int total) {
+		int lastPage = lastPage(terms, total);
 		if (terms.page >= lastPage) return null;
 		return terms.page + 1;
 	}

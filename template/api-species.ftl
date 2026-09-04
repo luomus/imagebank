@@ -100,7 +100,9 @@
 <#macro categoryHeader category parentCategory taxon><@printNamesRankPlain taxon/> - <#if category?has_content><#if parentCategory?has_content>${(parentCategory.title.forLocale(locale)?html)} </#if>${(category.title.forLocale(locale)?html)}<#else>${text.uncategorized}</#if></#macro>
 
 <#macro pager scrollTop>
-<#if lastPage != 1>
+<#if lastPage == 1>
+<nav class="pager only-page">
+<#else>
 <nav class="pager">
     <#if currentPage != 1>
         <button data-page="1" data-scrolltop="${scrollTop}" class="pager-btn">« First</button>
@@ -126,7 +128,14 @@
     <#if currentPage != lastPage>
         <button data-page="${lastPage}" data-scrolltop="${scrollTop}" class="pager-btn">Last »</button>
     </#if>
-</nav>
+    
+</#if>    
+<#if total == 1>
+ 	${total} ${text.taxon_count_single}
+<#else>
+   	${total} ${text.taxon_count}
 </#if>
+</nav>
+
 </#macro>
 

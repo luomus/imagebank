@@ -57,6 +57,10 @@ show_more = Näytä kaikki
 change = Vaihda
 select = Valitse
 edit = Muokkaa
+filters = Rajaukset
+biogeo_filter = Rajaa alueella
+taxon_count_single = taksoni
+taxon_count = taksonia
 
 taxon_tree = Taksonomiset tasot
 taxon_tree_no_taxa = Ei tämän tason taksoneita näytettäväksi

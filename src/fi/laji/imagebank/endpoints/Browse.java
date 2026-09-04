@@ -66,7 +66,8 @@ public class Browse extends ImageBankBaseServlet {
 				.setData("taxonGroups", filteredTaxonGroups())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
 				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS)
-				.setData("defs", defs);
+				.setData("defs", defs)
+				.setData("bioGeoProvinces", getTaxonomyDAO().getBiogeographicalProvinces().values());
 	}
 
 	private ResponseData selectGroup(HttpServletRequest req) throws Exception {
