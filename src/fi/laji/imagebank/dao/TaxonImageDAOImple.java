@@ -92,12 +92,10 @@ public class TaxonImageDAOImple implements TaxonImageDAO {
 
 	@Override
 	public Taxon reloadImages(Taxon t) throws Exception {
+		if (t == null) throw new IllegalArgumentException("Null taxon given to reload images");
 		try {
 			List<Image> images = images(t);
-			t.clearMultimedia();
-			for (Image i : images) {
-				t.addMultimedia(i);
-			}
+			t.replaceMultimedia(images);
 		} catch (SQLException e) {
 			throw new RuntimeException("Loading images for " + t.getId(), e);
 		}
