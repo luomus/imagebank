@@ -19,7 +19,7 @@
 </#macro>
 
 <#macro printScientificName taxon>
-	<span class="scientificName <#if taxon.isCursiveName()>speciesName</#if>">${(taxon.scientificName!taxon.vernacularName.forLocale("en")!taxon.qname)?html}</span>
+	<span class="scientificName">${taxon.scientificNameLabel!taxon.vernacularName.forLocale("en")!taxon.qname}</span>
 </#macro>
 
 <#macro printNames taxon>

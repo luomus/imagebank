@@ -181,8 +181,7 @@ li {
 	display: none;
 }
 
-.speciesName {
-	font-style: italic;
+.scientificName {
 	white-space: nowrap;
 }
 
