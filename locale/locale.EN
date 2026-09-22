@@ -62,7 +62,7 @@ biogeo_filter = Filter by region
 taxon_count_single = taxon
 taxon_count = taxa
 
-taxon_tree = Taxonomic Levels
+taxon_tree = Taxonomy
 taxon_tree_no_taxa = No taxa to display at this level
 obs_count = occurrences
 
