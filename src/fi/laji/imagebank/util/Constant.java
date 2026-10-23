@@ -8,5 +8,5 @@ public class Constant {
 	public static final String NEW_IMAGES = "newImages";
 	public static final String USER_DEFAULT_LICENSE = "defaultLicense";
 
-	public static final int MAX_PAGE_SIZE = 300;
+	public static final int MAX_PAGE_SIZE = 100;
 }

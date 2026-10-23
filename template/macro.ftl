@@ -193,10 +193,7 @@
 				</optgroup>
         	</select>
         </fieldset>
-    </div>
-
-    <div class="preferences-group">
-    	<fieldset>
+        <fieldset>
     		<legend>${text.order}</legend>
     		<label for="order_taxonomic">${text.taxonomic}</label>
     		<input type="radio" name="order" id="order_taxonomic" value="order_taxonomic" checked>
@@ -213,9 +210,6 @@
     		<label for="taxa_all">${text.taxa_all}</label>
     		<input type="radio" name="taxa" id="taxa_all" value="taxa_all">
     	</fieldset>
-    </div>
-
-    <div class="preferences-group">
     	<fieldset>
     		<legend>${text.taxon_ranks_preference}</legend>
 			<select id="taxonRankSelect" name="taxonRanks" multiple data-placeholder=" ">
@@ -243,14 +237,11 @@
         	<legend>${text.page_size}</legend>
         	<select id="pageSizeSelect" name="pageSize">
             	<option value="20" selected>20</option>
-            	<option value="100">100</option>
+            	<option value="50">50</option>
             	<option value="${maxPageSize}">${maxPageSize}</option>
         	</select>
         </fieldset>
-    </div>
-
-    <div class="preferences-group">
-    	<fieldset>
+       <fieldset>
     		<legend>${text.image_size}</legend>
     		<label title="${text.image_size_large}" for="large_image"><i class="fa fa-image fa-image-largeImage" aria-hidden="true"></i></label> 
     		<input type="radio" name="imageSize" id="large_image" value="large_image" checked>

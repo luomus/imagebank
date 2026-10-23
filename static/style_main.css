@@ -502,6 +502,7 @@ p.info {
 .preferences-group {
 	display: inline-block;
 	vertical-align: top;
+	margin-right: 1em;
 }
 
 .preferences .ui-checkboxradio-label {
@@ -514,6 +515,10 @@ p.info {
     padding: 10px;
     border-radius: 2px;
     background-color: #fff;
+}
+
+.preferences fieldset:not(:last-of-type) {
+	margin-bottom: 1em;
 }
 
 .preferences fieldset legend {
