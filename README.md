@@ -74,7 +74,7 @@ MediaAPI_DBurl = https://...
 MediaAPI_DBusername = 
 MediaAPI_DBpassword = 
 
-#api.laji.fi (person names, taxa details) 
+#api.laji.fi (person names, taxon autocomplete) 
 LajiAPI_URL = https://api.laji.fi/
 LajiAPI_AccessToken = 
 

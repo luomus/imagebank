@@ -59,6 +59,7 @@ select = Välj
 edit = Redigera
 filters = Filter
 biogeo_filter = Filtrera efter område
+taxon_filter = Taksonomisk avgränsning
 taxon_count_single = taxon
 taxon_count = taxa
 
@@ -106,6 +107,7 @@ save_success = Sparat!
 cancel = Ångra
 cancel_confirm = Är du säker på att du vill ångra alla ändringar?
 clear_all = Rensa alla
+clear = Rensa
 
 yes = Ja
 no = Nej

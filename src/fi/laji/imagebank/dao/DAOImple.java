@@ -20,6 +20,7 @@ import fi.luomus.commons.db.connectivity.TransactionConnection;
 import fi.luomus.commons.http.HttpClientService;
 import fi.luomus.commons.json.JSONObject;
 import fi.luomus.commons.utils.Cached;
+import fi.luomus.commons.utils.URIBuilder;
 import fi.luomus.commons.utils.Utils;
 
 public class DAOImple implements DAO {
@@ -109,6 +110,32 @@ public class DAOImple implements DAO {
 	public String getPersonFulName(String personId) {
 		try {
 			return personNameCache.get(personId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	private final Cached<TaxonNameSearchParameters, JSONObject> taxonAutocompleteCache = new Cached<>(new Cached.CacheLoader<TaxonNameSearchParameters, JSONObject>() {
+
+		@Override
+		public JSONObject load(TaxonNameSearchParameters params) {
+			try (HttpClientService client = apiClient()){
+				URIBuilder b = new URIBuilder(apiURL()+"taxa/search");
+				b.addParameter("query", params.getQuery());
+				if (params.getInformalTaxonGroup() != null) {
+					b.addParameter("informalTaxonGroups", params.getInformalTaxonGroup().toString());
+				}
+				return client.contentAsJson(new HttpGet(b.getURI()));
+			} catch (Exception e) {
+				return null;
+			}
+		}
+	}, 10, TimeUnit.HOURS, 1000);
+
+	@Override
+	public JSONObject getTaxonNameSearch(TaxonNameSearchParameters params) {
+		try {
+			return taxonAutocompleteCache.get(params);
 		} catch (Exception e) {
 			return null;
 		}

@@ -71,9 +71,18 @@ function loadTree() {
 
 let taxonFilter = null;
 
-function setTaxonFilter(taxonId) {
+function setTaxonFilter(taxonId, label, scroll) {
 	taxonFilter = taxonId;
+	$("#taxon-name-filter").val(label);
+	loadSpecies();
+	if (!scroll) return; 
+    const anchor = $("#top-anchor");
+    $("html, body").animate({
+        scrollTop: anchor.offset().top
+    }, 500);
 }
+
+let bioGeoFilter = null;
 
 function loadSpecies(page = 1) {
 	const params = {
@@ -81,7 +90,7 @@ function loadSpecies(page = 1) {
         order: getPreference("order") || "order_taxonomic",
         taxa: getPreference("taxa") || "taxa_finnish",
         taxonRanks: getArrayPreference("taxonRanks") || [],
-        biogeoFilter: getArrayPreference("biogeo-filter") || [], 
+        biogeoFilter: bioGeoFilter || [], 
         page: page,
         pageSize: getPreference("pageSize") || "100"
     };
@@ -167,10 +176,8 @@ $(document).ready(function() {
 	$("#biogeo-filter").chosen({width: "15em", no_results_text: "${text.no_matches}"});
 	
 	$("#biogeo-filter").on('change', function() {
-		const preference = $(this).attr('name');
-		setPreference("biogeo-filter", $(this).val()).done(function() {
-			loadSpecies();
-		});
+		bioGeoFilter = $(this).val();
+		loadSpecies();
 	});
 	
 	$("#browse-tree-header").click(function() {
@@ -203,13 +210,7 @@ $(document).ready(function() {
 
 $(document).on("click", ".browse-tree-taxon-selector", function (e) {
     e.preventDefault();
-    const taxonId = $(this).data("taxonid");
-    setTaxonFilter(taxonId);
-    loadSpecies();
-    const anchor = $("#top-anchor");
-    $("html, body").animate({
-        scrollTop: anchor.offset().top
-    }, 500);
+    setTaxonFilter($(this).data("taxonid"), $(this).data("taxonname"), true);
 });
 
 let galleryViewer = null;
@@ -338,6 +339,33 @@ $(document).ready(function() {
     	}
 	});
 
+   $("#taxon-name-filter").autocomplete({
+		source: function (request, response) {
+			$.ajax({
+				url: "${baseURL}/api/taxon-autocomplete",
+				dataType: "json",
+				data: { query: request.term <#if group??>, group: '${group.qname}'</#if>},
+				success: function (data) {
+					let suggestions = data.map(function (item) {
+						return {
+							label: item.matchingName + (item.nameType !== "MX.scientificName" ? " (" + item.scientificName + ")": ""),
+							value: item.id
+						};
+					});
+					response(suggestions); // Pass suggestions to autocomplete
+				}
+			});
+		},
+		minLength: 3,
+		select: function (event, ui) {
+			setTaxonFilter(ui.item.value, ui.item.label, false);
+			return false; // Prevent default autocomplete behavior
+		}
+	});
+	
+	$("#clear-taxon-name-filter").click(function() {
+		setTaxonFilter('', '', false);
+	});
 });
 
 $(document).on("click", ".pager-btn", function (e) {

@@ -11,7 +11,7 @@ $(document).ready(function() {
 	$("#taxon-autocomplete").autocomplete({
 		source: function (request, response) {
 			$.ajax({
-				url: "https://laji.fi/api/taxa/search",
+				url: "${baseURL}/api/taxon-autocomplete",
 				dataType: "json",
 				data: { query: request.term },
 				success: function (data) {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 			return false; // Prevent default autocomplete behavior
 		}
 	});
-   
+	
     if (getPreference("group")) {
     	let group = getPreference("group");
     	let browse = $("#menu_browse");

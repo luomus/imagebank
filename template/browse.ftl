@@ -24,13 +24,14 @@
 		<i class="fa fa-bars" aria-hidden="true"></i>
 		<h5 class="browse-taxa-headertext">${text.taxon_tree}</h5>
 	</div>
-	<div id="browse-taxa-header" class="box-header">
+	<div id="browse-taxa-header">
 		<h5 style="display:inline-block">${text.filters}</h5> 
 		<select id="biogeo-filter" multiple data-placeholder="${text.biogeo_filter}">
 			<#list bioGeoProvinces as province>
 				<option value="${province.qname}">${province.abbreviation} &mdash; ${province.name.forLocale(locale)?html}</option>
 			</#list>
 		</select>
+		<input id="taxon-name-filter" name="taxonSearch" type="text" size="30" placeholder="${text.taxon_filter}" /> <button id="clear-taxon-name-filter">${text.clear}</button>
 	</div>
 	<div id="browse-tree" class="box">
 			<select id="browse-tree-select">

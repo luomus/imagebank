@@ -59,6 +59,7 @@ select = Valitse
 edit = Muokkaa
 filters = Rajaukset
 biogeo_filter = Rajaa alueella
+taxon_filter = Taksonominen rajaus
 taxon_count_single = taksoni
 taxon_count = taksonia
 
@@ -106,6 +107,7 @@ save_success = Tallennettu onnistuneesti!
 cancel = Peruuta
 cancel_confirm = Peruuta muutokset?
 clear_all = Tyhjennä kaikki
+clear = Tyhjennä
 
 yes = Kyllä
 no = Ei

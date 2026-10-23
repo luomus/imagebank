@@ -59,6 +59,7 @@ select = Select
 edit = Edit
 filters = Filters
 biogeo_filter = Filter by region
+taxon_filter = Taxonomic delimitation
 taxon_count_single = taxon
 taxon_count = taxa
 
@@ -106,6 +107,7 @@ save_success = Saved!
 cancel = Cancel
 cancel_confirm = Discard all changes?
 clear_all = Clear all
+clear = Clear
 
 yes = Yes
 no = No

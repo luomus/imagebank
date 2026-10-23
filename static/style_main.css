@@ -565,9 +565,13 @@ p.info {
 #browse-taxa-header {
 	grid-column: 2;
 	z-index: 3;
+	margin: 3px;
 	margin-left: 1em;
 }
 
+#browse-taxa-header input {
+	height: 2em;
+}
 #browse-taxa {
 	grid-column: 2;
 	z-index: 1;
