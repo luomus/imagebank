@@ -92,7 +92,7 @@ function loadSpecies(page = 1) {
         taxonRanks: getArrayPreference("taxonRanks") || [],
         biogeoFilter: bioGeoFilter || [], 
         page: page,
-        pageSize: getPreference("pageSize") || "100"
+        pageSize: getPreference("pageSize") || "20"
     };
 	$.ajax({
         url: "${baseURL}/api/species/${groupId?html}",
