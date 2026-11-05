@@ -35,6 +35,8 @@ import fi.luomus.kuvapalvelu.client.MediaApiClientImpl;
 
 public abstract class ImageBankBaseServlet extends BaseServlet implements LicenseNameProvider {
 
+	private static final long serialVersionUID = -8211770238148729310L;
+
 	private static final int MONTH = 60*24*30;
 	private static final Qname MM_TYPE_ENUM = Qname.of("MM.typeEnum");
 	private static final Qname MM_SIDE_ENUM = Qname.of("MM.sideEnum");
@@ -42,7 +44,6 @@ public abstract class ImageBankBaseServlet extends BaseServlet implements Licens
 	private static final Qname MY_PLANT_LIFE_STAGES = Qname.of("MY.plantLifeStageEnum");
 	private static final Qname MY_LIFE_STAGES = Qname.of("MY.lifeStages");
 	private static final Qname MZ_INTELLECTUAL_RIGHTS_ENUM = Qname.of("MZ.intellectualRightsEnum");
-	private static final long serialVersionUID = -8211770238148729310L;
 	public static final String CONFIG_FILE = "imagebank.properties";
 	private static final Object LOCK = new Object();
 
@@ -67,8 +68,6 @@ public abstract class ImageBankBaseServlet extends BaseServlet implements Licens
 	protected String configFileName() {
 		return CONFIG_FILE;
 	}
-
-
 
 	@Override
 	protected void applicationInit() {
