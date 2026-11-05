@@ -10,8 +10,7 @@ $(document).ready(function() {
     
 	$(".admin-image").each(function() {
 		const image = $(this);
-		const wrapper = $("<div class='image-wrapper'></div>");
-		image.wrap(wrapper);
+		image.wrap("<div class='image-wrapper'></div>");
 		
         const tagsContainer = $("<div class='image-tags'></div>");
         const tagData = {
@@ -39,12 +38,18 @@ $(document).ready(function() {
 			{ key: "uploaddatetime", label: "${text.label_uploadDateTime}" },
 			{ key: "keywords", label: "${text.label_tags}" }
 		];
-		let infoHtml = fields.map(field => {
+
+		fields.forEach(field => {
         	const value = image.data(field.key);
-        	return value ? '<p><strong>' + field.label + ':</strong> ' + value + '</p>' : '';
-    	})
-    	.join('');
-		infoBox.html(infoHtml);
+        	if (value) {
+            	$("<p>")
+                .append($("<strong>").text(field.label + ": "))
+                .append(document.createTextNode(value))
+                .appendTo(infoBox);
+        	}
+    	});
+    	image.after(infoBox);
+    	
 		image.after(infoBox);
         image.hover(
 			function() { infoBox.stop(true, true).fadeIn(100); },
