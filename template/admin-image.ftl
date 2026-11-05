@@ -125,16 +125,16 @@
 
 <#macro imageLink image type label>
 	<#if image.urls[type]??>
-		<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" target="_blank">${label}</a></label> 
+		<label><a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" target="_blank">${label?html}</a></label> 
 		<a href="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" target="_blank">
 			<#if type == "original">
-            	<img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" alt="${label}"/>
+            	<img src="${image.urls['full']?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" alt="${label?html}"/>
         	<#else>
-            	<img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" alt="${label}"/>
+            	<img src="${image.urls[type]?html}<#if image.secretKey??>?secret=${image.secretKey?html}</#if>" alt="${label?html}"/>
         	</#if>
 		</a>
 	<#else>
-		<label>${label}</label>
+		<label>${label?html}</label>
 		<p>${text.no_image}</p>
 	</#if>
 </#macro>

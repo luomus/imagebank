@@ -19,7 +19,7 @@
 </#macro>
 
 <#macro printScientificName taxon>
-	<span class="scientificName">${taxon.scientificNameLabel!taxon.vernacularName.forLocale("en")!taxon.qname}</span>
+	<span class="scientificName"><#if taxon.scientificNameLabel?has_content>${taxon.scientificNameLabel}<#else>${(taxon.vernacularName.forLocale("en")!taxon.qname)?html}</#if></span>
 </#macro>
 
 <#macro printNames taxon>
@@ -76,7 +76,13 @@
   	<#else>
     	<i class="fa fa-copyright" aria-hidden="true"></i>
   	</#if>
-	${(image.copyrightOwner!"")?html} ${(image.licenseAbbreviation!"")?html}
+	${(image.author!"")?html}
+	<#if image.author?has_content && image.copyrightOwner?has_content>
+		<#if image.author != image.copyrightOwner> ${(image.copyrightOwner!"")?html} </#if>
+	<#else>
+		${(image.copyrightOwner!"")?html}
+	</#if>
+	${(image.licenseAbbreviation!"")?html}
 </#macro>
 
 <#macro list seq><#list seq as s>${s?html}<#if s_has_next>, </#if></#list></#macro>
