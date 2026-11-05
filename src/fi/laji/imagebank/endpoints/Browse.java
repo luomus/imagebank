@@ -24,7 +24,7 @@ import fi.luomus.commons.utils.Utils;
 @WebServlet(urlPatterns = {"/browse/*"})
 public class Browse extends ImageBankBaseServlet {
 
-	private static final List<String> DEFAULT_TAXON_RANKS = Utils.list("MX.aggregate", "MX.species");
+	private static final List<String> DEFAULT_TAXON_RANKS = Utils.list("MX.aggregate", "MX.species", "MX.subspecies");
 	private static final long serialVersionUID = 8621449842296848597L;
 
 	@Override
