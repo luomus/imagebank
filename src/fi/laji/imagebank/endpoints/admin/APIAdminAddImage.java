@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import fi.laji.imagebank.endpoints.APIPreferences;
 import fi.laji.imagebank.models.User;
 import fi.laji.imagebank.util.Constant;
 import fi.luomus.commons.containers.rdf.Qname;
@@ -79,10 +80,9 @@ public class APIAdminAddImage extends APIAdminBaseServlet {
 		if (given(userSubmittedLicense)) {
 			String currentLicense = getUsersDefaultLicense(req);
 			if (!userSubmittedLicense.equals(currentLicense)) {
-				getDAO().savePreference(user.getId().toString(), Constant.USER_DEFAULT_LICENSE, userSubmittedLicense);
+				getDAO().savePreference(user.getId().toString(), Constant.USER_DEFAULT_LICENSE, APIPreferences.clean(userSubmittedLicense));
 				invalidatePreferences(req);
 			}
-
 		}
 
 		if (uploadedIds.size() == 1) {

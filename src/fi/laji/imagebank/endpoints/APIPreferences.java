@@ -42,7 +42,7 @@ public class APIPreferences extends APIBaseServlet {
 		return clean(Stream.of(parameterValues).collect(Collectors.joining(",")));
 	}
 
-	private String clean(String s) {
+	public static String clean(String s) {
 		if (s == null) return null;
 		s = s.chars()
 				.filter(c -> ALLOWED.contains((char) c))
