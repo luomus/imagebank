@@ -63,6 +63,7 @@ public class Browse extends ImageBankBaseServlet {
 		return initResponseData(req).setViewName("browse")
 				.setData("group", group)
 				.setData("groupId", groupId)
+				.setData("groupCleaned", groupId.replace(".", "_"))
 				.setData("taxonGroups", filteredTaxonGroups())
 				.setData("speciesTaxonRanks", speciesTaxonRanks())
 				.setData("defaultTaxonRanks", DEFAULT_TAXON_RANKS)

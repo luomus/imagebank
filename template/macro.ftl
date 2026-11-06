@@ -233,11 +233,11 @@
     	<fieldset>
     		<legend>${text.category_filter}</legend>
     		<#list defs as def>
-    			<label for="category_filter_${def.id}">${def.title.forLocale(locale)}</label>
-    			<input type="checkbox" name="category_filter_${def.id}" id="category_filter_${def.id}" checked>
+    			<label for="category_filter_${groupCleaned?html}_${def.id}">${def.title.forLocale(locale)}</label>
+    			<input type="checkbox" name="category_filter_${groupCleaned?html}_${def.id}" id="category_filter_${groupCleaned?html}_${def.id}" checked>
     		</#list>
-    		<label for="category_filter_uncategorized">${text.uncategorized}</label>
-    		<input type="checkbox" name="category_filter_uncategorized" id="category_filter_uncategorized" checked>
+    		<label for="category_filter_${groupCleaned?html}_uncategorized">${text.uncategorized}</label>
+    		<input type="checkbox" name="category_filter_${groupCleaned?html}_uncategorized" id="category_filter_${groupCleaned?html}_uncategorized" checked>
         </fieldset>
     </div>
 

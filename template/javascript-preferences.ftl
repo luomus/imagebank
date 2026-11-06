@@ -57,7 +57,7 @@ $(document).ready(function() {
 	}
 	
 	$.each(preferences, function(key, value) {
-    	if (key.startsWith("category_filter_")) {
+    	if (key.startsWith("category_filter_${groupCleaned?html}")) {
     		let isChecked = (value === true || value === "true");
         	$("#" + key).prop('checked', isChecked);
     	}
