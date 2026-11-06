@@ -197,6 +197,14 @@ $(document).ready(function() {
      		$(this).parent().find(".multi-input-add-item").first().click();
      		$("input[name='primaryForTaxon']").filter(function() {return $(this).val() === "";}).first().val('${taxon.id}');
      	});
+     	
+     	const removeFromTaxaButton = $('<button id="removeFromTaxa" type="button">${text.admin_remove_from_taxa}</button>').button();
+     	$("input[name='taxonIds']").first().parent().before(removeFromTaxaButton);
+     	
+     	removeFromTaxaButton.click(function() {
+     		$("input[name='taxonIds']").val('');
+     		$("input[name='primaryForTaxon']").val('');
+     	});
 	</#if>
     
     $("#dropArea").on("dragover", function(event) {

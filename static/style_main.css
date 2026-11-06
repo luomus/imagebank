@@ -299,6 +299,11 @@ p.info {
 	display: block;
 }
 
+.info li {
+	list-style-type: square;
+	margin-left: 1em;
+}
+
 .ui-tooltip {
     border: 1px solid red;
     background: #111;
