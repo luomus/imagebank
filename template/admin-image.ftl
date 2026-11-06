@@ -42,13 +42,16 @@
     	<fieldset>
         	<legend>${text.group_taxon_images}</legend>
 			<@inputMulti "taxonIds" 18 meta.identifications.taxonIds />
-			<@inputMulti "verbatim" 80 meta.identifications.verbatim />
 			<@inputMulti "primaryForTaxon" 18 meta.primaryForTaxon />
 			<@select "type" types meta.type />
         	<@selectMulti "sex" sexes meta.sex />
         	<@selectMulti "lifeStage" lifeStages meta.lifeStage />
         	<@selectMulti "plantLifeStage" plantLifeStages meta.plantLifeStage />
         	<@select "side" sides meta.side />
+        	<div>
+				<@inputNumber "sortOrder" meta.sortOrder /> 
+				<label>&nbsp;</label><span>${text.sort_order_info}</span>
+			</div>
     	</fieldset>
 
     	<fieldset>
@@ -59,21 +62,19 @@
 			<@input "taxonDescriptionCaptionEN" 80 meta.taxonDescriptionCaption["en"] />
 		</fieldset>
 
-    	<fieldset>
+		<input type="submit" class="button" id="saveButton" value="${text.save}" />
+		<button id="cancelButton" type="button"><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
+
+		<br/><br/><hr /><br/>
+	    <fieldset id="misc-meta-fields">
         	<legend>${text.group_misc}</legend>
-        	<div>
-				<@inputNumber "sortOrder" meta.sortOrder /> 
-				<label>&nbsp;</label><span>${text.sort_order_info}</span>
-			</div>
 			<@inputMulti "documentIds" 40 meta.documentIds />
 			<@inputMulti "tags" 40 meta.tags />
+			<@inputMulti "verbatim" 80 meta.identifications.verbatim />
 			<@selectBool "fullResolutionMediaAvailable" meta.fullResolutionMediaAvailable!false />
 			<@selectBool "secret" meta.secret />
     	</fieldset>
-	
-		<input type="submit" class="button" id="saveButton" value="${text.save}" />
-		<button id="cancelButton" type="button"><span class="ui-icon ui-icon-cancel"></span>${text.cancel}</button>
-	
+    		
 	 	<fieldset id="unmodifieable-meta-fields" class="long-labels">
         	<legend>${text.group_unmodifiable}</legend>
 

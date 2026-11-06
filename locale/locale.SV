@@ -147,10 +147,10 @@ label_primary = Primär
 
 group_captions = Bildtexter
 label_caption = Bildtext
-label_taxonDescriptionCaption = Taxonbeskrivningstext
-label_taxonDescriptionCaptionFI = Taxonbeskrivningstext - FI
-label_taxonDescriptionCaptionSV = Taxonbeskrivningstext - SV
-label_taxonDescriptionCaptionEN = Taxonbeskrivningstext - EN
+label_taxonDescriptionCaption = Taxonbildbeskrivning
+label_taxonDescriptionCaptionFI = Taxonbildbeskrivning - FI
+label_taxonDescriptionCaptionSV = Taxonbildbeskrivning - SV
+label_taxonDescriptionCaptionEN = Taxonbildbeskrivning - EN
 
 group_misc = Övrigt
 label_sortOrder = Sorteringsordning

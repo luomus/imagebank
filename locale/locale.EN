@@ -147,10 +147,10 @@ label_primary = Primary
 
 group_captions = Captions
 label_caption = Caption
-label_taxonDescriptionCaption = Taxon Description Caption
-label_taxonDescriptionCaptionFI = Taxon Description Caption - FI
-label_taxonDescriptionCaptionSV = Taxon Description Caption - SV
-label_taxonDescriptionCaptionEN = Taxon Description Caption - EN
+label_taxonDescriptionCaption = Taxon Image Description
+label_taxonDescriptionCaptionFI = Taxon Image Description - FI
+label_taxonDescriptionCaptionSV = Taxon Image Description - SV
+label_taxonDescriptionCaptionEN = Taxon Image Description - EN
 
 group_misc = Misc
 label_sortOrder = Sort Order

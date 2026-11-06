@@ -102,6 +102,9 @@
 	margin-top: 2em;
 }
 
+#adminMetaForm #misc-meta-fields {
+	background-color: #eee;
+}
 fieldset#unmodifieable-meta-fields {
 	margin-top: 2em;
 	background-color: #eee;

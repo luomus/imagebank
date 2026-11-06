@@ -147,10 +147,10 @@ label_primary = Pääkuva
 
 group_captions = Kuvatekstit
 label_caption = Kuvateksti
-label_taxonDescriptionCaption = Lajikuvaus
-label_taxonDescriptionCaptionFI = Lajikuvaus - FI
-label_taxonDescriptionCaptionSV = Lajikuvaus - SV
-label_taxonDescriptionCaptionEN = Lajikuvaus - EN
+label_taxonDescriptionCaption = Lajikuvan selite
+label_taxonDescriptionCaptionFI = Lajikuvan selite - FI
+label_taxonDescriptionCaptionSV = Lajikuvan selite - SV
+label_taxonDescriptionCaptionEN = Lajikuvan selite - EN
 
 group_misc = Muut
 label_sortOrder = Järjestys
