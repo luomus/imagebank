@@ -27,7 +27,7 @@
 <div class="admin-image-edit">
 
 	<div class="admin-image-meta">
-		<form method="POST" action="${baseURL}/admin/${image.id}?${ref?html}" id="adminMetaForm">
+		<form method="POST" action="${baseURL}/admin/${image.id}?${ref?url}" id="adminMetaForm">
 	
 		<#assign meta = image.meta/>	
 

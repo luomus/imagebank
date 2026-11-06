@@ -156,7 +156,7 @@
 </#macro>
 
 <#macro adminImageUpload multi=false>
-	<form class="image-upload-form" id="imageUploadForm" action="${baseURL}/admin/add<#if taxon??>?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?html}</#if></#if>" method="POST" enctype="multipart/form-data">
+	<form class="image-upload-form" id="imageUploadForm" action="${baseURL}/admin/add<#if taxon??>?taxonId=${taxon.id}<#if taxonSearch??>&taxonSearch=${taxonSearch?url}</#if></#if>" method="POST" enctype="multipart/form-data">
 		<fieldset id="adminMetaForm">
 			<legend><#if multi>${text.admin_add_image_title_multi}<#else>${text.admin_add_image_title}</#if></legend>
 			    <div id="dropArea">

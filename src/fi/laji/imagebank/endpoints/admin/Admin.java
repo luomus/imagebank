@@ -28,6 +28,7 @@ import fi.luomus.commons.taxonomy.TaxonSearch;
 import fi.luomus.commons.taxonomy.TaxonSearch.MatchType;
 import fi.luomus.commons.taxonomy.TaxonSearchResponse;
 import fi.luomus.commons.utils.URIBuilder;
+import fi.luomus.commons.utils.Utils;
 import fi.luomus.kuvapalvelu.model.Media;
 import fi.luomus.kuvapalvelu.model.MediaClass;
 import fi.luomus.kuvapalvelu.model.Meta;
@@ -203,10 +204,9 @@ public class Admin extends ImageBankBaseServlet {
 		}
 
 		List<String> ref = new ArrayList<>();
-		if (given(taxonSearch)) ref.add(TAXON_SEARCH + "=" + taxonSearch);
-		if (taxon != null) ref.add(TAXON_ID + "=" + taxon.getId());
-		if (given(imageSearch)) ref.add(IMAGE_SEARCH + "=" + imageSearch);
-
+		if (given(taxonSearch)) ref.add(TAXON_SEARCH + "=" + Utils.urlEncode(taxonSearch));
+		if (taxon != null) ref.add(TAXON_ID + "=" + Utils.urlEncode(taxon.getId().toString()));
+		if (given(imageSearch)) ref.add(IMAGE_SEARCH + "=" + Utils.urlEncode(imageSearch));
 		data.setData(REF, ref.stream().collect(Collectors.joining("&")));
 		return data;
 	}
@@ -216,7 +216,7 @@ public class Admin extends ImageBankBaseServlet {
 		return data.setViewName("admin-taxon-select")
 				.setData("results", searchResults)
 				.setData(TAXON_SEARCH, taxonSearch)
-				.setData(REF, TAXON_SEARCH+"="+taxonSearch);
+				.setData(REF, TAXON_SEARCH+"="+Utils.urlEncode(taxonSearch));
 	}
 
 	private ResponseData imageSearch(String imageSearch, ResponseData data, HttpServletRequest req) throws Exception {
@@ -227,7 +227,7 @@ public class Admin extends ImageBankBaseServlet {
 		return data.setViewName("admin-image-select")
 				.setData("results", images)
 				.setData(IMAGE_SEARCH, imageSearch)
-				.setData(REF, IMAGE_SEARCH+"="+imageSearch);
+				.setData(REF, IMAGE_SEARCH+"="+Utils.urlEncode(imageSearch));
 	}
 
 	@Override
