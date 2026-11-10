@@ -12,7 +12,6 @@ import fi.luomus.commons.config.Config;
 import fi.luomus.commons.reporting.ErrorReporter;
 import fi.luomus.commons.services.ResponseData;
 import fi.luomus.commons.session.SessionHandler;
-import fi.luomus.commons.utils.Utils;
 import fi.luomus.lajiauth.model.AuthenticationEvent;
 import fi.luomus.lajiauth.model.UserDetails;
 import fi.luomus.lajiauth.service.LajiAuthClient;
@@ -84,6 +83,9 @@ public class LoginUtil  {
 
 	public ResponseData processPost(HttpServletRequest req, SessionHandler session, ResponseData responseData) throws Exception {
 		String lajiAuthToken = req.getParameter("token");
+		if (!given(lajiAuthToken)) {
+			return responseData.setRedirectLocation(config.baseURL());
+		}
 		try {
 			AuthenticationResult authentication = authenticateViaLajiAuthentication(lajiAuthToken);
 			if (authentication.successful()) {
@@ -129,9 +131,9 @@ public class LoginUtil  {
 			return authenticationResultFromLajiAuth(authorizationInfo);
 		} catch (Exception e) {
 			if (authorizationInfo != null) {
-				errorReporter.report("Erroreous LajiAuth login for " + Utils.debugS(token, objectMapper.writeValueAsString(authorizationInfo)), e);
+				errorReporter.report("Erroreous LajiAuth login " + objectMapper.writeValueAsString(authorizationInfo), e);
 			} else {
-				errorReporter.report("Unsuccesful LajiAuth login for " + token, e);
+				errorReporter.report("Unsuccesful LajiAuth login for token", e);
 			}
 			AuthenticationResult authenticationResult = new AuthenticationResult(false);
 			authenticationResult.setErrorMessage(e.getMessage());
